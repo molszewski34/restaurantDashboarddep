@@ -63,7 +63,7 @@ const MenuSidebar = () => {
       <div id="App" style={({ height: "100vh" }, { display: "flex" })}>
         <Sidebar
           breakPoint="md"
-          transitionDuration={800}
+          transitionDuration={400}
           style={{
             height: "100%",
             minHeight: "100vh",
