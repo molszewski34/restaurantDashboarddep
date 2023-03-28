@@ -82,7 +82,7 @@ export default function Tables() {
   ) : (
     <div sx={{ maxwidth: 1024 }}>
       {userLogin.userInfo.id ? (
-        <Box sx={{ margin: "20px" }}>
+        <Box sx={{ margin: "0" }}>
           <TableContainer component={Paper}>
             <Table aria-label="customized table">
               <TableHead>
@@ -90,7 +90,7 @@ export default function Tables() {
                   <StyledTableCell>Table no</StyledTableCell>
                   <StyledTableCell align="center">Room</StyledTableCell>
                   <StyledTableCell align="center"> Max Persons</StyledTableCell>
-                  <StyledTableCell align="center"></StyledTableCell>
+                  <StyledTableCell align="center">Order</StyledTableCell>
                 </TableRow>
               </TableHead>
 
