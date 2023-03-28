@@ -139,7 +139,7 @@ export default function Tables() {
                             addOrderHandler(table.id);
                           }}
                         >
-                          add order
+                          add
                         </Button>
                       )}
                     </StyledTableCell>
