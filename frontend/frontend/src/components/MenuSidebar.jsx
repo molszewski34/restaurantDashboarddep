@@ -23,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 
 const darkTheme = createTheme({
   palette: {
-    mode: "dark",
+    mode: "light",
   },
 });
 

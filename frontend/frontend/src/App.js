@@ -14,7 +14,7 @@ import Staff from "./screens/staff";
 
 import MenuSidebar from "./components/MenuSidebar";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
-import SideBarComponent from "./components/SideBarComponent"
+import SideBarComponent from "./components/SideBarComponent";
 
 const darkTheme = createTheme({
   palette: {
@@ -29,7 +29,7 @@ function App() {
       <Router>
         <div id="app" style={({ height: "100vh" }, { display: "flex" })}>
           <SideBarComponent />
-          <main className="content">
+          <main className="content" style={{ marginTop: "50px" }}>
             {/* <ResponsiveAppBar /> */}
 
             <Routes>
