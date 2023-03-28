@@ -1,53 +1,54 @@
 import React, { useState } from "react";
-import "./styles.css";
-import {
-  AppBar,
-  Toolbar,
-  Avatar,
-  Box,
-  Divider,
-  IconButton,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  makeStyles,
-  CssBaseline,
-  Drawer,
-  Typography
-} from "@material-ui/core";
-import {
-  Apps,
-  Menu,
-  ContactMail,
-  AssignmentInd,
-  Home
-} from "@material-ui/icons";
+//import "./styles.css";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Drawer from '@mui/material/Drawer';
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import { Box } from "@mui/system";
+import ListItemIcon from '@mui/material/ListItemIcon'
+import Typography from "@mui/material/Typography";
+import Apps from "@mui/icons-material/Apps";
+import MenuIcon from '@mui/icons-material/Menu';
+import MailIcon from '@mui/icons-material/Mail';
 
-const useStyles = makeStyles((theme) => ({
-  menuSliderContainer: {
-    width: 250,
-    background: "#511",
-    height: "100%"
-  },
-  avatar: {
-    margin: "0.5rem auto",
-    padding: "1rem",
-    width: theme.spacing(13),
-    height: theme.spacing(13)
-  },
-  listItem: {
-    color: "tan"
-  }
-}));
+
+
+const darkTheme = createTheme({
+    palette: {
+      mode: "dark",
+    },
+  });
+
+// const useStyles = makeStyles((theme) => ({
+//   menuSliderContainer: {
+//     width: 250,
+//     background: "#511",
+//     height: "100%"
+//   },
+//   avatar: {
+//     margin: "0.5rem auto",
+//     padding: "1rem",
+//     width: theme.spacing(13),
+//     height: theme.spacing(13)
+//   },
+//   listItem: {
+//     color: "tan"
+//   }
+// }));
 
 const listItems = [
   {
-    listIcon: <Home />,
+    listIcon: <MailIcon />,
     listText: "Home"
   },
   {
-    listIcon: <AssignmentInd />,
+    listIcon: <MailIcon />,
     listText: "Resume"
   },
   {
@@ -55,13 +56,13 @@ const listItems = [
     listText: "Portfolio"
   },
   {
-    listIcon: <ContactMail />,
+    listIcon: <MailIcon />,
     listText: "Contacts"
   }
 ];
 
-export default function App() {
-  const classes = useStyles();
+export default function SideBarComponent() {
+  
   const [open, setOpen] = useState(false);
 
   const toggleSlider = () => {
@@ -69,17 +70,13 @@ export default function App() {
   };
 
   const sideList = () => (
-    <Box className={classes.menuSliderContainer} component="div">
-      <Avatar
-        className={classes.avatar}
-        src="https://i.ibb.co/rx5DFbs/avatar.png"
-        alt="Juaneme8"
-      />
+    <Box component="div">
+   
       <Divider />
       <List>
         {listItems.map((listItem, index) => (
-          <ListItem className={classes.listItem} button key={index}>
-            <ListItemIcon className={classes.listItem}>
+          <ListItem key={index}>
+            <ListItemIcon>
               {listItem.listIcon}
             </ListItemIcon>
             <ListItemText primary={listItem.listText} />
@@ -94,10 +91,10 @@ export default function App() {
       <CssBaseline />
 
       <Box component="nav">
-        <AppBar position="static">
+        <AppBar position="fixed">
           <Toolbar>
             <IconButton onClick={toggleSlider}>
-              <Menu />
+              <MenuIcon />
             </IconButton>
             <Typography>Portfolio</Typography>
             <Drawer open={open} anchor="left" onClose={toggleSlider}>
