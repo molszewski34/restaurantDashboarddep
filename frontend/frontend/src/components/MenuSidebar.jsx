@@ -6,9 +6,6 @@ import CssBaseline from "@mui/material/CssBaseline";
 
 import { Link } from "react-router-dom";
 
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
-
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";

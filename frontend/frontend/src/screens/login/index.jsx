@@ -25,7 +25,6 @@ const darkTheme = createTheme({
 });
 
 export default function SignIn() {
-  let location = useLocation();
   let navigate = useNavigate();
 
   const dispatch = useDispatch();

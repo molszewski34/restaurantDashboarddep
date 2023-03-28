@@ -6,7 +6,6 @@ import { listOrders } from "../../actions/ordersActions";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -44,9 +43,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function Staff() {
-  let location = useLocation();
-  let navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const userList = useSelector((state) => state.userList);

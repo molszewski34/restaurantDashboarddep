@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useEffect, useContext } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { listTables, listRooms } from "../../actions/tablesActions";
@@ -22,14 +22,6 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import { LinkContainer } from "react-router-bootstrap";
 import { LoginMessageComponent } from "../../components/LoginMessageComponent";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(2),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-}));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

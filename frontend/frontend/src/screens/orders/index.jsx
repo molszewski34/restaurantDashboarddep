@@ -5,7 +5,6 @@ import { getUsers } from "../../actions/userActions";
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
@@ -45,9 +44,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 export default function CustomizedTables() {
-  let location = useLocation();
-  let navigate = useNavigate();
-
   const dispatch = useDispatch();
 
   const orderList = useSelector((state) => state.orderList);
