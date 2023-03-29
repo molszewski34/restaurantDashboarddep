@@ -76,7 +76,7 @@ export default function Admin() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "20px" }}>
+    <Box sx={{ margin: "0" }}>
       {userLogin.userInfo.id ? (
         <>
           <StaffComponent />

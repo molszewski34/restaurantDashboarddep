@@ -26,3 +26,8 @@ code {
 .ps-sidebar-container {
   background-color: darkgrey;
 }
+
+.changePadding {
+  padding-left: 0;
+  padding-right: 0;
+}

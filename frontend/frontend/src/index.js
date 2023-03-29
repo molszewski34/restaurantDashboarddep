@@ -6,6 +6,7 @@ import store from "./store";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ProSidebarProvider } from "react-pro-sidebar";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

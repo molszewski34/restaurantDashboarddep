@@ -2,6 +2,7 @@ import * as React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import { listOrderDishes } from "../../actions/dishActions";
 import { listDishes } from "../../actions/dishActions";
@@ -48,6 +49,7 @@ const Item = styled(Paper)(({ theme }) => ({
 export default function Order() {
   const dispatch = useDispatch();
   let { id } = useParams();
+  let navigate = useNavigate();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -109,22 +111,23 @@ export default function Order() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "20px" }}>
+    <Box sx={{ margin: "20px 5px 0 5px" }}>
       {userLogin.userInfo.id ? (
         <>
           <Box>
             <Stack
               direction={{ xs: "column", sm: "row" }}
               spacing={{ xs: 1, sm: 2, md: 4 }}
-              sx={{ marginBottom: "10px" }}
+              sx={{ margin: "0 15px 10px 15px" }}
             >
               <Item>Payment method :{orderDetails.order.paymentMethod}</Item>
               <Item
                 onClick={() => {
                   setOrderAsPaid(id);
+                  navigate("/orders");
                 }}
               >
-                {isPaid ? "Is paid" : "Set as paid"}
+                {isPaid ? "Is paid" : "Set as paid nad remove order"}
               </Item>
               <Item>{orderDetails.order.isPaid ? "is paid" : "not paid"}</Item>
             </Stack>
@@ -140,8 +143,17 @@ export default function Order() {
                 </TableRow>
                 <TableRow>
                   <TableCell>Dish</TableCell>
-                  <TableCell align="right">Qty.</TableCell>
-                  <TableCell align="right">Unit price</TableCell>
+                  <TableCell align="center">Qty.</TableCell>
+                  <TableCell
+                    align="center"
+                    style={{
+                      paddingLeft: "0",
+                      paddingRight: "0",
+                    }}
+                    size="small"
+                  >
+                    Unit
+                  </TableCell>
 
                   <TableCell align="right">Sum</TableCell>
                 </TableRow>
@@ -162,26 +174,38 @@ export default function Order() {
                         ))}
                     </TableCell>
 
-                    <TableCell align="right">
+                    <TableCell
+                      className="changePadding"
+                      align="center"
+                      //style={{ paddingLeft: "0", paddingRight: "0" }}
+                    >
                       <IconButton
+                        className="changePadding"
                         aria-label="add"
                         onClick={() => {
                           dispatch(increaseDishQty(filteredDish, id));
                         }}
+                        //style={{ paddingLeft: "0", paddingRight: "0" }}
                       >
                         <AddIcon />
                       </IconButton>
                       {filteredDish.qty}
 
-                      <IconButton aria-label="delete">
+                      <IconButton
+                        className="changePadding"
+                        //style={{ paddingLeft: "0", paddingRight: "0" }}
+                        aria-label="delete"
+                      >
                         {" "}
                         {filteredDish.qty > 1 ? (
                           <RemoveIcon
+                            className="changePadding"
                             onClick={() => {
                               dispatch(
                                 removeFromOrder(filteredDish, id, orderDishes)
                               );
                             }}
+                            //style={{ paddingLeft: "0", paddingRight: "0" }}
                           />
                         ) : (
                           <DeleteOutlineIcon
@@ -193,7 +217,14 @@ export default function Order() {
                         )}
                       </IconButton>
                     </TableCell>
-                    <TableCell align="right">
+                    <TableCell
+                      style={{
+                        paddingLeft: "0",
+                        paddingRight: "0",
+                      }}
+                      align="center"
+                      size="small"
+                    >
                       {" "}
                       {dishList.dishes
                         .filter(

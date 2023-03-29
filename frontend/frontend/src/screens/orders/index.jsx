@@ -81,7 +81,7 @@ export default function CustomizedTables() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "0" }}>
+    <Box sx={{ margin: "0" }} sm={{ marginTop: "200px" }}>
       {userLogin.userInfo.id ? (
         <>
           <TableContainer component={Paper}>
@@ -90,10 +90,7 @@ export default function CustomizedTables() {
                 <TableRow>
                   <StyledTableCell>Table no</StyledTableCell>
                   <StyledTableCell align="center">Room</StyledTableCell>
-                  <StyledTableCell align="center">
-                    Waiter/Waitress
-                  </StyledTableCell>
-
+                  <StyledTableCell align="center">Person</StyledTableCell>
                   <StyledTableCell align="center">Details</StyledTableCell>
                 </TableRow>
               </TableHead>

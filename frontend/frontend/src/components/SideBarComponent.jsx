@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { Menu, MenuItem } from "react-pro-sidebar";
 import CssBaseline from "@mui/material/CssBaseline";
 import Drawer from "@mui/material/Drawer";
@@ -14,9 +13,9 @@ import IconButton from "@mui/material/IconButton";
 import { Box } from "@mui/system";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import Apps from "@mui/icons-material/Apps";
+
 import MenuIcon from "@mui/icons-material/Menu";
-import MailIcon from "@mui/icons-material/Mail";
+
 import PeopleOutlinedIcon from "@mui/icons-material/PeopleOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
@@ -26,38 +25,12 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ListItemButton from "@mui/material/ListItemButton";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
+
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Avatar from "@mui/material/Avatar";
-import Stack from "@mui/material/Stack";
-import { deepOrange, green } from "@mui/material/colors";
-import AssignmentIcon from "@mui/icons-material/Assignment";
-import RamenDiningIcon from "@mui/icons-material/RamenDining";
+
 import { logout } from "../actions/userActions";
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
-
-// const useStyles = makeStyles((theme) => ({
-//   menuSliderContainer: {
-//     width: 250,
-//     background: "#511",
-//     height: "100%"
-//   },
-//   avatar: {
-//     margin: "0.5rem auto",
-//     padding: "1rem",
-//     width: theme.spacing(13),
-//     height: theme.spacing(13)
-//   },
-//   listItem: {
-//     color: "tan"
-//   }
-// }));
+import CircularProgress from "@mui/material/CircularProgress";
 
 const listItems = [
   {
@@ -179,7 +152,11 @@ export default function SideBarComponent() {
     </Box>
   );
 
-  return (
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <>
       <CssBaseline />
 
@@ -189,7 +166,7 @@ export default function SideBarComponent() {
             <IconButton onClick={toggleSlider}>
               <MenuIcon />
             </IconButton>
-            <Typography>Portfolio</Typography>
+            <Typography>Restaurant Dashboard</Typography>
             <Drawer open={open} anchor="left" onClose={toggleSlider}>
               {sideList()}
             </Drawer>

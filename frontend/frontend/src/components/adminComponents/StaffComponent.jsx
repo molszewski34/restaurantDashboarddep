@@ -85,7 +85,7 @@ export const StaffComponent = () => {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Accordion>
+    <Accordion style={{ margin: "0", width: "100%" }}>
       <AccordionSummary
         expandIcon={<ExpandMoreIcon />}
         aria-controls="panel1a-content"

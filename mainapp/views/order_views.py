@@ -196,7 +196,6 @@ def getAllTables(request):
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
 
-
 @api_view(['POST'])
 def createTable(request):
     data = request.data 
@@ -212,6 +211,8 @@ def createTable(request):
     )
 
     return Response("Table created")
+
+
 
 
 @api_view(['DELETE'])
