@@ -76,6 +76,7 @@ export default function Order() {
 
   const [isPaid, setIsPaid] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isDisabled, setIsDisabled] =useState(false)
 
   useEffect(() => {
     dispatch(listDishes());
@@ -105,6 +106,11 @@ export default function Order() {
   const openAndCloseMenu = async () => {
     setOpenMenu(!openMenu);
   };
+
+  const buttonHandler = () =>{
+    setIsDisabled(true)
+    setTimeout(setIsDisabled(false),800)
+  }
 
   return loading ? (
     <div>Loading</div>
@@ -182,8 +188,10 @@ export default function Order() {
                       <IconButton
                         className="changePadding"
                         aria-label="add"
+                        disabled={isDisabled}
                         onClick={() => {
                           dispatch(increaseDishQty(filteredDish, id));
+                          buttonHandler()
                         }}
                         //style={{ paddingLeft: "0", paddingRight: "0" }}
                       >
@@ -203,7 +211,8 @@ export default function Order() {
                             onClick={() => {
                               dispatch(
                                 removeFromOrder(filteredDish, id, orderDishes)
-                              );
+                              )
+                              buttonHandler();
                             }}
                             //style={{ paddingLeft: "0", paddingRight: "0" }}
                           />
