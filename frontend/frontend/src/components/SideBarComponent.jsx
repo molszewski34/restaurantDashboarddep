@@ -166,7 +166,14 @@ export default function SideBarComponent() {
             <IconButton onClick={toggleSlider}>
               <MenuIcon />
             </IconButton>
-            <Typography>Restaurant Dashboard</Typography>
+            <Link
+              style={{ textDecoration: "none", color: "white" }}
+              to="/dashboard"
+            >
+              {" "}
+              <Typography>Restaurant Dashboard</Typography>
+            </Link>
+
             <Drawer open={open} anchor="left" onClose={toggleSlider}>
               {sideList()}
             </Drawer>

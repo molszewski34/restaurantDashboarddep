@@ -76,7 +76,7 @@ export default function Order() {
 
   const [isPaid, setIsPaid] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
-  const [isDisabled, setIsDisabled] =useState(false)
+  const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
     dispatch(listDishes());
@@ -107,14 +107,14 @@ export default function Order() {
     setOpenMenu(!openMenu);
   };
 
-<<<<<<< HEAD
-  const buttonHandler = () => {};
-=======
-  const buttonHandler = () =>{
-    setIsDisabled(true)
-    setTimeout(setIsDisabled(false),800)
-  }
->>>>>>> bec7509d3e334fe615fcff131159ecd8bd1137b5
+  const buttonHandler = () => {
+    console.log("object");
+
+    console.log(isDisabled);
+    setTimeout(() => {
+      setIsDisabled(false);
+    }, 1200);
+  };
 
   return loading ? (
     <div>Loading</div>
@@ -132,6 +132,7 @@ export default function Order() {
             >
               <Item>Payment method :{orderDetails.order.paymentMethod}</Item>
               <Item
+                style={{ cursor: "pointer" }}
                 onClick={() => {
                   setOrderAsPaid(id);
                   navigate("/orders");
@@ -195,11 +196,8 @@ export default function Order() {
                         disabled={isDisabled}
                         onClick={() => {
                           dispatch(increaseDishQty(filteredDish, id));
-<<<<<<< HEAD
+                          setIsDisabled(true);
                           buttonHandler();
-=======
-                          buttonHandler()
->>>>>>> bec7509d3e334fe615fcff131159ecd8bd1137b5
                         }}
                         //style={{ paddingLeft: "0", paddingRight: "0" }}
                       >
@@ -208,6 +206,7 @@ export default function Order() {
                       {filteredDish.qty}
 
                       <IconButton
+                        disabled={isDisabled}
                         className="changePadding"
                         //style={{ paddingLeft: "0", paddingRight: "0" }}
                         aria-label="delete"
@@ -216,19 +215,24 @@ export default function Order() {
                         {filteredDish.qty > 1 ? (
                           <RemoveIcon
                             className="changePadding"
+                            disabled={isDisabled}
                             onClick={() => {
                               dispatch(
                                 removeFromOrder(filteredDish, id, orderDishes)
-                              )
+                              );
+                              setIsDisabled(true);
                               buttonHandler();
                             }}
                             //style={{ paddingLeft: "0", paddingRight: "0" }}
                           />
                         ) : (
                           <DeleteOutlineIcon
+                            disabled={isDisabled}
                             onClick={() => {
                               dispatch(deleteFromOrder(filteredDish, id));
                               dispatch(listOrderDishes(id));
+                              setIsDisabled(true);
+                              buttonHandler();
                             }}
                           />
                         )}

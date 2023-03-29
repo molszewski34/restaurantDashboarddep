@@ -72,7 +72,7 @@ export default function Tables() {
   }, []);
 
   const addOrderHandler = (id) => {
-    dispatch(createOrder(id));
+    dispatch(createOrder(id, orders));
   };
 
   return loading ? (
@@ -124,9 +124,6 @@ export default function Tables() {
                                 key={filteredOrder.id}
                                 component="button"
                                 to={`/orders/order/${filteredOrder.id}`}
-                                onClick={() => {
-                                  console.log("Clicked");
-                                }}
                               >
                                 <Button variant="contained">details</Button>
                               </LinkContainer>
@@ -136,7 +133,7 @@ export default function Tables() {
                         <Button
                           variant="contained"
                           onClick={() => {
-                            addOrderHandler(table.id);
+                            addOrderHandler(table.id, orders);
                           }}
                         >
                           add
