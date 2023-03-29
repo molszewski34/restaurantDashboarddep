@@ -106,6 +106,8 @@ export default function Order() {
     setOpenMenu(!openMenu);
   };
 
+  const buttonHandler = () => {};
+
   return loading ? (
     <div>Loading</div>
   ) : error ? (
@@ -184,6 +186,7 @@ export default function Order() {
                         aria-label="add"
                         onClick={() => {
                           dispatch(increaseDishQty(filteredDish, id));
+                          buttonHandler();
                         }}
                         //style={{ paddingLeft: "0", paddingRight: "0" }}
                       >
