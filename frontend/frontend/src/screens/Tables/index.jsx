@@ -80,7 +80,7 @@ export default function Tables() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <div sx={{ maxwidth: 1024 }}>
+    <div style={{ margin: "15px auto", maxWidth: "1366px" }}>
       {userLogin.userInfo.id ? (
         <Box sx={{ margin: "0" }}>
           <TableContainer component={Paper}>

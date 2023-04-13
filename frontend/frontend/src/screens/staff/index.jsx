@@ -75,7 +75,10 @@ export default function Staff() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "0" }}>
+    <Box
+      style={{ margin: "15px auto", maxWidth: "1366px" }}
+      sx={{ margin: "0" }}
+    >
       {userLogin.userInfo.id ? (
         <>
           {" "}

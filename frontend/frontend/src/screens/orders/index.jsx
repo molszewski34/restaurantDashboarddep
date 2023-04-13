@@ -81,7 +81,10 @@ export default function CustomizedTables() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "0" }} sm={{ marginTop: "200px" }}>
+    <Box
+      sx={{ margin: "15px auto", maxWidth: "1366px" }}
+      sm={{ marginTop: "200px" }}
+    >
       {userLogin.userInfo.id ? (
         <>
           <TableContainer component={Paper}>

@@ -27,29 +27,29 @@ export default function Admin() {
   const userList = useSelector((state) => state.userList);
   const { error, loading, users } = userList;
 
-  const orderList = useSelector((state) => state.orderList);
-  const {
-    error: orderListError,
-    loading: orderListLoading,
-    orders,
-  } = orderList;
+  // const orderList = useSelector((state) => state.orderList);
+  // const {
+  //   error: orderListError,
+  //   loading: orderListLoading,
+  //   orders,
+  // } = orderList;
 
-  const tableList = useSelector((state) => state.tableList);
-  const {
-    error: tableListError,
-    loading: tableListLoading,
-    tables,
-  } = tableList;
+  // const tableList = useSelector((state) => state.tableList);
+  // const {
+  //   error: tableListError,
+  //   loading: tableListLoading,
+  //   tables,
+  // } = tableList;
 
-  const roomsList = useSelector((state) => state.roomsList);
-  const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
+  // const roomsList = useSelector((state) => state.roomsList);
+  // const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
 
-  const employeeList = useSelector((state) => state.employeeList);
-  const {
-    error: employeeListError,
-    loadng: employeeListLoading,
-    employees,
-  } = employeeList;
+  // const employeeList = useSelector((state) => state.employeeList);
+  // const {
+  //   error: employeeListError,
+  //   loadng: employeeListLoading,
+  //   employees,
+  // } = employeeList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const {
@@ -58,10 +58,10 @@ export default function Admin() {
     userInfo,
   } = userLogin;
 
-  const [roomName, setroomName] = React.useState("");
-  const handleChange = (event) => {
-    setroomName(event.target.value);
-  };
+  // const [roomName, setroomName] = React.useState("");
+  // const handleChange = (event) => {
+  //   setroomName(event.target.value);
+  // };
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -76,7 +76,7 @@ export default function Admin() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "0" }}>
+    <Box sx={{ margin: "15px auto", maxWidth: "1366px" }}>
       {userLogin.userInfo.id ? (
         <>
           <StaffComponent />
