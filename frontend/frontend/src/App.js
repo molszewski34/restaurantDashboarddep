@@ -11,10 +11,8 @@ import Admin from "./screens/admin";
 import Order from "./screens/order";
 import Login from "./screens/login";
 import Staff from "./screens/staff";
-
-import MenuSidebar from "./components/MenuSidebar";
-import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import SideBarComponent from "./components/SideBarComponent";
+import Invoices from "./screens/invoices";
 
 const darkTheme = createTheme({
   palette: {
@@ -41,6 +39,8 @@ function App() {
               <Route path="/orders" element={<Orders />} />
               <Route path="orders/order/:id" element={<Order />} />
               <Route path="/staff" element={<Staff />} />
+              <Route path="/invoices" element={<Invoices />} />
+
               <Route path="/admin-panel" element={<Admin />} />
               <Route path="/login" element={<Login />} />
             </Routes>

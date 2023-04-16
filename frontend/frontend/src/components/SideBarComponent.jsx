@@ -25,6 +25,7 @@ import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ListItemButton from "@mui/material/ListItemButton";
+import ReceiptIcon from "@mui/icons-material/Receipt";
 
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -52,6 +53,11 @@ const listItems = [
     listIcon: <PeopleOutlinedIcon />,
     listText: "Staff",
     to: "/staff",
+  },
+  {
+    listIcon: <ReceiptIcon />,
+    listText: "Invoices",
+    to: "/invoices",
   },
   {
     listIcon: <AdminPanelSettingsIcon />,

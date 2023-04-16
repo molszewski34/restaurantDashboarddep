@@ -121,7 +121,7 @@ export default function Order() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "20px 5px 0 5px" }}>
+    <Box sx={{ margin: "20px auto 5px", maxWidth: "1366px" }}>
       {userLogin.userInfo.id ? (
         <>
           <Box>
