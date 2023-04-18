@@ -3,7 +3,7 @@ import * as React from "react";
 import { listTables, listRooms } from "../../actions/tablesActions";
 import { getUsers } from "../../actions/userActions";
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { styled } from "@mui/material/styles";
@@ -19,9 +19,18 @@ import Button from "@mui/material/Button";
 import { LinkContainer } from "react-router-bootstrap";
 import "@fontsource/public-sans";
 import CircularProgress from "@mui/material/CircularProgress";
+import Stack from "@mui/material/Stack";
 
 import { listOrders } from "../../actions/ordersActions";
 import { LoginMessageComponent } from "../../components/LoginMessageComponent";
+
+const Item = styled(Paper)(({ theme }) => ({
+  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
+  ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: "center",
+  color: theme.palette.text.secondary,
+}));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -69,6 +78,8 @@ export default function CustomizedTables() {
     userInfo,
   } = userLogin;
 
+  const [openPastOrders, setOpenPastOrders] = useState(false);
+
   useEffect(() => {
     dispatch(getUsers());
     dispatch(listOrders());
@@ -87,6 +98,21 @@ export default function CustomizedTables() {
     >
       {userLogin.userInfo.id ? (
         <>
+          <Stack
+            direction={{ xs: "column", sm: "row" }}
+            spacing={{ xs: 1, sm: 2, md: 4 }}
+            sx={{ margin: "25px 15px 10px 15px" }}
+          >
+            <Item
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                console.log("past");
+                setOpenPastOrders(!openPastOrders);
+              }}
+            >
+              {openPastOrders ? "Current orders" : "Past orders"}
+            </Item>
+          </Stack>
           <TableContainer component={Paper}>
             <Table aria-label="customized table">
               <TableHead>
@@ -98,60 +124,64 @@ export default function CustomizedTables() {
                 </TableRow>
               </TableHead>
 
-              <TableBody>
-                {orders.map((order) => (
-                  <StyledTableRow key={order.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {order.table}
-                    </StyledTableCell>
-                    <StyledTableCell align="center">
-                      {tables
-                        .filter((table) => table.id == order.table)
-                        .map((filteredTable) => (
-                          <div key={filteredTable.id}>
-                            {" "}
-                            {rooms
-                              .filter((room) => room.id == filteredTable.room)
-                              .map((filteredRoom) => (
-                                <div key={filteredRoom.id}>
-                                  {filteredRoom.name}
-                                </div>
-                              ))}
-                          </div>
-                        ))}
-                    </StyledTableCell>
-                    {users ? (
+              {openPastOrders ? (
+                <div>past orders</div>
+              ) : (
+                <TableBody>
+                  {orders.map((order) => (
+                    <StyledTableRow key={order.id}>
+                      <StyledTableCell component="th" scope="row">
+                        {order.table}
+                      </StyledTableCell>
                       <StyledTableCell align="center">
-                        {" "}
-                        {users
-                          .filter((user) => user.id == order.user)
-                          .map((filteredUsers) => (
-                            <div key={filteredUsers.id}>
-                              {filteredUsers.first_name}
+                        {tables
+                          .filter((table) => table.id == order.table)
+                          .map((filteredTable) => (
+                            <div key={filteredTable.id}>
+                              {" "}
+                              {rooms
+                                .filter((room) => room.id == filteredTable.room)
+                                .map((filteredRoom) => (
+                                  <div key={filteredRoom.id}>
+                                    {filteredRoom.name}
+                                  </div>
+                                ))}
                             </div>
                           ))}
                       </StyledTableCell>
-                    ) : (
-                      <div>name</div>
-                    )}
+                      {users ? (
+                        <StyledTableCell align="center">
+                          {" "}
+                          {users
+                            .filter((user) => user.id == order.user)
+                            .map((filteredUsers) => (
+                              <div key={filteredUsers.id}>
+                                {filteredUsers.first_name}
+                              </div>
+                            ))}
+                        </StyledTableCell>
+                      ) : (
+                        <div>name</div>
+                      )}
 
-                    <StyledTableCell
-                      style={{ cursor: "pointer" }}
-                      align="center"
-                    >
-                      <LinkContainer
-                        component="button"
-                        to={`order/${order.id}`}
-                        onClick={() => {
-                          console.log("Clicked");
-                        }}
+                      <StyledTableCell
+                        style={{ cursor: "pointer" }}
+                        align="center"
                       >
-                        <Button variant="contained">details</Button>
-                      </LinkContainer>
-                    </StyledTableCell>
-                  </StyledTableRow>
-                ))}
-              </TableBody>
+                        <LinkContainer
+                          component="button"
+                          to={`order/${order.id}`}
+                          onClick={() => {
+                            console.log("Clicked");
+                          }}
+                        >
+                          <Button variant="contained">details</Button>
+                        </LinkContainer>
+                      </StyledTableCell>
+                    </StyledTableRow>
+                  ))}
+                </TableBody>
+              )}
             </Table>
           </TableContainer>
         </>

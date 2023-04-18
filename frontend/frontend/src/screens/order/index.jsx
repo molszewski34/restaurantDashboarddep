@@ -108,8 +108,6 @@ export default function Order() {
   };
 
   const buttonHandler = () => {
-    console.log("object");
-
     console.log(isDisabled);
     setTimeout(() => {
       setIsDisabled(false);
@@ -185,11 +183,7 @@ export default function Order() {
                         ))}
                     </TableCell>
 
-                    <TableCell
-                      className="changePadding"
-                      align="center"
-                      //style={{ paddingLeft: "0", paddingRight: "0" }}
-                    >
+                    <TableCell className="changePadding" align="center">
                       <IconButton
                         className="changePadding"
                         aria-label="add"
@@ -199,7 +193,6 @@ export default function Order() {
                           setIsDisabled(true);
                           buttonHandler();
                         }}
-                        //style={{ paddingLeft: "0", paddingRight: "0" }}
                       >
                         <AddIcon />
                       </IconButton>
@@ -208,7 +201,6 @@ export default function Order() {
                       <IconButton
                         disabled={isDisabled}
                         className="changePadding"
-                        //style={{ paddingLeft: "0", paddingRight: "0" }}
                         aria-label="delete"
                       >
                         {" "}
@@ -223,7 +215,6 @@ export default function Order() {
                               setIsDisabled(true);
                               buttonHandler();
                             }}
-                            //style={{ paddingLeft: "0", paddingRight: "0" }}
                           />
                         ) : (
                           <DeleteOutlineIcon

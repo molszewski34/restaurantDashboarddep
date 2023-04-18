@@ -12,6 +12,7 @@ import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
+  PAST_ORDERS_LIST_SUCESS,
 } from "../constants/orderConstants";
 import axios from "axios";
 
@@ -42,7 +43,7 @@ export const createOrder = (id, orders) => async (dispatch, getState) => {
       payload: data,
     });
 
-    window.location.reload();
+    // window.location.reload();
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
@@ -64,6 +65,11 @@ export const listOrders = () => async (dispatch) => {
       type: ORDER_LIST_SUCCESS,
       payload: data,
     });
+
+    dispatch({
+      type: PAST_ORDERS_LIST_SUCESS,
+      payload: data,
+    });
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAIL,
@@ -73,6 +79,11 @@ export const listOrders = () => async (dispatch) => {
           : error.message,
     });
   }
+};
+
+export const listPastOrders = () => async (dispatch) => {
+  try {
+  } catch (error) {}
 };
 
 export const getOrderDetails = (id) => async (dispatch) => {

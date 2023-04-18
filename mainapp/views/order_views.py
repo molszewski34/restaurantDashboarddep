@@ -53,21 +53,17 @@ def getOrderById(request,pk):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated])
 def updateOrder(request,pk):
-   
     data= request.data
-   
     order = Order.objects.get(id=pk)
-    user = request.user
     table = order.table
-      
-    
-       
+          
     table.isOccupied = False
     table.save()
     order.isPaid = data['body']['isPaid']
-    
+    order.table = None
+    order.save()
     print( order.isPaid)
-    order.delete()
+ 
         
        
 
@@ -174,10 +170,16 @@ def removeDishFromOrder(request,pk):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])
 def getOrders(request):
-    orders = Order.objects.all()
-    print(orders)
- 
+
+    orders = Order.objects.all().filter(table__isnull = False)
     serializer= OrderSerializer(orders, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getOldOrders(request):
+    oldORders = Order.objects.all().filter(table__isnull = True)
+    serializer= OrderSerializer(oldORders, many=True)
     return Response(serializer.data)
 
 

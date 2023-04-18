@@ -24,7 +24,7 @@ class Room(models.Model):
 class Table(models.Model):
     
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
-    tableNumber = models.IntegerField(null=False, blank=False)
+    tableNumber = models.IntegerField(null=True, blank=False)
     numberOfPersons = models.IntegerField(null=False, blank=False, default =2)
     isOccupied = models.BooleanField(null=False, blank=False, default=False)
     

@@ -9,6 +9,7 @@ urlpatterns = [
     path('get-tables', views.getAllTables, name="get-tables"),
     path('order/dishes/get-categories', dshviews.getDishCategories, name="get-categories-dsh"),
     path('create-new-table', views.createTable, name="create-new-table"),
+    path('past-orders', views.getOldOrders, name="past-orders"),
 
     
     path('add-dish-to-order',views.addDishToOrder, name="add-dish-to-order" ),
