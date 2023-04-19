@@ -24,6 +24,8 @@ import Stack from "@mui/material/Stack";
 import { listOrders } from "../../actions/ordersActions";
 import { LoginMessageComponent } from "../../components/LoginMessageComponent";
 
+import "../../css/orders.css";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -96,6 +98,9 @@ export default function CustomizedTables() {
       sx={{ margin: "15px auto", maxWidth: "1366px" }}
       sm={{ marginTop: "200px" }}
     >
+      <div>
+        <h1>Orders</h1>
+      </div>
       {userLogin.userInfo.id ? (
         <>
           <Stack
@@ -104,16 +109,30 @@ export default function CustomizedTables() {
             sx={{ margin: "25px 15px 10px 15px" }}
           >
             <Item
-              style={{ cursor: "pointer" }}
+              style={{
+                cursor: "pointer",
+                backgroundColor: openPastOrders ? "#1A2027" : "green",
+              }}
               onClick={() => {
-                console.log("past");
-                setOpenPastOrders(!openPastOrders);
+                setOpenPastOrders(false);
               }}
             >
-              {openPastOrders ? "Current orders" : "Past orders"}
+              Current orders
+            </Item>
+
+            <Item
+              style={{
+                cursor: "pointer",
+                backgroundColor: openPastOrders ? "green" : "#1A2027",
+              }}
+              onClick={() => {
+                setOpenPastOrders(true);
+              }}
+            >
+              Past orders
             </Item>
           </Stack>
-          <TableContainer component={Paper}>
+          <TableContainer className="orders-container" component={Paper}>
             <Table aria-label="customized table">
               <TableHead>
                 <TableRow>
