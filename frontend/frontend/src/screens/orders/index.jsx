@@ -21,10 +21,8 @@ import "@fontsource/public-sans";
 import CircularProgress from "@mui/material/CircularProgress";
 import Stack from "@mui/material/Stack";
 
-import { listOrders } from "../../actions/ordersActions";
+import { listOrders, listPastOrders } from "../../actions/ordersActions";
 import { LoginMessageComponent } from "../../components/LoginMessageComponent";
-
-import "../../css/orders.css";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -59,6 +57,13 @@ export default function CustomizedTables() {
 
   const orderList = useSelector((state) => state.orderList);
   const { error, loading, orders } = orderList;
+
+  const pastOrdersList = useSelector((state) => state.pastOrdersList);
+  const {
+    error: pastOrdersListError,
+    loading: pastOrdersListLoading,
+    pastOrders,
+  } = pastOrdersList;
 
   const userList = useSelector((state) => state.userList);
   const { error: userListError, loading: userListloading, users } = userList;
@@ -127,24 +132,91 @@ export default function CustomizedTables() {
               }}
               onClick={() => {
                 setOpenPastOrders(true);
+                dispatch(listPastOrders());
               }}
             >
               Past orders
             </Item>
           </Stack>
+
           <TableContainer className="orders-container" component={Paper}>
             <Table aria-label="customized table">
-              <TableHead>
-                <TableRow>
-                  <StyledTableCell>Table no</StyledTableCell>
-                  <StyledTableCell align="center">Room</StyledTableCell>
-                  <StyledTableCell align="center">Person</StyledTableCell>
-                  <StyledTableCell align="center">Details</StyledTableCell>
-                </TableRow>
-              </TableHead>
+              {openPastOrders ? (
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Waiter</StyledTableCell>
+                    <StyledTableCell align="center">
+                      Total price
+                    </StyledTableCell>
+                    <StyledTableCell align="center">Payment</StyledTableCell>
+                    <StyledTableCell align="center">shipping</StyledTableCell>
+                    <StyledTableCell align="right">Date</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+              ) : (
+                <TableHead>
+                  <TableRow>
+                    <StyledTableCell>Table no</StyledTableCell>
+                    <StyledTableCell align="center">Room</StyledTableCell>
+                    <StyledTableCell align="center">Person</StyledTableCell>
+                    <StyledTableCell align="center">Details</StyledTableCell>
+                  </TableRow>
+                </TableHead>
+              )}
 
               {openPastOrders ? (
-                <div>past orders</div>
+                <>
+                  {pastOrders ? (
+                    <TableBody>
+                      {pastOrders.map((order) => (
+                        <StyledTableRow key={order.id}>
+                          {users ? (
+                            <StyledTableCell align="left">
+                              {" "}
+                              {users
+                                .filter((user) => user.id == order.user)
+                                .map((filteredUsers) => (
+                                  <div key={filteredUsers.id}>
+                                    {filteredUsers.first_name}
+                                  </div>
+                                ))}
+                            </StyledTableCell>
+                          ) : (
+                            <div>name</div>
+                          )}
+
+                          <StyledTableCell
+                            align="center"
+                            component="th"
+                            scope="row"
+                          >
+                            {order.totalPrice}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="center"
+                            component="th"
+                            scope="row"
+                          >
+                            {order.paymentMethod}
+                          </StyledTableCell>
+                          <StyledTableCell
+                            align="center"
+                            component="th"
+                            scope="row"
+                          >
+                            {order.shipping}
+                          </StyledTableCell>
+
+                          <StyledTableCell align="right">
+                            {order.createdAt.toString().slice(0, 10)}
+                          </StyledTableCell>
+                        </StyledTableRow>
+                      ))}
+                    </TableBody>
+                  ) : (
+                    <CircularProgress color="secondary" />
+                  )}
+                </>
               ) : (
                 <TableBody>
                   {orders.map((order) => (

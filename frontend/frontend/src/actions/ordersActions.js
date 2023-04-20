@@ -12,13 +12,14 @@ import {
   ORDER_CREATE_REQUEST,
   ORDER_CREATE_SUCCESS,
   ORDER_CREATE_FAIL,
-  PAST_ORDERS_LIST_SUCESS,
+  PAST_ORDERS_LIST_SUCCESS,
+  PAST_ORDERS_LIST_REQUEST,
+  PAST_ORDERS_LIST_FAIL,
 } from "../constants/orderConstants";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const createOrder = (id, orders) => async (dispatch, getState) => {
-  console.log(orders);
-
   try {
     dispatch({
       type: ORDER_CREATE_REQUEST,
@@ -44,6 +45,9 @@ export const createOrder = (id, orders) => async (dispatch, getState) => {
     });
 
     // window.location.reload();
+    console.log(window.location.hostname);
+
+    window.location.href = `/#/orders/order/${data.id}`;
   } catch (error) {
     dispatch({
       type: ORDER_CREATE_FAIL,
@@ -65,11 +69,6 @@ export const listOrders = () => async (dispatch) => {
       type: ORDER_LIST_SUCCESS,
       payload: data,
     });
-
-    dispatch({
-      type: PAST_ORDERS_LIST_SUCESS,
-      payload: data,
-    });
   } catch (error) {
     dispatch({
       type: ORDER_LIST_FAIL,
@@ -83,7 +82,24 @@ export const listOrders = () => async (dispatch) => {
 
 export const listPastOrders = () => async (dispatch) => {
   try {
-  } catch (error) {}
+    dispatch({
+      type: PAST_ORDERS_LIST_REQUEST,
+    });
+
+    const { data } = await axios.get("/orders/past-orders");
+    dispatch({
+      type: PAST_ORDERS_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PAST_ORDERS_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
 };
 
 export const getOrderDetails = (id) => async (dispatch) => {

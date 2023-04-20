@@ -3,7 +3,11 @@ import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { dishListReducer, orderDishReducer } from "./reducers/dishReducers";
 import { categoriesListReducer } from "./reducers/categoriesReducers";
-import { orderListReducer, orderDetailReducer } from "./reducers/orderReducers";
+import {
+  orderListReducer,
+  orderDetailReducer,
+  pastOrdersListReducer,
+} from "./reducers/orderReducers";
 import { listTablesReducer, listRoomsReducer } from "./reducers/tablesReducers";
 import {
   userLoginReducer,
@@ -22,6 +26,7 @@ const reducer = combineReducers({
   userLogin: userLoginReducer,
   userList: userListReducer,
   employeeList: employeeListReducer,
+  pastOrdersList: pastOrdersListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

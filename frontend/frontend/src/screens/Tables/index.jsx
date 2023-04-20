@@ -73,6 +73,7 @@ export default function Tables() {
 
   const addOrderHandler = (id) => {
     dispatch(createOrder(id, orders));
+    console.log("Moment after dispatch");
   };
 
   return loading ? (

@@ -6,7 +6,9 @@ import {
   ORDER_DETAILS_SUCCESS,
   ORDER_DETAILS_FAIL,
   ORDER_CREATE_SUCCESS,
-  PAST_ORDERS_LIST_SUCESS,
+  PAST_ORDERS_LIST_REQUEST,
+  PAST_ORDERS_LIST_SUCCESS,
+  PAST_ORDERS_LIST_FAIL,
 } from "../constants/orderConstants";
 
 export const orderListReducer = (state = { orders: [] }, action) => {
@@ -21,11 +23,6 @@ export const orderListReducer = (state = { orders: [] }, action) => {
         orders: action.payload,
       };
 
-    case PAST_ORDERS_LIST_SUCESS:
-      return {
-        loading: false,
-        orders: action.payload,
-      };
     case ORDER_LIST_FAIL:
       return {
         loading: false,
@@ -37,6 +34,29 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       return {
         loading: false,
         orders: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const pastOrdersListReducer = (state = { pastOrders: [] }, action) => {
+  switch (action.type) {
+    case PAST_ORDERS_LIST_REQUEST:
+      return {
+        loading: true,
+      };
+    case PAST_ORDERS_LIST_SUCCESS:
+      return {
+        loading: false,
+        pastOrders: action.payload,
+      };
+
+    case PAST_ORDERS_LIST_FAIL:
+      return {
+        loading: false,
+        pastOrders: action.payload,
       };
 
     default:
