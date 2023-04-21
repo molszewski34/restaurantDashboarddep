@@ -123,7 +123,7 @@ export default function SideBarComponent() {
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>
-              <Link to="/dashboard" style={{ textDecoration: "none" }}>
+              <Link to="/invite" style={{ textDecoration: "none" }}>
                 <ListItemText
                   style={{
                     textDecoration: "none",
@@ -174,7 +174,7 @@ export default function SideBarComponent() {
             </IconButton>
             <Link
               style={{ textDecoration: "none", color: "white" }}
-              to="/dashboard"
+              to="/invite"
             >
               {" "}
               <Typography>Restaurant Dashboard</Typography>

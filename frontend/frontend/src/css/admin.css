@@ -1,0 +1,14 @@
+.admin-main {
+  white-space: nowrap;
+  overflow: auto;
+  color: bisque;
+}
+
+.admin-button-mobile {
+  background: none;
+  color: grey;
+  border: none;
+  font-size: 1.2rem;
+  margin-right: 10px;
+  cursor: pointer;
+}

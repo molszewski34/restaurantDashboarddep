@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 
 import { listTables, listRooms } from "../../actions/tablesActions";
 import { getUsers, getEmployees } from "../../actions/userActions";
@@ -17,6 +18,28 @@ import { TablesComponent } from "../../components/adminComponents/TablesComponen
 import { StaffComponent } from "../../components/adminComponents/StaffComponent";
 import { MenuComponent } from "../../components/adminComponents/MenuComponent";
 import { LoginMessageComponent } from "../../components/LoginMessageComponent";
+import { SalesComponent } from "../../components/adminComponents/SalesComponent";
+
+import styled from "styled-components";
+import "../../css/admin.css";
+
+const Button = styled.button``;
+
+const ButtonToggle = styled(Button)`
+  ${({ active }) =>
+    active &&
+    `
+  
+  
+  font-size: 1.6rem;
+  margin-right:25px;
+  color:bisque
+  
+  
+  `}
+`;
+
+const menuItems = ["Sales", "Staff", "Rooms management", "Menu Management"];
 
 export default function Admin() {
   let location = useLocation();
@@ -27,30 +50,6 @@ export default function Admin() {
   const userList = useSelector((state) => state.userList);
   const { error, loading, users } = userList;
 
-  // const orderList = useSelector((state) => state.orderList);
-  // const {
-  //   error: orderListError,
-  //   loading: orderListLoading,
-  //   orders,
-  // } = orderList;
-
-  // const tableList = useSelector((state) => state.tableList);
-  // const {
-  //   error: tableListError,
-  //   loading: tableListLoading,
-  //   tables,
-  // } = tableList;
-
-  // const roomsList = useSelector((state) => state.roomsList);
-  // const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
-
-  // const employeeList = useSelector((state) => state.employeeList);
-  // const {
-  //   error: employeeListError,
-  //   loadng: employeeListLoading,
-  //   employees,
-  // } = employeeList;
-
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -58,10 +57,7 @@ export default function Admin() {
     userInfo,
   } = userLogin;
 
-  // const [roomName, setroomName] = React.useState("");
-  // const handleChange = (event) => {
-  //   setroomName(event.target.value);
-  // };
+  const [active, setActive] = useState(menuItems[0]);
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -76,12 +72,31 @@ export default function Admin() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "15px auto", maxWidth: "1366px" }}>
+    <Box sx={{ margin: "15px auto" }}>
+      <div>
+        <h1>Admin Panel</h1>
+      </div>
       {userLogin.userInfo.id ? (
         <>
-          <StaffComponent />
+          <div className="admin-main">
+            {menuItems.map((item) => (
+              <ButtonToggle
+                key={item}
+                className="admin-button-mobile"
+                active={active === item}
+                onClick={() => {
+                  setActive(item);
+                  console.log("dupa");
+                }}
+              >
+                {item}
+              </ButtonToggle>
+            ))}
+          </div>
+
+          {/* <StaffComponent />
           <TablesComponent />
-          <MenuComponent />
+          <MenuComponent /> */}
         </>
       ) : (
         <LoginMessageComponent />

@@ -79,6 +79,9 @@ export default function Staff() {
       style={{ margin: "15px auto", maxWidth: "1366px" }}
       sx={{ margin: "0" }}
     >
+      <div>
+        <h1>Staff</h1>
+      </div>
       {userLogin.userInfo.id ? (
         <>
           {" "}

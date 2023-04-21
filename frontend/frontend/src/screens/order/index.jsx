@@ -120,6 +120,9 @@ export default function Order() {
     <div>Something went wrong</div>
   ) : (
     <Box sx={{ margin: "20px auto 5px", maxWidth: "1366px" }}>
+      <div>
+        <h1>Order</h1>
+      </div>
       {userLogin.userInfo.id ? (
         <>
           <Box>

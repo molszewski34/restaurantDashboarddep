@@ -13,6 +13,8 @@ import Login from "./screens/login";
 import Staff from "./screens/staff";
 import SideBarComponent from "./components/SideBarComponent";
 import Invoices from "./screens/invoices";
+import Invite from "./screens/invite";
+import { red, purple } from "@mui/material/colors";
 
 const darkTheme = createTheme({
   palette: {
@@ -28,8 +30,6 @@ function App() {
         <div id="app" style={({ height: "100vh" }, { display: "flex" })}>
           <SideBarComponent />
           <main className="content" style={{ marginTop: "50px" }}>
-            {/* <ResponsiveAppBar /> */}
-
             <Routes>
               <Route element={<Dashboard />} path="/" />
 
@@ -40,6 +40,7 @@ function App() {
               <Route path="orders/order/:id" element={<Order />} />
               <Route path="/staff" element={<Staff />} />
               <Route path="/invoices" element={<Invoices />} />
+              <Route path="/invite" element={<Invite />} />
 
               <Route path="/admin-panel" element={<Admin />} />
               <Route path="/login" element={<Login />} />

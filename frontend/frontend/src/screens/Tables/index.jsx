@@ -82,6 +82,9 @@ export default function Tables() {
     <div>Something went wrong</div>
   ) : (
     <div style={{ margin: "15px auto", maxWidth: "1366px" }}>
+      <div>
+        <h1>Tables</h1>
+      </div>
       {userLogin.userInfo.id ? (
         <Box sx={{ margin: "0" }}>
           <TableContainer component={Paper}>
