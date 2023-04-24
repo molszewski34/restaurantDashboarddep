@@ -39,7 +39,12 @@ const ButtonToggle = styled(Button)`
   `}
 `;
 
-const menuItems = ["Sales", "Staff", "Rooms management", "Menu Management"];
+const menuItems = [
+  { title: "Sales", component: <SalesComponent /> },
+  { title: "Staff", component: <SalesComponent /> },
+  { title: "Rooms management", component: <SalesComponent /> },
+  { title: "Menu Management", component: <SalesComponent /> },
+];
 
 export default function Admin() {
   let location = useLocation();
@@ -58,6 +63,7 @@ export default function Admin() {
   } = userLogin;
 
   const [active, setActive] = useState(menuItems[0]);
+  console.log(active);
 
   useEffect(() => {
     dispatch(getEmployees());
@@ -79,19 +85,28 @@ export default function Admin() {
       {userLogin.userInfo.id ? (
         <>
           <div className="admin-main">
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <ButtonToggle
-                key={item}
+                key={index}
                 className="admin-button-mobile"
-                active={active === item}
+                active={active === item.title}
                 onClick={() => {
-                  setActive(item);
-                  console.log("dupa");
+                  setActive(item.title);
+                  console.log(active);
                 }}
               >
-                {item}
+                {item.title}
               </ButtonToggle>
             ))}
+          </div>
+
+          <div>
+            {" "}
+            {active.title === undefined ? (
+              <div>{active}</div>
+            ) : (
+              <div>{active.title}</div>
+            )}
           </div>
 
           {/* <StaffComponent />
