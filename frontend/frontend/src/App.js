@@ -11,6 +11,7 @@ import Admin from "./screens/admin";
 import Order from "./screens/order";
 import Login from "./screens/login";
 import Staff from "./screens/staff";
+import OrderNew from "./screens/orderNew";
 import SideBarComponent from "./components/SideBarComponent";
 import Invoices from "./screens/invoices";
 import Invite from "./screens/invite";
@@ -41,6 +42,7 @@ function App() {
               <Route path="/staff" element={<Staff />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/invite" element={<Invite />} />
+              <Route path="/ordernew" element={<OrderNew />} />
 
               <Route path="/admin-panel" element={<Admin />} />
               <Route path="/login" element={<Login />} />

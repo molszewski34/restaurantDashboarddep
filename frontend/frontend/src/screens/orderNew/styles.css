@@ -1,0 +1,17 @@
+.order-new {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100vw;
+  height: 90vh;
+  background-color: grey;
+}
+
+.order,
+.dish {
+  display: block;
+  width: 45%;
+  height: 100%;
+  background-color: darkgrey;
+}
