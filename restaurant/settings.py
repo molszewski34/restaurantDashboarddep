@@ -34,24 +34,16 @@ INSTALLED_APPS = [
     
 ]
 
+
+
 REST_FRAMEWORK = {
-
-    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
         
-    #     'rest_framework_simplejwt.authentication.JWTAuthentication',
-    # )
-
-
-     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.SessionAuthentication',
-        'rest_framework.authentication.BasicAuthentication'
-    ),
-    'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny',
-    ),
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
     
 }
-
 
 from datetime import timedelta
 ...
@@ -122,17 +114,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'restaurant.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 
 

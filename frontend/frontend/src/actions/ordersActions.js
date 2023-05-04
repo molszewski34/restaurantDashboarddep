@@ -44,9 +44,6 @@ export const createOrder = (id, orders) => async (dispatch, getState) => {
       payload: data,
     });
 
-    // window.location.reload();
-    console.log(window.location.hostname);
-
     window.location.href = `/#/orders/order/${data.id}`;
   } catch (error) {
     dispatch({

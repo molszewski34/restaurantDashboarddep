@@ -41,10 +41,13 @@ def getUserProfile(request):
 
 
 @api_view(['GET'])
+#@permission_classes([IsAuthenticated])
 def getUsers(request):
-    
+    user = request.user
+    print("USER:", user)
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
+    print("Lópa")
    
     return Response(serializer.data)
 

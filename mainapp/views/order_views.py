@@ -186,6 +186,7 @@ def getOldOrders(request):
 #get all Rooms
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getAllRooms(request):
     rooms = Room.objects.all()
     serializer = RoomSerializer(rooms, many=True)
@@ -193,12 +194,14 @@ def getAllRooms(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getAllTables(request):
     tables = Table.objects.all()
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
 
 @api_view(['POST'])
+@permission_classes([IsAdminUser])
 def createTable(request):
     data = request.data 
     requestedRoom = Room.objects.filter(id=data['body']['tableData']['room']['id'])

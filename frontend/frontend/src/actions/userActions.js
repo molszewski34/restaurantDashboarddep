@@ -96,7 +96,15 @@ export const getUsers = () => async (dispatch) => {
       type: USER_LIST_REQUEST,
     });
 
-    const { data } = await axios.get(`/user/users/`);
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const { data } = await axios.get(`/user/users/`, config);
 
     dispatch({
       type: USER_LIST_SUCCESS,

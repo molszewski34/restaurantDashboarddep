@@ -13,12 +13,25 @@ import {
 
 import axios from "axios";
 
+// ================= Get list of tables in restaurant ===========
+
 export const listTables = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("/orders/get-tables");
     dispatch({
       type: TABLES_LIST_REQUEST,
     });
+
+    // ================= JWT Authorization data ===========
+
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const { data } = await axios.get("/orders/get-tables", config);
 
     dispatch({
       type: TABLES_LIST_SUCCESS,
@@ -35,12 +48,25 @@ export const listTables = () => async (dispatch) => {
   }
 };
 
+// ================= Get list of rooms in restaurant ===========
+
 export const listRooms = () => async (dispatch) => {
   try {
-    const { data } = await axios.get("/orders/get-rooms");
     dispatch({
       type: ROOMS_LIST_REQUEST,
     });
+
+    // ================= JWT Authorization data ===========
+
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const { data } = await axios.get("/orders/get-rooms", config);
 
     dispatch({
       type: ROOMS_LIST_SUCCESS,
@@ -57,6 +83,7 @@ export const listRooms = () => async (dispatch) => {
   }
 };
 
+// ================= Create new table in restaurant ===========
 export const createNewTable =
   (room, numberOfPersons, tables, rooms) => async (dispatch) => {
     function findTableRoom(tableRoom) {
@@ -111,7 +138,7 @@ export const createNewTable =
     }
   };
 
-export const removeTable = (table, rooms, tables) => async (dispatch) => {
+export const removeTable = (table, tables) => async (dispatch) => {
   const tablesAfterRemove = tables.filter((el) => el.id != table.id);
 
   try {
