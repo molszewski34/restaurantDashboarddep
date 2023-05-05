@@ -1,17 +1,68 @@
+* {
+  box-sizing: border-box;
+}
 .order-new {
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 100vw;
+  width: 100%;
   height: 90vh;
-  background-color: grey;
+  background-color: #c7bbff;
+  margin: auto;
 }
 
 .order,
 .dish {
   display: block;
-  width: 45%;
+  width: 50%;
   height: 100%;
   background-color: darkgrey;
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.dish {
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.table-and-user {
+  background-color: #8797ee;
+  height: 5%;
+}
+
+.order-details {
+  background-color: #fff;
+  color: blue;
+  height: 60%;
+}
+
+.order-details-buttons {
+  background-color: #7a7a7a;
+  height: 10%;
+}
+
+.order-balance {
+  height: 10%;
+}
+
+.order-table {
+  width: 100%;
+}
+
+td,
+th {
+  border-bottom: 1px solid #dddddd;
+  text-align: right;
+  padding: 8px;
+}
+
+.first-element {
+  text-align: left;
 }
