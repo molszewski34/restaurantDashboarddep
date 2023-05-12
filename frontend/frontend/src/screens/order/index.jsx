@@ -35,6 +35,7 @@ import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import OrderDetails from "../../components/orderComponents/OrderDetails";
 
 import axios from "axios";
 
@@ -119,12 +120,19 @@ export default function Order() {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <Box sx={{ margin: "20px auto 5px", maxWidth: "1366px" }}>
-      <div>
-        <h1>Order</h1>
-      </div>
+    <Box sx={{ margin: "20px auto 5px" }}>
       {userLogin.userInfo.id ? (
         <>
+          <div
+            className="order-new"
+            style={{
+              marginTop: "30px",
+            }}
+          >
+            <OrderDetails orderDishes={orderDishes} dishList={dishList} />
+            <div className="dish">dish</div>
+          </div>
+
           <Box>
             <Stack
               direction={{ xs: "column", sm: "row" }}
@@ -144,6 +152,7 @@ export default function Order() {
               <Item>{orderDetails.order.isPaid ? "is paid" : "not paid"}</Item>
             </Stack>
           </Box>
+
           <TableContainer component={Paper}>
             <Table aria-label="spanning table">
               <TableHead>

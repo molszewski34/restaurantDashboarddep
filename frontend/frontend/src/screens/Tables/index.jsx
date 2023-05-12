@@ -22,6 +22,7 @@ import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import { LinkContainer } from "react-router-bootstrap";
 import { LoginMessageComponent } from "../../components/LoginMessageComponent";
+import OrderDetails from "../../components/orderComponents/OrderDetails";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {

@@ -1,0 +1,85 @@
+.order,
+.dish {
+  display: block;
+  width: 50%;
+  height: 100%;
+  background-color: darkgrey;
+}
+
+.order {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+  margin-right: 5px;
+}
+
+.dish {
+  margin-right: 10px;
+  margin-left: 5px;
+}
+
+.table-and-user {
+  display: flex;
+  justify-content: space-between;
+  background-color: #8797ee;
+  height: 5%;
+}
+
+.table-info {
+  margin-left: 5px;
+}
+.user-info {
+  margin-right: 5px;
+}
+
+.order-details {
+  background-color: #fff;
+  color: blue;
+  height: 60%;
+}
+
+.order-details-buttons {
+  display: flex;
+  flex-grow: 1;
+  background-color: #7a7a7a;
+  height: 10%;
+}
+
+.orderButton {
+  flex-grow: 1;
+}
+
+.order-balance {
+  height: 10%;
+}
+
+.order-table {
+  width: 100%;
+  border-spacing: 0px;
+}
+
+table,
+thead {
+  display: table;
+  width: 100%;
+}
+
+table {
+  table-layout: fixed;
+}
+
+td,
+th {
+  border-bottom: 1px solid #dddddd;
+  text-align: right;
+  padding: 8px;
+}
+
+.first-element {
+  text-align: left;
+}
+
+.dish-tr:hover {
+  background-color: #b3bbfe;
+  cursor: pointer;
+}
