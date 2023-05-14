@@ -8,22 +8,18 @@ const OrderDetails = ({ orderDishes, dishList }) => {
       name: "+item",
     },
   ];
-  console.log("Ordered first: ", orderDishes[0]);
-  const orderedDishFirstName = dishList.dishes.filter(
-    (dishToDisplay) => dishToDisplay.id == orderDishes[0].dish
-  );
-  console.log("Ordered first NAME: ", orderedDishFirstName[0]);
-  const [dishToChange, setdishToChange] = useState(orderDishes[0]);
-  const [dishNameToDisplay, setDishNameToDisplay] = useState(
-    orderedDishFirstName[0]
-  );
+
+  const [dishToChange, setdishToChange] = useState("-");
+  const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
 
   const setDishToDisplay = (filteredDish) => {
     const dishToDisplay = dishList.dishes.filter(
       (dishToDisplay) => dishToDisplay.id == filteredDish.dish
     );
+
+    console.log(dishToDisplay[0].title);
     setDishNameToDisplay(dishToDisplay);
-    console.log("dishNameToDisplay: :", dishNameToDisplay[0].title);
+
     setdishToChange(filteredDish);
   };
 
@@ -108,12 +104,22 @@ const OrderDetails = ({ orderDishes, dishList }) => {
           </button>
         ))}
       </div>
-      <div className="order-balance">
+      <div className="order-balance" style={{ display: "flex" }}>
         <div>
           <button type="">-</button>
-          <button type="">{dishToChange.qty}</button>
+          {dishToChange.qty ? (
+            <button type="">{dishToChange.qty}</button>
+          ) : (
+            <button type="">0</button>
+          )}
           <button type="">+</button>
-          <div>{orderedDishFirstName[0].title}</div>
+        </div>
+        <div>
+          {dishNameToDisplay[0].title ? (
+            <div>{dishNameToDisplay[0].title}</div>
+          ) : (
+            <div>dish name</div>
+          )}
         </div>
       </div>
       <div className="order-balance">balance</div>
