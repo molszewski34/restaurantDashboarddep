@@ -130,7 +130,6 @@ export default function Order() {
             }}
           >
             <OrderDetails orderDishes={orderDishes} dishList={dishList} />
-            <div className="dish">dish</div>
           </div>
 
           <Box>

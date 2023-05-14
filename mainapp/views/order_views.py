@@ -196,6 +196,8 @@ def getAllRooms(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getAllTables(request):
+    user=request.user
+    print("USER IN TABLES: ",user)
     tables = Table.objects.all()
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
@@ -203,6 +205,8 @@ def getAllTables(request):
 @api_view(['POST'])
 @permission_classes([IsAdminUser])
 def createTable(request):
+    user=request.user
+    print(user)
     data = request.data 
     requestedRoom = Room.objects.filter(id=data['body']['tableData']['room']['id'])
     tableNumber = data['body']['tableData']['tableNumber']

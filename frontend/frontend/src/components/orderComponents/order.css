@@ -1,8 +1,8 @@
 .order,
 .dish {
   display: block;
-  width: 50%;
-  height: 100%;
+
+  height: 50%;
   background-color: darkgrey;
 }
 
@@ -51,6 +51,7 @@
 
 .order-balance {
   height: 10%;
+  border-bottom: 1px solid black;
 }
 
 .order-table {
