@@ -9,19 +9,22 @@ const OrderDetails = ({ orderDishes, dishList }) => {
     },
   ];
 
+  // First states of SECTION:  Change order QTY
   const [dishToChange, setdishToChange] = useState("-");
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
+  // First states of SECTION:  Change order QTY ==  END ==
 
+  // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
     const dishToDisplay = dishList.dishes.filter(
       (dishToDisplay) => dishToDisplay.id == filteredDish.dish
     );
 
-    console.log(dishToDisplay[0].title);
     setDishNameToDisplay(dishToDisplay);
-
     setdishToChange(filteredDish);
   };
+
+  // Setting states of dish to display in SECTION:  Change order QTY ==  END ==
 
   return (
     //  Section with order details:
@@ -34,7 +37,6 @@ const OrderDetails = ({ orderDishes, dishList }) => {
         <div className="table-info">Table : #5</div>
         <div className="user-info">Michael Jordan</div>
       </div>
-
       <table className="order-details">
         <thead className="order-table">
           <tr>
@@ -50,8 +52,6 @@ const OrderDetails = ({ orderDishes, dishList }) => {
               className="dish-tr"
               onClick={() => {
                 setDishToDisplay(filteredDish);
-
-                console.log("DishTpCHange: ", dishToChange);
               }}
             >
               <td className="first-element">
@@ -104,6 +104,7 @@ const OrderDetails = ({ orderDishes, dishList }) => {
           </button>
         ))}
       </div>
+      {/* // ============= SECTION: Change order QTY ================ */}
       <div className="order-balance" style={{ display: "flex" }}>
         <div>
           <button type="">-</button>
@@ -122,6 +123,7 @@ const OrderDetails = ({ orderDishes, dishList }) => {
           )}
         </div>
       </div>
+      {/* ============= SECTION: Change order QTY ================ END == */}
       <div className="order-balance">balance</div>
       <div className="order-details-buttons">buttons</div>
     </section>
