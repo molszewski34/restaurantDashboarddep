@@ -108,62 +108,69 @@
 //     </ThemeProvider>
 //   );
 // }
-
-import React from 'react'
-import { useState } from 'react';
-import heroImg from './images/Croods - Chart.png'
-import { ImEye } from 'react-icons/im';
+// LOGIN
+import React from "react";
+import { useState } from "react";
+import heroImg from "./images/Croods - Chart.png";
+import { ImEye } from "react-icons/im";
 
 const SignIn = () => {
   const [passwordShown, setPasswordShown] = useState(false);
-  
+
   const togglePassword = () => {
     // When the handler is invoked
     // inverse the boolean state of passwordShown
     setPasswordShown(!passwordShown);
   };
   return (
- 
-    <div className='flex flex-col gap-4 place-self-center items-center'> 
-    <img src={heroImg} alt="hero" />
-    <header className='flex flex-col items-center gap-2'>
+    <div className="flex flex-col gap-4 place-self-center items-center">
+      <img src={heroImg} alt="hero" />
+      <header className="flex flex-col items-center gap-2">
+        <h1 className="text-3xl font-bold">Sign in</h1>
+        <hr className="w-[48px] border-2 border-primary-bg-color" />
+      </header>
+      <form className="flex flex-col gap-10 min-w-[319px]" action="">
+        <label className="flex flex-col font-bold text-lg" htmlFor="">
+          Email
+          <input
+            className="text-black  border-b text-base font-normal focus:outline-none"
+            type="text"
+            placeholder="Enter your email"
+          />
+        </label>
 
-    <h1 className='text-3xl font-bold'>Sign in</h1>
-    <hr className='w-[48px] border-2 border-primary-bg-color' />
-    </header>
-<form className='flex flex-col gap-10 min-w-[319px]' action="">
-  <label className='flex flex-col font-bold text-lg' htmlFor="">
-    Email
-    <input className='text-black  border-b text-base font-normal focus:outline-none' type="text" placeholder='Enter your email'/>
-  </label>
-
-    <label className='flex flex-col font-bold text-lg' htmlFor="">
-    Password
-  <div className=" flex justify-between border-b  ">
-    <input className='text-black text-base font-normal focus:outline-none' type={passwordShown ? "text" : "password"} placeholder='Enter your password'/>
-    <button>
-<ImEye className='mr-2' onClick={togglePassword}/>
-    </button>
-    </div>
-  </label>
-    <div className='flex justify-between text-sm text-primary-gray'>
-      <div className="">
-
-      <input className='empty:bg-color-primary-gray default:bg-gray-300 checked:bg-gray-500' type="checkbox" /> <label htmlFor="">Stay logged in?</label>
-      </div>
-    <button>Forget password?</button>
-    </div>
-    <button className='text-[white] text-base font-semibold bg-primary-bg-color min-w-[277px] py-3 rounded-full shadow-md'>
-        
-        
-        Login</button>
+        <label className="flex flex-col font-bold text-lg" htmlFor="">
+          Password
+          <div className=" flex justify-between border-b  ">
+            <input
+              className="text-black text-base font-normal focus:outline-none"
+              type={passwordShown ? "text" : "password"}
+              placeholder="Enter your password"
+            />
+            <button>
+              <ImEye className="mr-2" onClick={togglePassword} />
+            </button>
+          </div>
+        </label>
+        <div className="flex justify-between text-sm text-primary-gray">
+          <div className="">
+            <input
+              className="empty:bg-color-primary-gray default:bg-gray-300 checked:bg-gray-500"
+              type="checkbox"
+            />{" "}
+            <label htmlFor="">Stay logged in?</label>
+          </div>
+          <button>Forget password?</button>
+        </div>
+        <button className="text-[white] text-base font-semibold bg-primary-bg-color min-w-[277px] py-3 rounded-full shadow-md">
+          Login
+        </button>
         {/* <div className="flex items-center justify-between text-primary-gray"> <hr className='bg-primary-gray w-full' />
         <p className='px-2'>Or</p> 
         <hr className='bg-primary-gray w-full' /> </div> */}
-</form>
-     </div>
- 
-  )
-}
+      </form>
+    </div>
+  );
+};
 
-export default SignIn
+export default SignIn;
