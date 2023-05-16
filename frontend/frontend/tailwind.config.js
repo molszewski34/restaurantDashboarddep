@@ -9,12 +9,14 @@ module.exports = {
 
       // Complex site-specific row configuration
       'layout': '150px minmax(150px, 1fr) 100px',
+      'layout-tablesPanel': 'repeat(2, 60px)'
     }},
     colors: {
       'primary-bg-color': '#296F63',
       'secondary-bg-color':'#CADFDE',
       'white': '#fff',
-      'primary-gray': '#ADADAD'
+      'primary-gray': '#ADADAD',
+      'gray-light' : '#D9D9D9'
     },
   },
   plugins: [],
