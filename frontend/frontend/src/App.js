@@ -19,6 +19,7 @@ import Invoices from './screens/invoices';
 import Invite from './screens/invite';
 import { red, purple } from '@mui/material/colors';
 import TablesPanel from './screens/tablesPanel';
+import OrdersPanel from './screens/ordersPanel';
 
 
 const darkTheme = createTheme({
@@ -56,6 +57,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/services" element={<Services />} />
               <Route path="/tablesPanel" element={<TablesPanel />} />
+              <Route path="/ordersPanel" element={<OrdersPanel />} />
             </Routes>
           </main>
         </div>
