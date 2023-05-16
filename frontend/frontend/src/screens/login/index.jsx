@@ -108,19 +108,34 @@
 //     </ThemeProvider>
 //   );
 // }
-// LOGIN
+
 import React from "react";
 import { useState } from "react";
 import heroImg from "./images/Croods - Chart.png";
 import { ImEye } from "react-icons/im";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { login } from "../../actions/userActions";
 
-const SignIn = () => {
+export default function SignIn() {
+  let navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
 
   const togglePassword = () => {
     // When the handler is invoked
     // inverse the boolean state of passwordShown
     setPasswordShown(!passwordShown);
+  };
+
+  // Submit handler
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(login(email, password));
+    navigate("/services");
   };
   return (
     <div className="flex flex-col gap-4 place-self-center items-center">
@@ -129,13 +144,18 @@ const SignIn = () => {
         <h1 className="text-3xl font-bold">Sign in</h1>
         <hr className="w-[48px] border-2 border-primary-bg-color" />
       </header>
-      <form className="flex flex-col gap-10 min-w-[319px]" action="">
+      <form
+        onSubmit={submitHandler}
+        className="flex flex-col gap-10 min-w-[319px]"
+        action=""
+      >
         <label className="flex flex-col font-bold text-lg" htmlFor="">
           Email
           <input
             className="text-black  border-b text-base font-normal focus:outline-none"
             type="text"
             placeholder="Enter your email"
+            onChange={(e) => setEmail(e.target.value)}
           />
         </label>
 
@@ -146,6 +166,7 @@ const SignIn = () => {
               className="text-black text-base font-normal focus:outline-none"
               type={passwordShown ? "text" : "password"}
               placeholder="Enter your password"
+              onChange={(e) => setPassword(e.target.value)}
             />
             <button>
               <ImEye className="mr-2" onClick={togglePassword} />
@@ -171,6 +192,4 @@ const SignIn = () => {
       </form>
     </div>
   );
-};
-
-export default SignIn;
+}
