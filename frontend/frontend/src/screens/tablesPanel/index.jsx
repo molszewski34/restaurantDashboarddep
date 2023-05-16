@@ -22,6 +22,8 @@ const TablesPanel = () => {
   const roomsList = useSelector((state) => state.roomsList);
   const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
 
+  console.log(tables);
+
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -42,194 +44,26 @@ const TablesPanel = () => {
   ) : (
     <main className="bg-secondary-bg-color h-screen">
       <NavbarTop />
-      <section className="grid grid-cols-4 grid-rows-layout-tablesPanel place-content-center gap-1 gap-y-3 mt-5 p-2  bg-secondary-bg-color grid-flow-row">
-        {tables.map((table) => (
-          <button
-            key={table.id}
-            className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow"
-          >
-            <span className="text-3xl">
-              {" "}
-              {rooms
-                .filter((room) => room.id == table.room)
-                .map((filteredRoom) => (
-                  <div key={filteredRoom.id}>{filteredRoom.name}</div>
-                ))}{" "}
-              #{table.tableNumber}
-            </span>{" "}
-            <span>1-{table.numberOfPersons}</span>
-          </button>
-        ))}
-
-        {/* <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button>
-        <button className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow">
-          <span className="text-3xl">123</span> <span>1-4</span>
-        </button> */}
-      </section>
+      {rooms.map((room) => (
+        <section
+          key={room.id}
+          className="grid grid-cols-4 grid-rows-layout-tablesPanel place-content-center gap-1 gap-y-3 mt-5 p-2  bg-secondary-bg-color grid-flow-row"
+        >
+          {/* TUTAJ JEST DIV Z NAZWĄ POKOJU */}
+          <div>{room.name}</div>
+          {tables
+            .filter((table) => table.room == room.id)
+            .map((filderedTable) => (
+              <button
+                key={filderedTable.id}
+                className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border border-primary-bg-color rounded shadow"
+              >
+                <span className="text-3xl"> #{filderedTable.tableNumber}</span>{" "}
+                <span>1-{filderedTable.numberOfPersons}</span>
+              </button>
+            ))}
+        </section>
+      ))}
     </main>
   );
 };
