@@ -115,6 +115,8 @@ import heroImg from "./images/Croods - Chart.png";
 import { ImEye } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { login } from "../../actions/userActions";
 
 export default function SignIn() {
@@ -125,11 +127,20 @@ export default function SignIn() {
   const [password, setPassword] = useState("");
   const [passwordShown, setPasswordShown] = useState(false);
 
+  const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, userInfo } = userLogin;
+
   const togglePassword = () => {
     // When the handler is invoked
     // inverse the boolean state of passwordShown
     setPasswordShown(!passwordShown);
   };
+
+  useEffect(() => {
+    if (userInfo.id) {
+      navigate("/services");
+    }
+  });
 
   // Submit handler
   const submitHandler = (e) => {
