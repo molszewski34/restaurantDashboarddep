@@ -11,11 +11,12 @@ const Services = () => {
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
-    <div>Something went wrong</div>
+    // WADOMOŚĆ  GDY HASŁO NIE PASUJE (LUB LOGIN)
+    <div>Ups! Password and login doesn`t match!</div>
   ) : (
     <main className="bg-secondary-bg-color h-screen">
       <NavbarTop />
-      {userInfo ? (
+      {userInfo.id ? (
         <div className=" mx-6 my-8">
           <div className="text-xl text-center text-white bg-[#629D93] p-1">
             <h1>Chose service</h1>
@@ -39,6 +40,7 @@ const Services = () => {
           </div>
         </div>
       ) : (
+        // WADOMOŚĆ  GDY UŻYTKOWNIK NIE JEST ZALOGOWANY
         <div>You must be logged in</div>
       )}
     </main>
