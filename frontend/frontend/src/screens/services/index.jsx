@@ -2,8 +2,10 @@ import React from "react";
 import NavbarTop from "../../components/NavbarTop";
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
 
 const Services = () => {
+  let navigate = useNavigate();
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, userInfo } = userLogin;
 
@@ -22,7 +24,12 @@ const Services = () => {
             <h1>Chose service</h1>
           </div>
           <div className="grid grid-rows-layout grid-cols-2 gap-1">
-            <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+            <div
+              onClick={() => {
+                navigate("/tablesPanel");
+              }}
+              className="flex justify-center items-center  bg-white text-center font-bold text-xl"
+            >
               Table Service
             </div>
             <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">
