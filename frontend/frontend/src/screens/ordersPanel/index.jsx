@@ -29,7 +29,6 @@ const OrdersPanel = () => {
     loading: loadingDishList,
     orderDishes,
   } = orderDishList;
-  console.log(orderDishes);
 
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
@@ -46,6 +45,7 @@ const OrdersPanel = () => {
   // First states of SECTION:  Change order QTY
   const [dishToChange, setdishToChange] = useState("-");
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
+  const [dishQty, setDishQty] = useState(0);
   // First states of SECTION:  Change order QTY ==  END ==
 
   // Setting states of dish to display in SECTION:  Change order QTY
@@ -53,12 +53,30 @@ const OrdersPanel = () => {
     const dishToDisplay = dishList.dishes.filter(
       (dishToDisplay) => dishToDisplay.id == filteredDish.dish
     );
-
+    console.log(filteredDish);
     setDishNameToDisplay(dishToDisplay);
     setdishToChange(filteredDish);
+    setDishQty(filteredDish.qty);
+  };
+
+  // Increment dish QTY
+  const incrementDishQty = () => {
+    setDishQty(dishQty + 1);
+    console.log("ADD");
+  };
+
+  //Decrement dish QTY
+
+  const decrementDishQty = () => {
+    if (dishQty > 0) {
+      setDishQty(dishQty - 1);
+    } else {
+      setDishQty(0);
+    }
   };
 
   useEffect(() => {
+    console.log("ID: ", id);
     dispatch(listDishes());
     dispatch(listOrderDishes(id));
     dispatch(listCategories());
@@ -87,10 +105,16 @@ const OrdersPanel = () => {
           <span>TOTAL</span>
         </div>
       </section>
-
+      {/* // ============= SECTION: Display ordered dishes ================ */}
       <section className="grid grid-cols-1 grid-flow-row gap-1 auto-rows-max justify-between min-h-[300px] text-sm font-bold border-b-2 border-gray-light py-1">
         {orderDishes.map((filteredDish) => (
-          <div className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2">
+          <div
+            key={filteredDish.id}
+            className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
+            onClick={() => {
+              setDishToDisplay(filteredDish);
+            }}
+          >
             <span className="text-ellipsis whitespace-nowrap overflow-hidden">
               {dishList.dishes
                 .filter(
@@ -128,7 +152,7 @@ const OrdersPanel = () => {
           </div>
         ))}
       </section>
-
+      {/* // ============= END SECTION: Display ordered dishes ================ */}
       <section className="flex justify-center py-2 bg-gray-light gap-2 border-b">
         <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
           Tab
@@ -143,18 +167,40 @@ const OrdersPanel = () => {
 
       <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color">
         <div className="flex gap-2">
-          <button className="w-[25px] font-bold bg-primary-gray border-b-2">
+          <button
+            className="w-[25px] font-bold bg-primary-gray border-b-2"
+            onClick={() => {
+              decrementDishQty();
+            }}
+          >
             -
           </button>
-          <button className="w-[25px] font-bold bg-primary-gray border-b-2">
-            1
+          {/* // ============= SECTION: Display QTY of selected dish ================ */}
+
+          <button
+            className="w-[25px] font-bold bg-primary-gray border-b-2"
+            type=""
+          >
+            {dishQty}
           </button>
-          <button className="w-[25px] font-bold bg-primary-gray border-b-2">
+
+          {/* // ============= END SECTION: Display QTY of selected dish ================ */}
+
+          <button
+            className="w-[25px] font-bold bg-primary-gray border-b-2"
+            onClick={() => {
+              incrementDishQty();
+            }}
+          >
             +
           </button>
         </div>
         <span className="text-xs font-bold">
-          Soft-Boiled Eggs With Deviled Soldiers
+          {dishNameToDisplay[0].title ? (
+            <div>{dishNameToDisplay[0].title}</div>
+          ) : (
+            <div>dish name</div>
+          )}
         </span>
         <div className="flex gap-2">
           <button className="font-bold text-base bg-primary-gray p-1 rounded border ">
@@ -168,35 +214,27 @@ const OrdersPanel = () => {
       <section className="flex justify-between bg-white p-2 border-b">
         <div className="flex flex-wrap justify-between items-center font-bold gap-4">
           <span className="text-base">Balance Due:</span>
-          <span className="text-3xl text-red-300">10000.00$</span>
+          <span className="text-3xl text-red-300">{orderDetail}</span>
         </div>
         <div className="flex flex-wrap  justify-between items-center font-bold gap-4">
           <span>Total:</span>
-          <span className="text-3xl">30000.00$</span>
+          <span className="text-3xl">{orderDetail}</span>
         </div>
       </section>
+
       <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b">
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem categorum dolor sit amet consectetur adipisicing elit.
-        </button>
+        {/* // ============= SECTION: Display Categories ================ */}
+
+        {categories.map((category) => (
+          <button
+            key={category.id}
+            className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
+          >
+            {category.title}
+          </button>
+        ))}
+
+        {/* // ============= END SECTION: Display Categories ================ */}
       </section>
       <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b">
         <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
