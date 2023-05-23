@@ -15,7 +15,9 @@ import {
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
 
-import NavbarOrders from "../../components/NavbarOrders";
+
+import NavbarOrders from '../../components/navbars/NavbarOrders'
+
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
