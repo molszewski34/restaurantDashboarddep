@@ -37,10 +37,12 @@ const TablesPanel = () => {
     dispatch(listOrders());
   }, []);
 
+
   const [modalOpen, setModalOpen] = useState(false)
   const [overlay, setOverlay] = useState(false)
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
   
+
 
 
   return loading ? (
@@ -97,11 +99,13 @@ const TablesPanel = () => {
                     <button
                       key={filderedTable.id}
                       className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
+
                       onClick={() => {
                         setSelectedMaxNumOfGuests(filderedTable.numberOfPersons);
                         setModalOpen(true);
                         setOverlay(true);
                       }}
+
                     >
                       <span className="text-3xl">
                         {" "}
