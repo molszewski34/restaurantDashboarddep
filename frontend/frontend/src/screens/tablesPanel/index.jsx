@@ -37,13 +37,9 @@ const TablesPanel = () => {
     dispatch(listOrders());
   }, []);
 
-
-  const [modalOpen, setModalOpen] = useState(false)
-  const [overlay, setOverlay] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
-  
-
-
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -99,13 +95,13 @@ const TablesPanel = () => {
                     <button
                       key={filderedTable.id}
                       className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
-
                       onClick={() => {
-                        setSelectedMaxNumOfGuests(filderedTable.numberOfPersons);
+                        setSelectedMaxNumOfGuests(
+                          filderedTable.numberOfPersons
+                        );
                         setModalOpen(true);
                         setOverlay(true);
                       }}
-
                     >
                       <span className="text-3xl">
                         {" "}
@@ -118,21 +114,21 @@ const TablesPanel = () => {
               ))}
           </div>
         </section>
-))}
-  {modalOpen && (
-<div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-<ModalTablesPanel
-maxNumOfGuests={selectedMaxNumOfGuests}
-closeModal={() => setModalOpen(false)}
-closeOverlay={()=> setOverlay(false)}
-/>
-</div>
-)}
-{overlay && (
-  <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
-)}
-</main>
-);
+      ))}
+      {modalOpen && (
+        <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+          <ModalTablesPanel
+            maxNumOfGuests={selectedMaxNumOfGuests}
+            closeModal={() => setModalOpen(false)}
+            closeOverlay={() => setOverlay(false)}
+          />
+        </div>
+      )}
+      {overlay && (
+        <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
+      )}
+    </main>
+  );
 };
 
 export default TablesPanel;
