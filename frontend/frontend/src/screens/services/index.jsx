@@ -9,7 +9,6 @@ const Services = () => {
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, userInfo } = userLogin;
 
-  console.log(userInfo);
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
