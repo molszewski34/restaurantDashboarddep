@@ -1,6 +1,6 @@
 import React from 'react'
 
-import NavbarOrders from '../../components/NavbarOrders'
+import NavbarOrders from '../../components/navbars/NavbarOrders'
 const OrdersPanel = () => {
   return (
    <main>
