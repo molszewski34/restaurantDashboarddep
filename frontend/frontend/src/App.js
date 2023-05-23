@@ -15,12 +15,11 @@ import Services from "./screens/services";
 import StartingPanel from "./screens/startingPanel";
 import OrderNew from "./screens/orderNew";
 // import SideBarComponent from './components/SideBarComponent';
-import Invoices from './screens/invoices';
-import Invite from './screens/invite';
-import { red, purple } from '@mui/material/colors';
-import TablesPanel from './screens/tablesPanel';
-import OrdersPanel from './screens/ordersPanel';
-
+import Invoices from "./screens/invoices";
+import Invite from "./screens/invite";
+import { red, purple } from "@mui/material/colors";
+import TablesPanel from "./screens/tablesPanel";
+import OrdersPanel from "./screens/ordersPanel";
 
 const darkTheme = createTheme({
   palette: {
@@ -46,7 +45,7 @@ function App() {
               <Route path="/dishmenu" element={<DishMenu />} />
               <Route path="/tables" element={<Tables />} />
               <Route path="/orders" element={<Orders />} />
-              <Route path="orders/order/:id" element={<Order />} />
+              <Route path="orders/order/:id" element={<OrdersPanel />} />
               <Route path="/staff" element={<Staff />} />
               <Route path="/invoices" element={<Invoices />} />
               <Route path="/invite" element={<Invite />} />

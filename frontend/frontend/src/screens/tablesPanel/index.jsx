@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
-import {MdTableBar} from 'react-icons/md'
+import { MdTableBar } from "react-icons/md";
 
 const TablesPanel = () => {
   const dispatch = useDispatch();
@@ -39,11 +39,9 @@ const TablesPanel = () => {
     dispatch(listOrders());
   }, []);
 
-  const [modalOpen, setModalOpen] = useState(false)
-  const [overlay, setOverlay] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
-  
-
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -88,21 +86,21 @@ const TablesPanel = () => {
               ))}
           </div>
         </section>
-))}
-  {modalOpen && (
-<div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-<ModalTablesPanel
-maxNumOfGuests={selectedMaxNumOfGuests}
-closeModal={() => setModalOpen(false)}
-closeOverlay={()=> setOverlay(false)}
-/>
-</div>
-)}
-{overlay && (
-  <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
-)}
-</main>
-);
+      ))}
+      {modalOpen && (
+        <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+          <ModalTablesPanel
+            maxNumOfGuests={selectedMaxNumOfGuests}
+            closeModal={() => setModalOpen(false)}
+            closeOverlay={() => setOverlay(false)}
+          />
+        </div>
+      )}
+      {overlay && (
+        <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
+      )}
+    </main>
+  );
 };
 
 export default TablesPanel;
