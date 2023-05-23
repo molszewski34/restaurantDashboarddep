@@ -1,6 +1,6 @@
 import React from 'react'
-import NavbarTop from '../../components/NavbarTop'
-
+import NavbarTop from '../../components/navbars/NavbarTop'
+import { Link } from 'react-router-dom'
 
 const Services = () => {
   return (
@@ -11,10 +11,10 @@ const Services = () => {
     <h1>Chose service</h1>
     </div>
     <div className="grid grid-rows-layout grid-cols-2 gap-1">
-    <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">Table Service</div>
-    <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">Pending orders</div>
-    <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">Quick Order</div>
-    <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">Delivery</div>
+    <Link to="/tablesPanel" className="flex justify-center items-center  bg-white text-center font-bold text-xl">Table Service</Link>
+    <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">Pending orders</button>
+    <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">Quick Order</button>
+    <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">Delivery</button>
     {/* <div className="p-8 bg-white">Pending Orders</div>
     <div className="p-8 bg-white">Quick Orders</div>
     <div className="p-8 bg-white">Delivery</div> */}
