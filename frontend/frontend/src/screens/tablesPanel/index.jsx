@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
-import { MdTableBar } from "react-icons/md";
 import { LinkContainer } from "react-router-bootstrap";
 const TablesPanel = () => {
   const dispatch = useDispatch();
