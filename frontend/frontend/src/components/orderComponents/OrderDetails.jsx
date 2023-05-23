@@ -12,6 +12,7 @@ const OrderDetails = ({ orderDishes, dishList }) => {
   // First states of SECTION:  Change order QTY
   const [dishToChange, setdishToChange] = useState("-");
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
+
   // First states of SECTION:  Change order QTY ==  END ==
 
   // Setting states of dish to display in SECTION:  Change order QTY
@@ -108,11 +109,7 @@ const OrderDetails = ({ orderDishes, dishList }) => {
       <div className="order-balance" style={{ display: "flex" }}>
         <div>
           <button type="">-</button>
-          {dishToChange.qty ? (
-            <button type="">{dishToChange.qty}</button>
-          ) : (
-            <button type="">0</button>
-          )}
+
           <button type="">+</button>
         </div>
         <div>
