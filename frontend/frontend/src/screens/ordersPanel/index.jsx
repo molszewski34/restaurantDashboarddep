@@ -23,6 +23,8 @@ const OrdersPanel = () => {
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
 
+  console.log(orderDetails.order);
+
   const orderDishList = useSelector((state) => state.orderDishList);
   const {
     error: errorDishList,
@@ -48,12 +50,15 @@ const OrdersPanel = () => {
   const [dishQty, setDishQty] = useState(0);
   // First states of SECTION:  Change order QTY ==  END ==
 
+  //First state of active category
+  const [activeCategory, setActiveCategory] = useState(0);
+
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
     const dishToDisplay = dishList.dishes.filter(
       (dishToDisplay) => dishToDisplay.id == filteredDish.dish
     );
-    console.log(filteredDish);
+
     setDishNameToDisplay(dishToDisplay);
     setdishToChange(filteredDish);
     setDishQty(filteredDish.qty);
@@ -62,7 +67,6 @@ const OrdersPanel = () => {
   // Increment dish QTY
   const incrementDishQty = () => {
     setDishQty(dishQty + 1);
-    console.log("ADD");
   };
 
   //Decrement dish QTY
@@ -76,7 +80,6 @@ const OrdersPanel = () => {
   };
 
   useEffect(() => {
-    console.log("ID: ", id);
     dispatch(listDishes());
     dispatch(listOrderDishes(id));
     dispatch(listCategories());
@@ -214,11 +217,13 @@ const OrdersPanel = () => {
       <section className="flex justify-between bg-white p-2 border-b">
         <div className="flex flex-wrap justify-between items-center font-bold gap-4">
           <span className="text-base">Balance Due:</span>
-          <span className="text-3xl text-red-300">{orderDetail}</span>
+          <span className="text-3xl text-red-300">
+            ${orderDetails.order.totalPrice}
+          </span>
         </div>
         <div className="flex flex-wrap  justify-between items-center font-bold gap-4">
-          <span>Total:</span>
-          <span className="text-3xl">{orderDetail}</span>
+          <span>Total: </span>
+          <span className="text-3xl">${orderDetails.order.totalPrice}</span>
         </div>
       </section>
 
@@ -229,6 +234,11 @@ const OrdersPanel = () => {
           <button
             key={category.id}
             className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
+            onClick={() => {
+              setActiveCategory(category.id);
+              console.log(category.id);
+              console.log(activeCategory);
+            }}
           >
             {category.title}
           </button>
@@ -236,8 +246,20 @@ const OrdersPanel = () => {
 
         {/* // ============= END SECTION: Display Categories ================ */}
       </section>
+
       <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b">
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
+        {dishList.dishes
+          .filter((filteredDishes) => filteredDishes.category == activeCategory)
+          .map((dishToDisplay) => (
+            <button
+              key={dishToDisplay.id}
+              className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
+            >
+              {dishToDisplay.title}
+            </button>
+          ))}
+
+        {/* <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
           Lorem dishum dolor sit amet consectetur adipisicing elit.
         </button>
         <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
@@ -245,10 +267,7 @@ const OrdersPanel = () => {
         </button>
         <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
           Lorem dishum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem dishum dolor sit amet consectetur adipisicing elit.
-        </button>
+        </button> */}
       </section>
     </main>
   );
