@@ -1,9 +1,5 @@
-import React from 'react'
-import NavbarTop from '../../components/navbars/NavbarTop'
-import { Link } from 'react-router-dom'
-
 import React from "react";
-import NavbarTop from "../../components/NavbarTop";
+import NavbarTop from '../../components/navbars/NavbarTop'
 import { useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useNavigate } from "react-router-dom";
@@ -58,4 +54,4 @@ const Services = () => {
   );
 };
 
-
+export default Services

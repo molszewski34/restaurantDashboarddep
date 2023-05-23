@@ -7,7 +7,7 @@ import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import {MdTableBar} from 'react-icons/md'
-import { MdTableBar } from "react-icons/md";
+
 const TablesPanel = () => {
   const dispatch = useDispatch();
 
@@ -50,7 +50,7 @@ const TablesPanel = () => {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <main className="bg-secondary-bg-color h-full relative">
+    <main className="bg-secondary-bg-color h-screen relative">
       <NavbarTop />
       <h1 className="font-bold text-[#374151] text-3xl text-center pl-2 my-4 ml-2 ">
         Tables
@@ -69,6 +69,11 @@ const TablesPanel = () => {
               .map((filderedTable) => (
                 <button
                   key={filderedTable.id}
+                  onClick={() => {
+                    setSelectedMaxNumOfGuests(filderedTable.numberOfPersons);
+                    setModalOpen(true);
+                    setOverlay(true);
+                  }}
                   className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
                   style={
                     filderedTable.isOccupied ? { backgroundColor: "red" } : {}
