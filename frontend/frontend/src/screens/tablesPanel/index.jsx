@@ -43,11 +43,6 @@ const TablesPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
-  const [activeTab, setActiveTab] = useState(0);
-
-  const handleChangeTab = (event, newValue) => {
-    setActiveTab(newValue);
-  };
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -129,9 +124,11 @@ const TablesPanel = () => {
                     
                     <button
                       key={filderedTable.id}
-                      className="flex flex-col items-center justify-center bg-[#f0fdfa]  duration-200 font-bold border-2 hover:border-dotted border-primary-bg-color rounded shadow"
+                      className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
                       onClick={() => {
-                        setSelectedMaxNumOfGuests(filderedTable.numberOfPersons);
+                        setSelectedMaxNumOfGuests(
+                          filderedTable.numberOfPersons
+                        );
                         setModalOpen(true);
                         setOverlay(true);
                         console.log(` console.log z tables ${filderedTable.numberOfPersons}`)
