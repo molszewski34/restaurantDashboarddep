@@ -7,8 +7,6 @@ import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdTableBar } from "react-icons/md";
-import { LinkContainer } from "react-router-bootstrap";
-import { useMediaQuery, Tab, Tabs, useTheme } from "@mui/material";
 
 const TablesPanel = () => {
   const dispatch = useDispatch();
@@ -152,44 +150,21 @@ const TablesPanel = () => {
               ))}
           </div>
         </section>
-))}
-  {modalOpen && (
-<div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-<ModalTablesPanel
-selectedMaxNumOfGuests={selectedMaxNumOfGuests}
-closeModal={() => setModalOpen(false)}
-closeOverlay={()=> setOverlay(false)}
-/>
-</div>
-)}
-{overlay && (
-  <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
-)}
-</main>
-);
+      ))}
+      {modalOpen && (
+        <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+          <ModalTablesPanel
+            maxNumOfGuests={selectedMaxNumOfGuests}
+            closeModal={() => setModalOpen(false)}
+            closeOverlay={() => setOverlay(false)}
+          />
+        </div>
+      )}
+      {overlay && (
+        <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
+      )}
+    </main>
+  );
 };
 
 export default TablesPanel;
-
-
-  /* <div>
-  {orders
-    .filter((order) => order.table == filderedTable.id)
-    .map((filteredOrder) => (
-      <LinkContainer
-        key={filteredOrder.id}
-        component="button"
-        to={`/orders/order/${filteredOrder.id}`}
-      >
-        <button
-          key={filderedTable.id}
-          className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
-          style={filderedTable.isOccupied ? { backgroundColor: "red" } : {}}
-        >
-          <span className="text-3xl"> #{filderedTable.tableNumber}</span>{" "}
-          <span>1-{filderedTable.numberOfPersons}</span>
-        </button>
-      </LinkContainer>
-    ))}
-</div>; */
-
