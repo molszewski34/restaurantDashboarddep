@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {BsFillBackspaceFill} from 'react-icons/bs'
 const ModalTablesPanel = ({closeModal, selectedMaxNumOfGuests, closeOverlay}) => {
 
-console.log(selectedMaxNumOfGuests)
+console.log(`console log z ModalTablesPanel ${selectedMaxNumOfGuests}`)
   const [numOfGuests, setNumOFGuests] = useState('')
 
   //if numOfGuests is not empty (numOfGuests !== ''), or if numOfGuests is empty and the selected value is not 0 (numOfGuests === '' && value !== 0), then the value will be appended to numOfGuests. This ensures that 0 can only be selected as the second digit, given that the first digit is not 0.
@@ -19,7 +19,7 @@ console.log(selectedMaxNumOfGuests)
   };
 
   //changes color of text when numOfGuests is bigger than selectedMaxNumOfGuests
-  const outputClassName = parseInt(numOfGuests) > selectedMaxNumOfGuests
+  const outputClassName = numOfGuests > selectedMaxNumOfGuests
   ? 'text-center text-3xl text-[#ef4444] col-start-2 col-end-2 py-2'
   : 'text-center text-3xl col-start-2 col-end-2 py-2';
 
@@ -59,7 +59,13 @@ console.log(selectedMaxNumOfGuests)
       <div className="flex flex-col gap-2 px-4">
         <button onClick={handleBackspace} className='rounded flex justify-center text-xl bg-primary-bg-color text-white font-bold py-2 '><BsFillBackspaceFill/></button>
         <button onClick={() => { closeModal(false); closeOverlay(false); }} className='rounded bg-primary-bg-color text-white font-bold py-1 px-4'>Cancel</button>
-        <button className='rounded bg-primary-bg-color text-white font-bold py-1 px-4'>Done</button>
+        <button
+            // disabled={parseInt(numOfGuests) > selectedMaxNumOfGuests}
+            // className={`rounded bg-primary-bg-color text-white font-bold py-1 px-4 ${numOfGuests > selectedMaxNumOfGuests ? 'opacity-50' : ''}`}
+            className={`rounded bg-primary-bg-color text-white font-bold py-1 px-4 ${numOfGuests > selectedMaxNumOfGuests ? 'opacity-50' : ''}`}
+            >
+            Done
+            </button>
       
       </div>
       </div>
