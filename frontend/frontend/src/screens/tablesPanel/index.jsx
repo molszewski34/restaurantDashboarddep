@@ -6,9 +6,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
-import { MdTableBar } from "react-icons/md";
 import { LinkContainer } from "react-router-bootstrap";
+
 import { useMediaQuery, Tab, Tabs, useTheme } from "@mui/material";
+
+import { MdTableBar } from "react-icons/md";
+
+
+
 
 const TablesPanel = () => {
   const dispatch = useDispatch();
@@ -29,6 +34,8 @@ const TablesPanel = () => {
   const roomsList = useSelector((state) => state.roomsList);
   const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
 
+  console.log(tables);
+
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -45,11 +52,13 @@ const TablesPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
+
   const [activeTab, setActiveTab] = useState(0);
 
   const handleChangeTab = (event, newValue) => {
     setActiveTab(newValue);
   };
+
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -91,7 +100,8 @@ const TablesPanel = () => {
             {room.name}
           </header>
           <div className="grid grid-cols-4 place-content-center gap-1 gap-y-3 mb-5 bg-secondary-bg-color grid-flow-row">
-            {/* DISPLAY TABLES */}
+            {/* TUTAJ JEST DIV Z NAZWĄ POKOJU */}
+
             {tables
               .filter((table) => table.room == room.id)
               .map((filderedTable) => (
@@ -133,7 +143,9 @@ const TablesPanel = () => {
                       key={filderedTable.id}
                       className="flex flex-col items-center justify-center bg-[#f0fdfa]  duration-200 font-bold border-2 hover:border-dotted border-primary-bg-color rounded shadow"
                       onClick={() => {
-                        setSelectedMaxNumOfGuests(filderedTable.numberOfPersons);
+                        setSelectedMaxNumOfGuests(
+                          filderedTable.numberOfPersons
+                        );
                         setModalOpen(true);
                         setOverlay(true);
                         console.log(` console.log z tables ${filderedTable.numberOfPersons}`)
@@ -152,6 +164,7 @@ const TablesPanel = () => {
               ))}
           </div>
         </section>
+
 ))}
   {modalOpen && (
 <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
@@ -170,26 +183,4 @@ closeOverlay={()=> setOverlay(false)}
 };
 
 export default TablesPanel;
-
-
-  /* <div>
-  {orders
-    .filter((order) => order.table == filderedTable.id)
-    .map((filteredOrder) => (
-      <LinkContainer
-        key={filteredOrder.id}
-        component="button"
-        to={`/orders/order/${filteredOrder.id}`}
-      >
-        <button
-          key={filderedTable.id}
-          className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
-          style={filderedTable.isOccupied ? { backgroundColor: "red" } : {}}
-        >
-          <span className="text-3xl"> #{filderedTable.tableNumber}</span>{" "}
-          <span>1-{filderedTable.numberOfPersons}</span>
-        </button>
-      </LinkContainer>
-    ))}
-</div>; */
 
