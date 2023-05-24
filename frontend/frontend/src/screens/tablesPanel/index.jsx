@@ -8,11 +8,16 @@ import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdTableBar } from "react-icons/md";
 import { LinkContainer } from "react-router-bootstrap";
+import { useMediaQuery, Tab, Tabs, useTheme } from "@mui/material";
+
 const TablesPanel = () => {
   const dispatch = useDispatch();
 
   const orderList = useSelector((state) => state.orderList);
   const { error, loading, orders } = orderList;
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const tableList = useSelector((state) => state.tableList);
   const {
@@ -20,8 +25,6 @@ const TablesPanel = () => {
     loading: tableListLoading,
     tables,
   } = tableList;
-
-  // console.log(tables)
 
   const roomsList = useSelector((state) => state.roomsList);
   const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
@@ -39,26 +42,52 @@ const TablesPanel = () => {
     dispatch(listOrders());
   }, []);
 
-  const [modalOpen, setModalOpen] = useState(false)
-  const [overlay, setOverlay] = useState(false)
+  const [modalOpen, setModalOpen] = useState(false);
+  const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
-  
+  const [activeTab, setActiveTab] = useState(0);
 
+  const handleChangeTab = (event, newValue) => {
+    setActiveTab(newValue);
+  };
 
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <main className="bg-secondary-bg-color h-full relative flex flex-col justify-center ">
+    <main className="bg-secondary-bg-color h-screen relative flex flex-col">
       <NavbarTop />
       <h1 className="font-bold text-[#0f766e] text-3xl text-center pl-2 my-4 ml-2 ">
         Tables
       </h1>
-      {rooms.map((room) => (
-        <section key={room.id} className="p-2 md:p-4 md:min-w-[800px] md:max-w-[50vw] md:place-self-center md:border-2 md:border-[#337066] md:mb-6 md:rounded md:shadow-md">
-          <header className=" flex items-center text-lg text-[#374151] mb-2">
-            <MdTableBar className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border border-white shadow" />
+ 
+          <Tabs
+            orientation={isMobile ? 'vertical' : 'horizontal'}
+            value={activeTab}
+            onChange={handleChangeTab}
+            // variant="scrollable"
+            // scrollButtons="auto"
+            className={isMobile ? 'centered-tabs' : ''} 
+            centered
+          >
+            {rooms.map((room, index) => (
+              <Tab key={room.id} label={room.name}  />
+            ))}
+          </Tabs>
+
+    
+
+      {rooms.map((room, index) => (
+        <section
+          key={room.id}
+          className={`p-2 md:p-4 md:min-w-[800px] md:max-w-[50vw] md:place-self-center md:border-2 md:border-[#337066] md:mb-6 md:rounded md:shadow-md mt-4 ${
+            activeTab === index ? "" : "hidden"
+          }`}
+        >
+          <header className="flex items-center text-lg text-[#374151] mb-2">
+            <MdTableBar className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border
+ border-white shadow" />
             {room.name}
           </header>
           <div className="grid grid-cols-4 place-content-center gap-1 gap-y-3 mb-5 bg-secondary-bg-color grid-flow-row">
