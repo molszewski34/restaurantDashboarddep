@@ -7,3 +7,4 @@ restaurant/_pycatch
 mainapp
 _pycatch
 /node_modules
+*__pycache__*

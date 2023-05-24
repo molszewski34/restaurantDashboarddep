@@ -12,9 +12,6 @@ import { useMediaQuery, Tab, Tabs, useTheme } from "@mui/material";
 
 import { MdTableBar } from "react-icons/md";
 
-
-
-
 const TablesPanel = () => {
   const dispatch = useDispatch();
 
@@ -22,7 +19,7 @@ const TablesPanel = () => {
   const { error, loading, orders } = orderList;
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const tableList = useSelector((state) => state.tableList);
   const {
@@ -59,7 +56,6 @@ const TablesPanel = () => {
     setActiveTab(newValue);
   };
 
-
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
@@ -70,22 +66,20 @@ const TablesPanel = () => {
       <h1 className="font-bold text-[#0f766e] text-3xl text-center pl-2 my-4 ml-2 ">
         Tables
       </h1>
- 
-          <Tabs
-            orientation={isMobile ? 'vertical' : 'horizontal'}
-            value={activeTab}
-            onChange={handleChangeTab}
-            // variant="scrollable"
-            // scrollButtons="auto"
-            className={isMobile ? 'centered-tabs' : ''} 
-            centered
-          >
-            {rooms.map((room, index) => (
-              <Tab key={room.id} label={room.name}  />
-            ))}
-          </Tabs>
 
-    
+      <Tabs
+        orientation={isMobile ? "vertical" : "horizontal"}
+        value={activeTab}
+        onChange={handleChangeTab}
+        // variant="scrollable"
+        // scrollButtons="auto"
+        className={isMobile ? "centered-tabs" : ""}
+        centered
+      >
+        {rooms.map((room, index) => (
+          <Tab key={room.id} label={room.name} />
+        ))}
+      </Tabs>
 
       {rooms.map((room, index) => (
         <section
@@ -95,8 +89,10 @@ const TablesPanel = () => {
           }`}
         >
           <header className="flex items-center text-lg text-[#374151] mb-2">
-            <MdTableBar className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border
- border-white shadow" />
+            <MdTableBar
+              className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border
+ border-white shadow"
+            />
             {room.name}
           </header>
           <div className="grid grid-cols-4 place-content-center gap-1 gap-y-3 mb-5 bg-secondary-bg-color grid-flow-row">
@@ -116,10 +112,9 @@ const TablesPanel = () => {
                             key={filteredOrder.id}
                             component="button"
                             to={`/orders/order/${filteredOrder.id}`}
-                   
                             style={{
                               // backgroundColor: "red",
-                              border: "2px dashed red"
+                              border: "2px dashed red",
                             }}
                           >
                             <button
@@ -138,7 +133,7 @@ const TablesPanel = () => {
                     </>
                   ) : (
                     // DISPLAY FREE TABLES
-                    
+
                     <button
                       key={filderedTable.id}
                       className="flex flex-col items-center justify-center bg-[#f0fdfa]  duration-200 font-bold border-2 hover:border-dotted border-primary-bg-color rounded shadow"
@@ -148,39 +143,39 @@ const TablesPanel = () => {
                         );
                         setModalOpen(true);
                         setOverlay(true);
-                        console.log(` console.log z tables ${filderedTable.numberOfPersons}`)
+                        console.log(
+                          ` console.log z tables ${filderedTable.numberOfPersons}`
+                        );
                       }}
                     >
                       <span className="text-3xl text-[#0f766e]">
                         {" "}
                         #{filderedTable.tableNumber}
                       </span>{" "}
-                      <span className="text-[#0f766e]">1-{filderedTable.numberOfPersons}</span>
+                      <span className="text-[#0f766e]">
+                        1-{filderedTable.numberOfPersons}
+                      </span>
                     </button>
-                                   
-                    
                   )}
                 </>
               ))}
           </div>
         </section>
-
-))}
-  {modalOpen && (
-<div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-<ModalTablesPanel
-selectedMaxNumOfGuests={selectedMaxNumOfGuests}
-closeModal={() => setModalOpen(false)}
-closeOverlay={()=> setOverlay(false)}
-/>
-</div>
-)}
-{overlay && (
-  <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
-)}
-</main>
-);
+      ))}
+      {modalOpen && (
+        <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+          <ModalTablesPanel
+            selectedMaxNumOfGuests={selectedMaxNumOfGuests}
+            closeModal={() => setModalOpen(false)}
+            closeOverlay={() => setOverlay(false)}
+          />
+        </div>
+      )}
+      {overlay && (
+        <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
+      )}
+    </main>
+  );
 };
 
 export default TablesPanel;
-
