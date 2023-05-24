@@ -119,7 +119,6 @@ const TablesPanel = () => {
                           >
                             <button
                               key={filderedTable.id}
-                              disabled
                               className="flex flex-col items-center justify-center  duration-200 font-bold border-2 border-primary-bg-color rounded shadow bg-white opacity-50 cursor-not-allowed"
                             >
                               <span className="text-3xl">
