@@ -15,6 +15,7 @@ import {
   PAST_ORDERS_LIST_SUCCESS,
   PAST_ORDERS_LIST_REQUEST,
   PAST_ORDERS_LIST_FAIL,
+  CHANGE_DISH_QTY,
 } from "../constants/orderConstants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -156,15 +157,14 @@ export const increaseDishQty = (filteredDish, id) => async (dispatch) => {
 };
 
 //change dish qty
-export const changeDishQty = (filteredDish, id) => async (dispatch) => {
-  const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
-
+export const changeDishQty = (dish, dishQty) => async (dispatch) => {
+  console.log("Dish in Actions: ", dish.qty);
+  dish.qty = dishQty;
+  console.log("Dish in action (after change):", dish);
   dispatch({
-    type: ORDER_ADD_ITEM,
+    type: CHANGE_DISH_QTY,
     payload: {
-      data,
-      id,
-      filteredDish,
+      dish,
     },
   });
 

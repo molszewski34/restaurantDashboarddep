@@ -81,8 +81,8 @@ const OrdersPanel = () => {
 
   //Send chenged dish Qty to backend
   const sendDishQty = () => {
-    dispatch(changeDishQty());
-    console.log(dishQty);
+    dispatch(changeDishQty(dishToChange, dishQty));
+    console.log(dishToChange);
   };
 
   useEffect(() => {
@@ -115,52 +115,57 @@ const OrdersPanel = () => {
         </div>
       </section>
       {/* // ============= SECTION: Display ordered dishes ================ */}
-      <section className="grid grid-cols-1 grid-flow-row gap-1 auto-rows-max justify-between min-h-[300px] text-sm font-bold border-b-2 border-gray-light py-1">
-        {orderDishes.map((filteredDish) => (
-          <div
-            key={filteredDish.id}
-            className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
-            onClick={() => {
-              setDishToDisplay(filteredDish);
-            }}
-          >
-            <span className="text-ellipsis whitespace-nowrap overflow-hidden">
-              {dishList.dishes
-                .filter(
-                  (dishToDisplay) => dishToDisplay.id == filteredDish.dish
-                )
-                .map((filteredDishToDisplay) => (
-                  <div key={filteredDishToDisplay.id}>
-                    {filteredDishToDisplay.title}
-                  </div>
-                ))}
-            </span>
-            <div className="flex gap-8">
-              <span>{filteredDish.qty}</span>
-              {dishList.dishes
-                .filter(
-                  (dishToDisplay) => dishToDisplay.id == filteredDish.dish
-                )
-                .map((filteredDishToDisplay) => (
-                  <span key={filteredDishToDisplay.id}>
-                    {filteredDishToDisplay.price}
-                  </span>
-                ))}
-              {dishList.dishes
-                .filter(
-                  (dishToDisplay) => dishToDisplay.id == filteredDish.dish
-                )
-                .map((filteredDishToDisplay) => (
-                  <span key={filteredDishToDisplay.id}>
-                    {(filteredDishToDisplay.price * filteredDish.qty).toFixed(
-                      2
-                    )}
-                  </span>
-                ))}
+      {orderDishes ? (
+        <section className="grid grid-cols-1 grid-flow-row gap-1 auto-rows-max justify-between min-h-[300px] text-sm font-bold border-b-2 border-gray-light py-1">
+          {orderDishes.map((filteredDish) => (
+            <div
+              key={filteredDish.id}
+              className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
+              onClick={() => {
+                setDishToDisplay(filteredDish);
+              }}
+            >
+              <span className="text-ellipsis whitespace-nowrap overflow-hidden">
+                {dishList.dishes
+                  .filter(
+                    (dishToDisplay) => dishToDisplay.id == filteredDish.dish
+                  )
+                  .map((filteredDishToDisplay) => (
+                    <div key={filteredDishToDisplay.id}>
+                      {filteredDishToDisplay.title}
+                    </div>
+                  ))}
+              </span>
+              <div className="flex gap-8">
+                <span>{filteredDish.qty}</span>
+                {dishList.dishes
+                  .filter(
+                    (dishToDisplay) => dishToDisplay.id == filteredDish.dish
+                  )
+                  .map((filteredDishToDisplay) => (
+                    <span key={filteredDishToDisplay.id}>
+                      {filteredDishToDisplay.price}
+                    </span>
+                  ))}
+                {dishList.dishes
+                  .filter(
+                    (dishToDisplay) => dishToDisplay.id == filteredDish.dish
+                  )
+                  .map((filteredDishToDisplay) => (
+                    <span key={filteredDishToDisplay.id}>
+                      {(filteredDishToDisplay.price * filteredDish.qty).toFixed(
+                        2
+                      )}
+                    </span>
+                  ))}
+              </div>
             </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      ) : (
+        <CircularProgress color="secondary" />
+      )}
+
       {/* // ============= END SECTION: Display ordered dishes ================ */}
       <section className="flex justify-center py-2 bg-gray-light gap-2 border-b">
         <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
@@ -268,16 +273,6 @@ const OrdersPanel = () => {
               {dishToDisplay.title}
             </button>
           ))}
-
-        {/* <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem dishum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem dishum dolor sit amet consectetur adipisicing elit.
-        </button>
-        <button className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2">
-          Lorem dishum dolor sit amet consectetur adipisicing elit.
-        </button> */}
       </section>
     </main>
   );
