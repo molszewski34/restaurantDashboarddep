@@ -6,13 +6,19 @@ import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdTableBar } from "react-icons/md";
+
 import { LinkContainer } from "react-router-bootstrap";
+
 
 const TablesPanel = () => {
   const dispatch = useDispatch();
 
   const orderList = useSelector((state) => state.orderList);
   const { error, loading, orders } = orderList;
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
 
   const tableList = useSelector((state) => state.tableList);
   const {
@@ -56,6 +62,7 @@ const TablesPanel = () => {
       <h1 className="font-bold text-[#0f766e] text-3xl text-center pl-2 my-4 ml-2">
         Tables
       </h1>
+
       {/* <div className="flex justify-center mb-4"> */}
       <div className="grid grid-cols-4 grid-flow-row auto-rows-fr gap-y-4 mb-4 md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         {rooms.map((room, index) => (
@@ -72,6 +79,7 @@ const TablesPanel = () => {
          ))}
     
       </div>
+
       {rooms.map((room, index) => (
         <section
           key={room.id}
@@ -80,6 +88,7 @@ const TablesPanel = () => {
           }`}
         >
           <header className="flex items-center text-lg text-[#374151] mb-2">
+
             <MdTableBar className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border border-white shadow"
           />
           {room.name}
@@ -159,5 +168,6 @@ const TablesPanel = () => {
   </main>
 )}
 
-export default TablesPanel;
+      
 
+export default TablesPanel;
