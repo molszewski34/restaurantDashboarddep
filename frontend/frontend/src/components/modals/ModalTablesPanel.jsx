@@ -15,13 +15,13 @@ console.log(`console log z ModalTablesPanel ${selectedMaxNumOfGuests}`)
       }
     };
   //renders button as component
-    return <button className="border hover:bg-[#e4e4e7]"  onClick={handleClick}>{value}</button>;
+    return <button className="border-2 border-primary-bg-color rounded w-[60px]  text-primary-bg-color font-bold self-center hover:bg-[#e4e4e7]"  onClick={handleClick}>{value}</button>;
   };
 
   //changes color of text when numOfGuests is bigger than selectedMaxNumOfGuests
   const outputClassName = numOfGuests > selectedMaxNumOfGuests
   ? 'text-center text-3xl text-[#ef4444] col-start-2 col-end-2 py-2'
-  : 'text-center text-3xl col-start-2 col-end-2 py-2';
+  : 'text-center text-3xl text-primary-bg-color col-start-2 col-end-2 py-2';
 
 
   const handleBackspace = () => {
@@ -34,25 +34,35 @@ console.log(`console log z ModalTablesPanel ${selectedMaxNumOfGuests}`)
  
  
   return (
-    <main className=' flex flex-col border rounded bg-white p-2'>
-    <header className='flex justify-between border-b-2 font-bold'>
-  <div>Number of guests</div>
+    <main className=' flex flex-col border-white rounded bg-white p-2'>
+    <header className='flex text-primary-bg-color justify-between border-b-2 font-bold'>
+  <div className='pb-1 text-lg'>Number of guests</div>
 </header>
 
       {/* Output */}
-      <div className="grid grid-cols-3 justify-between">
-      <div className={outputClassName}>{outputValue}</div>
-      <div className="grid grid-cols-3 col-span-2 text-center gap-1">
+      <div className="grid grid-cols-2 justify-between">
+      <div className={`${outputClassName} col-start-1 col-end-3`}>{outputValue}</div>
+      {/* =========================== */}
+      {/* <div className="grid grid-cols-3 col-span-2 text-center gap-1 items-center " > */}
+      <div className="flex flex-col text-center gap-1 items-center " >
+      <div className="flex gap-2">
       <Number  value={1}/>
       <Number value={2}/>
       <Number value={3}/>
-      <Number value={4}/>
+      </div>
+      <div className="flex gap-2">
+      <Number  value={4}/>
       <Number value={5}/>
       <Number value={6}/>
-      <Number value={7}/>
+      </div>
+      <div className="flex gap-2">
+      <Number  value={7}/>
       <Number value={8}/>
       <Number value={9}/>
-      <Number value={0}/>
+      </div>
+     
+      <Number value={0} className='col-start-2' style={{ gridColumnStart: 2, gridColumnEnd: 3 }} />    
+ 
       </div>
 
       {/* BUTTONS */}

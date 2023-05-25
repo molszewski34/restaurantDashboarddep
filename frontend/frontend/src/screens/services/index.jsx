@@ -23,23 +23,23 @@ const Services = () => {
             <h1>Chose service</h1>
           </div>
           <div className="grid grid-rows-layout grid-cols-2 gap-1">
-            <div
+            <button
               onClick={() => {
                 navigate("/tablesPanel");
               }}
               className="flex justify-center items-center  bg-white text-center font-bold text-xl"
             >
               Table Service
-            </div>
-            <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+            </button>
+            <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
               Pending orders
-            </div>
-            <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+            </button>
+            <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
               Quick Order
-            </div>
-            <div className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+            </button>
+            <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
               Delivery
-            </div>
+            </button>
             {/* <div className="p-8 bg-white">Pending Orders</div>
         <div className="p-8 bg-white">Quick Orders</div>
         <div className="p-8 bg-white">Delivery</div> */}
