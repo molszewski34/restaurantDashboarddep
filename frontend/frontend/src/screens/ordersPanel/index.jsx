@@ -17,6 +17,7 @@ import {
 import { listCategories } from "../../actions/categoriesActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
+import { BsCheckLg } from "react-icons/bs";
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
@@ -267,6 +268,10 @@ const OrdersPanel = () => {
           .filter((filteredDishes) => filteredDishes.category == activeCategory)
           .map((dishToDisplay) => (
             <button
+              onDoubleClick={() => {
+                console.log("chuj");
+                alert("dupa");
+              }}
               key={dishToDisplay.id}
               className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
             >
