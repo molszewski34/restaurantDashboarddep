@@ -125,6 +125,7 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 };
 
+// This function will be removed
 export const increaseDishQty = (filteredDish, id) => async (dispatch) => {
   const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
 
@@ -152,6 +153,32 @@ export const increaseDishQty = (filteredDish, id) => async (dispatch) => {
     `/orders/update-qty/${filteredDish.id}`,
     config
   );
+};
+
+//change dish qty
+export const changeDishQty = (filteredDish, id) => async (dispatch) => {
+  const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
+
+  dispatch({
+    type: ORDER_ADD_ITEM,
+    payload: {
+      data,
+      id,
+      filteredDish,
+    },
+  });
+
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+    },
+    body: {},
+  };
+
+  // const { orderedDish } = await axios.post(
+  //   `/orders/update-qty/${filteredDish.id}`,
+  //   config
+  // );
 };
 
 export const addToOrder = (filteredDish, id) => async (dispatch) => {

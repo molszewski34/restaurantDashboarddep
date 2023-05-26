@@ -8,6 +8,7 @@ import { listOrderDishes } from "../../actions/dishActions";
 import { listDishes } from "../../actions/dishActions";
 import {
   getOrderDetails,
+  changeDishQty,
   addToOrder,
   removeFromOrder,
   deleteFromOrder,
@@ -15,8 +16,7 @@ import {
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
 
-
-import NavbarOrders from '../../components/navbars/NavbarOrders'
+import NavbarOrders from "../../components/navbars/NavbarOrders";
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
@@ -24,8 +24,6 @@ const OrdersPanel = () => {
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
-
-  console.log(orderDetails.order);
 
   const orderDishList = useSelector((state) => state.orderDishList);
   const {
@@ -79,6 +77,12 @@ const OrdersPanel = () => {
     } else {
       setDishQty(0);
     }
+  };
+
+  //Send chenged dish Qty to backend
+  const sendDishQty = () => {
+    dispatch(changeDishQty());
+    console.log(dishQty);
   };
 
   useEffect(() => {
@@ -211,7 +215,13 @@ const OrdersPanel = () => {
           <button className="font-bold text-base bg-primary-gray p-1 rounded border ">
             Cancel
           </button>
-          <button className="font-bold text-base bg-primary-bg-color text-white p-1 rounded border">
+          <button
+            className="font-bold text-base bg-primary-bg-color text-white p-1 rounded border"
+            onClick={() => {
+              console.log(dishNameToDisplay[0]);
+              sendDishQty();
+            }}
+          >
             Done
           </button>
         </div>
@@ -238,8 +248,6 @@ const OrdersPanel = () => {
             className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
             onClick={() => {
               setActiveCategory(category.id);
-              console.log(category.id);
-              console.log(activeCategory);
             }}
           >
             {category.title}
