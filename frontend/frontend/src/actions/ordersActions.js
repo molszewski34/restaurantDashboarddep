@@ -156,11 +156,11 @@ export const increaseDishQty = (filteredDish, id) => async (dispatch) => {
   );
 };
 
-//change dish qty
+// =============== CHANGE DISH QTY ==========================
 export const changeDishQty = (dish, dishQty) => async (dispatch) => {
-  console.log("Dish in Actions: ", dish.qty);
+  //replace old value of dish qty by new
   dish.qty = dishQty;
-  console.log("Dish in action (after change):", dish);
+
   dispatch({
     type: CHANGE_DISH_QTY,
     payload: {
@@ -168,18 +168,29 @@ export const changeDishQty = (dish, dishQty) => async (dispatch) => {
     },
   });
 
+  // New value of qty
+  const body = {
+    qty: dish.qty,
+  };
+
+  // Authorization - userInfo is ssending to backend
+  let userInfo = JSON.parse(localStorage.userInfo);
   const config = {
     headers: {
       "Content-type": "application/json",
+      Authorization: "Bearer " + String(userInfo.access),
     },
-    body: {},
   };
 
-  // const { orderedDish } = await axios.post(
-  //   `/orders/update-qty/${filteredDish.id}`,
-  //   config
-  // );
+  //Send POST metod to backend with changed dish qty
+  const { orderedDish } = await axios.post(
+    `/orders/update-qty/${dish.id}`,
+    body, // if POST request, axios send headers as third parameter
+    config
+  );
 };
+
+// =============== CHANGE DISH QTY ========================== END
 
 export const addToOrder = (filteredDish, id) => async (dispatch) => {
   console.log("FilteredDish: ", filteredDish);

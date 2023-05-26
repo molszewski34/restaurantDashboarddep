@@ -115,36 +115,34 @@ def addDishToOrder(request):
 
 
 
-@api_view(['POST',"GET"])
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def changeDishQty(request,pk):
     
     data = request.data
-    user= request.user
-    print(request.headers)
-    print("USER: ", user)
-    
+
     if request.method == "POST":
        
-        user = request.user
+       #Get dish to change qty
         dishToChange = OrderDish.objects.get(id=pk)
   
         orderedDishQtyBeforeChange = dishToChange.qty
         
-        dishToChange.qty = data["body"]['qty']
-        
-        print("orderedDishQtyBeforeChange: ", orderedDishQtyBeforeChange)
-        print("dishToChange.qty: ",dishToChange.qty)
-        
+        #new value of qty
+        dishToChange.qty = data['qty']
+       
+       #get order contains dish to change
         order = Order.objects.get(id=dishToChange.order.id)
+        #CHanging dish qty in order
         if orderedDishQtyBeforeChange < dishToChange.qty:
             order.totalPrice = round((float(order.totalPrice) + float(dishToChange.dish.price)),2)
         else:
             order.totalPrice = round((float(order.totalPrice) - float(dishToChange.dish.price)),2)
+        #if new qty value is 0, delete dish from order
         if dishToChange.qty == 0:
            
             dishToChange.delete()
-            
-         
+                 
             return Response("Element deleted")
         
         dishToChange.save()

@@ -77,12 +77,9 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
 
     // Change qty of selected dish
     case CHANGE_DISH_QTY:
-      const dishToChange = action.payload;
-      console.log("Dish to Change: ", dishToChange);
-      console.log(state);
       return {
         state,
-        orderDishes: [...state.orderDishes, dishToChange],
+        orderDishes: [...state.orderDishes],
       };
 
     // This case will be removed
