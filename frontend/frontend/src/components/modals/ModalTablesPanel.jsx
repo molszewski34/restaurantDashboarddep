@@ -15,7 +15,8 @@ console.log(`console log z ModalTablesPanel ${selectedMaxNumOfGuests}`)
       }
     };
   //renders button as component
-    return <button className="border-2 border-primary-bg-color rounded w-[60px]  text-primary-bg-color font-bold self-center hover:bg-[#e4e4e7]"  onClick={handleClick}>{value}</button>;
+    return <button className="border-2 border-primary-bg-color rounded w-[60px]  text-primary-bg-color font-bold self-center hover:bg-[#e4e4e7]"  
+    onClick={handleClick}>{value}</button>;
   };
 
   //changes color of text when numOfGuests is bigger than selectedMaxNumOfGuests
@@ -37,7 +38,7 @@ console.log(`console log z ModalTablesPanel ${selectedMaxNumOfGuests}`)
     <main className=' flex flex-col border-white rounded bg-white p-2'>
     <header className='flex text-primary-bg-color justify-between border-b-2 font-bold'>
   <div className='pb-1 text-lg'>Number of guests</div>
-</header>
+  </header>
 
       {/* Output */}
       <div className="grid grid-cols-2 justify-between">
