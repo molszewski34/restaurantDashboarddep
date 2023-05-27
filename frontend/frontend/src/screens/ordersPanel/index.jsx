@@ -48,7 +48,11 @@ const OrdersPanel = () => {
   const [dishToChange, setdishToChange] = useState("-");
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
   const [dishQty, setDishQty] = useState(0);
+  //set first state of clicked dish in order - in case of cancel changes
+  const [oldDishQty, setOldDishQty] = useState(0);
   // First states of SECTION:  Change order QTY ==  END ==
+
+  const [reload, setReload] = useState(false);
 
   //First state of active category
   const [activeCategory, setActiveCategory] = useState(0);
@@ -62,6 +66,7 @@ const OrdersPanel = () => {
     setDishNameToDisplay(dishToDisplay);
     setdishToChange(filteredDish);
     setDishQty(filteredDish.qty);
+    setOldDishQty(filteredDish.qty);
   };
 
   // Increment dish QTY
@@ -82,7 +87,7 @@ const OrdersPanel = () => {
   //Send chenged dish Qty to backend
   const sendDishQty = () => {
     dispatch(changeDishQty(dishToChange, dishQty));
-    console.log(dishToChange);
+    setReload(!reload);
   };
 
   useEffect(() => {
@@ -91,7 +96,7 @@ const OrdersPanel = () => {
     dispatch(listCategories());
 
     dispatch(getOrderDetails(id));
-  }, [dispatch, id]);
+  }, [dispatch, reload]);
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -217,7 +222,12 @@ const OrdersPanel = () => {
           )}
         </span>
         <div className="flex gap-2">
-          <button className="font-bold text-base bg-primary-gray p-1 rounded border ">
+          <button
+            onClick={() => {
+              setDishQty(oldDishQty);
+            }}
+            className="font-bold text-base bg-primary-gray p-1 rounded border "
+          >
             Cancel
           </button>
           <button
@@ -263,16 +273,33 @@ const OrdersPanel = () => {
       </section>
 
       <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b">
+        {/* // ============= SECTION: Display Dish From active Category ================ */}
         {dishList.dishes
           .filter((filteredDishes) => filteredDishes.category == activeCategory)
           .map((dishToDisplay) => (
             <button
+              onClick={() => {
+                setReload(!reload);
+                // set doubledDish - if order contains clicked dish
+                const doubledDish = orderDishes.filter(
+                  (dishToCheck) => dishToCheck.dish == dishToDisplay.id
+                );
+                // if clicked dish exist in order, change qty +1
+                if (doubledDish.length > 0) {
+                  let doubledDishQty = doubledDish[0].qty + 1;
+                  dispatch(changeDishQty(doubledDish[0], doubledDishQty));
+                  // if doesn`t - add dish to order (and also to database)
+                } else if (doubledDish.length == 0) {
+                  dispatch(addToOrder(dishToDisplay, id));
+                }
+              }}
               key={dishToDisplay.id}
               className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
             >
               {dishToDisplay.title}
             </button>
           ))}
+        {/* // ============= END SECTION: Display Dish From active Category ================ */}
       </section>
     </main>
   );
