@@ -15,6 +15,7 @@ import {
   PAST_ORDERS_LIST_SUCCESS,
   PAST_ORDERS_LIST_REQUEST,
   PAST_ORDERS_LIST_FAIL,
+  CHANGE_DISH_QTY,
 } from "../constants/orderConstants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -125,76 +126,110 @@ export const getOrderDetails = (id) => async (dispatch) => {
   }
 };
 
-export const increaseDishQty = (filteredDish, id) => async (dispatch) => {
-  const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
+// This function will be removed
+// export const increaseDishQty = (filteredDish, id) => async (dispatch) => {
+//   const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
+
+//   dispatch({
+//     type: ORDER_ADD_ITEM,
+//     payload: {
+//       data,
+//       id,
+//       filteredDish,
+//     },
+//   });
+
+//   const config = {
+//     headers: {
+//       "Content-type": "application/json",
+//     },
+//     body: {
+//       order: data.orderedDishData.order,
+//       dish: data.orderedDishData.dish,
+//       qty: data.orderedDishData.qty + 1,
+//     },
+//   };
+
+//   const { orderedDish } = await axios.post(
+//     `/orders/update-qty/${filteredDish.id}`,
+//     config
+//   );
+// };
+
+// =============== CHANGE DISH QTY ==========================
+export const changeDishQty = (dish, dishQty) => async (dispatch) => {
+  //replace old value of dish qty by new
+  dish.qty = dishQty;
+  console.log(dish);
 
   dispatch({
-    type: ORDER_ADD_ITEM,
+    type: CHANGE_DISH_QTY,
     payload: {
-      data,
+      dish,
+    },
+  });
+
+  // New value of qty
+  const body = {
+    qty: dish.qty,
+  };
+
+  // Authorization - userInfo is ssending to backend
+  let userInfo = JSON.parse(localStorage.userInfo);
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: "Bearer " + String(userInfo.access),
+    },
+  };
+
+  //Send POST metod to backend with changed dish qty
+  const { orderedDish } = await axios.post(
+    `/orders/update-qty/${dish.id}`,
+    body, // if POST request, axios send headers as third parameter
+    config
+  );
+};
+
+// =============== END ==== CHANGE DISH QTY =========== END ===============
+
+// =============== ADD NEW DISH TO ORDER ==========================
+
+export const addToOrder = (filteredDish, id) => async (dispatch) => {
+  console.log("Fire off addToORder");
+
+  dispatch({
+    type: ORDER_ADD_NEW_ITEM,
+    payload: {
       id,
       filteredDish,
     },
   });
 
+  const body = {
+    dish: filteredDish.id,
+    order: id,
+    qty: 1,
+    price: filteredDish.price,
+  };
+  // Get userInfo from local storage and send it to backend for JWT authorization
+  let userInfo = JSON.parse(localStorage.userInfo);
   const config = {
     headers: {
       "Content-type": "application/json",
-    },
-    body: {
-      order: data.orderedDishData.order,
-      dish: data.orderedDishData.dish,
-      qty: data.orderedDishData.qty + 1,
+      Authorization: "Bearer " + String(userInfo.access),
     },
   };
 
-  const { orderedDish } = await axios.post(
-    `/orders/update-qty/${filteredDish.id}`,
+  const { dishToAdd } = await axios.post(
+    `/orders/add-dish-to-order`,
+    body,
     config
   );
-};
+  //window.location.reload();
 
-export const addToOrder = (filteredDish, id) => async (dispatch) => {
-  console.log("FilteredDish: ", filteredDish);
-
-  const { data } = await axios.get("/dishes/get-order-dishes");
-
-  const orderedDishes = data.filter((el) => el.order == id);
-  console.log(orderedDishes);
-  console.log(filteredDish);
-  const ordereDishExist = orderedDishes.filter(
-    (el) => el.dish == filteredDish.id
-  );
-  console.log("Ordered dish existed: ", ordereDishExist);
-
-  if (ordereDishExist.length < 1) {
-    console.log("OrderderDishesExist: ", ordereDishExist);
-    dispatch({
-      type: ORDER_ADD_NEW_ITEM,
-      payload: {
-        id,
-        filteredDish,
-      },
-    });
-
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-      body: {
-        dish: filteredDish.id,
-        order: id,
-        qty: 1,
-        price: filteredDish.price,
-      },
-    };
-
-    const { dishToAdd } = await axios.post(`/orders/add-dish-to-order`, config);
-    window.location.reload();
-  }
-  if (ordereDishExist.length > 0) {
-    alert("Dish you want to add already exist in order. Try to increase qty");
-  }
+  // if (ordereDishExist.length > 0) {
+  //   alert("Dish you want to add already exist in order. Try to increase qty");
 };
 
 export const removeFromOrder = (filteredDish, id) => async (dispatch) => {
