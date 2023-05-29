@@ -90,6 +90,23 @@ const OrdersPanel = () => {
     setReload(!reload);
   };
 
+  const handleClick = event => {
+    console.log(event.detail);
+    switch (event.detail) {
+      case "single_click": {
+        console.log('single click');
+        break;
+      }
+      case "double_click": {
+        console.log('double click');
+        break;
+      }
+  
+      default: {
+        break;
+      }
+    }}
+
   useEffect(() => {
     dispatch(listDishes());
     dispatch(listOrderDishes(id));
