@@ -103,34 +103,39 @@ const OrdersPanel = () => {
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <main>
+    <>
       <NavbarOrders />
-      <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
+    <main className="grid bg-secondary-bg-color border">
+      <div className="md:min-w-[800px] md:max-w-[50vw] md:place-self-center  md:border-x-2">
+      <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1 md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         <div className="flex gap-2">
           <span>#66</span> <span>Table 6</span>
         </div>
         <p>Name of waiter</p>
       </section>
-      <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1">
-        <span className="w-half">Name</span>
-        <div className="flex gap-8">
-          <span>QTY</span>
-          <span>EACH</span>
-          <span>TOTAL</span>
-        </div>
+      <section className="grid grid-cols-5 border-b-2 border-gray-light py-1 md:min-w-[800px] md:max-w-[50vw] md:place-self-center bg-white ">
+      {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
+        <span className="col-start-1 col-end-3 font-bold pl-2">Name</span>
+        {/* <span className="w-half col-start-1 col-end-3 ">Name</span> */}
+    
+          <span className="text-center font-bold">QTY</span>
+          <span className="text-center font-bold">EACH</span>
+          <span className="text-center font-bold">TOTAL</span>
+  
       </section>
       {/* // ============= SECTION: Display ordered dishes ================ */}
       {orderDishes ? (
-        <section className="grid grid-cols-1 grid-flow-row gap-1 auto-rows-max justify-between min-h-[300px] text-sm font-bold border-b-2 border-gray-light py-1">
+        <section className="grid grid-cols-1 grid-flow-row gap-1 auto-rows-max justify-between min-h-[300px] text-sm font-bold border-b-2 border-gray-light py-1 md:min-w-[800px] md:max-w-[50vw] md:place-self-center bg-white ">
           {orderDishes.map((filteredDish) => (
             <div
               key={filteredDish.id}
-              className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
+              className=" grid grid-cols-5 "
+              // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
               onClick={() => {
                 setDishToDisplay(filteredDish);
               }}
             >
-              <span className="text-ellipsis whitespace-nowrap overflow-hidden">
+              <span className="text-ellipsis whitespace-nowrap overflow-hidden col-start-1 col-end-3 pl-2 flex flex-wrap max-w-full">
                 {dishList.dishes
                   .filter(
                     (dishToDisplay) => dishToDisplay.id == filteredDish.dish
@@ -141,14 +146,14 @@ const OrdersPanel = () => {
                     </div>
                   ))}
               </span>
-              <div className="flex gap-8">
-                <span>{filteredDish.qty}</span>
+          
+                <span className="text-center">{filteredDish.qty}</span>
                 {dishList.dishes
                   .filter(
                     (dishToDisplay) => dishToDisplay.id == filteredDish.dish
                   )
                   .map((filteredDishToDisplay) => (
-                    <span key={filteredDishToDisplay.id}>
+                    <span className="text-center" key={filteredDishToDisplay.id}>
                       {filteredDishToDisplay.price}
                     </span>
                   ))}
@@ -157,14 +162,14 @@ const OrdersPanel = () => {
                     (dishToDisplay) => dishToDisplay.id == filteredDish.dish
                   )
                   .map((filteredDishToDisplay) => (
-                    <span key={filteredDishToDisplay.id}>
+                    <span className="text-center" key={filteredDishToDisplay.id}>
                       {(filteredDishToDisplay.price * filteredDish.qty).toFixed(
                         2
                       )}
                     </span>
                   ))}
               </div>
-            </div>
+       
           ))}
         </section>
       ) : (
@@ -172,7 +177,8 @@ const OrdersPanel = () => {
       )}
 
       {/* // ============= END SECTION: Display ordered dishes ================ */}
-      <section className="flex justify-center py-2 bg-gray-light gap-2 border-b">
+ 
+      <section className="flex justify-center py-2 bg-gray-light gap-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
           Tab
         </button>
@@ -184,7 +190,7 @@ const OrdersPanel = () => {
         </button>
       </section>
 
-      <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color">
+      <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color md:min-w-[800px] md:max-w-[50vw] md:place-self-center border-x-1">
         <div className="flex gap-2">
           <button
             className="w-[25px] font-bold bg-primary-gray border-b-2"
@@ -241,7 +247,7 @@ const OrdersPanel = () => {
           </button>
         </div>
       </section>
-      <section className="flex justify-between bg-white p-2 border-b">
+      <section className="flex justify-between bg-white p-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         <div className="flex flex-wrap justify-between items-center font-bold gap-4">
           <span className="text-base">Balance Due:</span>
           <span className="text-3xl text-red-300">
@@ -254,13 +260,13 @@ const OrdersPanel = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b">
+      <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         {/* // ============= SECTION: Display Categories ================ */}
 
         {categories.map((category) => (
           <button
             key={category.id}
-            className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
+            className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
             onClick={() => {
               setActiveCategory(category.id);
             }}
@@ -272,7 +278,7 @@ const OrdersPanel = () => {
         {/* // ============= END SECTION: Display Categories ================ */}
       </section>
 
-      <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b">
+      <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         {/* // ============= SECTION: Display Dish From active Category ================ */}
         {dishList.dishes
           .filter((filteredDishes) => filteredDishes.category == activeCategory)
@@ -294,14 +300,16 @@ const OrdersPanel = () => {
                 }
               }}
               key={dishToDisplay.id}
-              className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2"
+              className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
             >
               {dishToDisplay.title}
             </button>
           ))}
         {/* // ============= END SECTION: Display Dish From active Category ================ */}
       </section>
+      </div>
     </main>
+    </>
   );
 };
 
