@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavbarTop from "../../components/navbars/NavbarTop";
 import ModalTablesPanel from "../../components/modals/ModalTablesPanel";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdTableBar } from "react-icons/md";
+
+import { LinkContainer } from "react-router-bootstrap";
 
 const TablesPanel = () => {
   const dispatch = useDispatch();
@@ -14,8 +15,8 @@ const TablesPanel = () => {
   const orderList = useSelector((state) => state.orderList);
   const { error, loading, orders } = orderList;
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  // const theme = useTheme();
+  // const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
 
   const tableList = useSelector((state) => state.tableList);
   const {
@@ -43,105 +44,106 @@ const TablesPanel = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
+  const [activeTab, setActiveTab] = useState(0);
+
+  const handleTabChange = (index) => {
+    setActiveTab(index);
+  };
 
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
     <div>Something went wrong</div>
   ) : (
-    <main className="bg-secondary-bg-color h-screen relative flex flex-col">
+    <main className="bg-secondary-bg-color h-screen relative flex flex-col  ">
       <NavbarTop />
-      <h1 className="font-bold text-[#0f766e] text-3xl text-center pl-2 my-4 ml-2 ">
+      <h1 className="font-bold text-[#0f766e] text-3xl text-center pl-2 my-4 ml-2">
         Tables
       </h1>
- 
-          <Tabs
-            orientation={isMobile ? 'vertical' : 'horizontal'}
-            value={activeTab}
-            onChange={handleChangeTab}
-            // variant="scrollable"
-            // scrollButtons="auto"
-            className={isMobile ? 'centered-tabs' : ''} 
-            centered
-          >
-            {rooms.map((room, index) => (
-              <Tab key={room.id} label={room.name}  />
-            ))}
-          </Tabs>
 
-    
+      {/* <div className="flex justify-center mb-4"> */}
+      <div className="grid grid-cols-4 grid-flow-row auto-rows-fr gap-y-4 mb-4 md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
+        {rooms.map((room, index) => (
+          <button
+            key={room.id}
+            className={`p-2 mx-2 text-base text-white bg-primary-bg-color shadow-xl  ${
+              activeTab === index
+                ? "text-[#fde047] font-bold border-2 border-white"
+                : "text-[#374151] border-2 border-primary-bg-color"
+            }`}
+            onClick={() => handleTabChange(index)}
+          >
+            {room.name}
+          </button>
+        ))}
+      </div>
 
       {rooms.map((room, index) => (
         <section
           key={room.id}
-          className={`p-2 md:p-4 md:min-w-[800px] md:max-w-[50vw] md:place-self-center md:border-2 md:border-[#337066] md:mb-6 md:rounded md:shadow-md mt-4 ${
-            activeTab === index ? "" : "hidden"
+          className={`p-2 md:p-4 md:min-w-[800px] md:max-w-[50vw] md:place-self-center md:border-2 md:border-[#337066] md:mb-6 md:rounded md:shadow-md ${
+            activeTab !== index ? "hidden" : ""
           }`}
         >
           <header className="flex items-center text-lg text-[#374151] mb-2">
-            <MdTableBar className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border
- border-white shadow" />
+            <MdTableBar className="text-lg text-white bg-[#ea580c] rounded-full p-1 w-6 h-6 mr-2 border border-white shadow" />
             {room.name}
           </header>
           <div className="grid grid-cols-4 place-content-center gap-1 gap-y-3 mb-5 bg-secondary-bg-color grid-flow-row">
             {/* DISPLAY TABLES */}
             {tables
-              .filter((table) => table.room == room.id)
-              .map((filderedTable) => (
+              .filter((table) => table.room === room.id)
+              .map((filteredTable) => (
                 <>
-                  {filderedTable.isOccupied ? (
+                  {filteredTable.isOccupied ? (
                     <>
-                      {/* DISPLAY OCCIPIED TABLES */}
+                      {/* DISPLAY OCCUPIED TABLES */}
                       {orders
-                        .filter((order) => order.table == filderedTable.id)
+                        .filter((order) => order.table === filteredTable.id)
                         .map((filteredOrder) => (
                           <LinkContainer
                             key={filteredOrder.id}
                             component="button"
                             to={`/orders/order/${filteredOrder.id}`}
-                   
                             style={{
-                              // backgroundColor: "red",
-                              border: "2px dashed red"
+                              border: "2px dashed red",
                             }}
                           >
                             <button
-                              key={filderedTable.id}
-                              disabled
-                              className="flex flex-col items-center justify-center  duration-200 font-bold border-2 border-primary-bg-color rounded shadow bg-white opacity-50 cursor-not-allowed"
+                              key={filteredTable.id}
+                              className="flex flex-col items-center justify-center duration-200 font-bold border-2 border-primary-bg-color rounded shadow bg-white opacity-50"
                             >
                               <span className="text-3xl">
-                                {" "}
-                                #{filderedTable.tableNumber}
-                              </span>{" "}
-                              <span>1-{filderedTable.numberOfPersons}</span>
+                                #{filteredTable.tableNumber}
+                              </span>
+                              <span>1-{filteredTable.numberOfPersons}</span>
                             </button>
                           </LinkContainer>
                         ))}
                     </>
                   ) : (
                     // DISPLAY FREE TABLES
-                    
                     <button
-                      key={filderedTable.id}
-                      className="flex flex-col items-center justify-center bg-white hover:bg-gray-light  duration-200 font-bold border-2 border-primary-bg-color rounded shadow"
+                      key={filteredTable.id}
+                      className="flex flex-col items-center justify-center bg-[#f0fdfa] duration-200 font-bold border-2 hover:border-dotted border-primary-bg-color rounded shadow"
                       onClick={() => {
                         setSelectedMaxNumOfGuests(
-                          filderedTable.numberOfPersons
+                          filteredTable.numberOfPersons
                         );
                         setModalOpen(true);
                         setOverlay(true);
-                        console.log(` console.log z tables ${filderedTable.numberOfPersons}`)
+                        console.log(
+                          `console.log z tables ${filteredTable.numberOfPersons}`
+                        );
                       }}
                     >
                       <span className="text-3xl text-[#0f766e]">
-                        {" "}
-                        #{filderedTable.tableNumber}
-                      </span>{" "}
-                      <span className="text-[#0f766e]">1-{filderedTable.numberOfPersons}</span>
+                        #{filteredTable.tableNumber}
+                      </span>
+                      <span className="text-[#0f766e]">
+                        1-{filteredTable.numberOfPersons}
+                      </span>
                     </button>
-                                   
-                    
                   )}
                 </>
               ))}
@@ -151,7 +153,7 @@ const TablesPanel = () => {
       {modalOpen && (
         <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <ModalTablesPanel
-            maxNumOfGuests={selectedMaxNumOfGuests}
+            selectedMaxNumOfGuests={selectedMaxNumOfGuests}
             closeModal={() => setModalOpen(false)}
             closeOverlay={() => setOverlay(false)}
           />
