@@ -46,6 +46,9 @@ const TablesPanel = () => {
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
 
+  // =========== table ID used to create new order ============
+  const [tableId, setTableId] = useState(null);
+
   const handleTabChange = (index) => {
     setActiveTab(index);
   };
@@ -141,9 +144,7 @@ const TablesPanel = () => {
                         );
                         setModalOpen(true);
                         setOverlay(true);
-                        console.log(
-                          `console.log z tables ${filteredTable.numberOfPersons}`
-                        );
+                        setTableId(filteredTable.id);
                       }}
                     >
                       <span className="text-3xl text-[#0f766e]">
@@ -163,6 +164,7 @@ const TablesPanel = () => {
       {modalOpen && (
         <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <ModalTablesPanel
+            tableId={tableId}
             selectedMaxNumOfGuests={selectedMaxNumOfGuests}
             closeModal={() => setModalOpen(false)}
             closeOverlay={() => setOverlay(false)}
