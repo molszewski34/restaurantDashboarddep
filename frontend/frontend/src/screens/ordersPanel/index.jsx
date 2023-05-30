@@ -21,6 +21,7 @@ import NavbarOrders from "../../components/navbars/NavbarOrders";
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
+  console.log("START");
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -53,6 +54,7 @@ const OrdersPanel = () => {
   // First states of SECTION:  Change order QTY ==  END ==
 
   const [reload, setReload] = useState(false);
+  console.log(reload);
 
   //First state of active category
   const [activeCategory, setActiveCategory] = useState(0);
@@ -90,12 +92,32 @@ const OrdersPanel = () => {
     setReload(!reload);
   };
 
-  useEffect(() => {
-    dispatch(listDishes());
-    dispatch(listOrderDishes(id));
-    dispatch(listCategories());
+  const handleClick = (event) => {
+    console.log(event.detail);
+    switch (event.detail) {
+      case "single_click": {
+        console.log("single click");
+        break;
+      }
+      case "double_click": {
+        console.log("double click");
+        break;
+      }
 
-    dispatch(getOrderDetails(id));
+      default: {
+        break;
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (reload == false) {
+      console.log("USE EFF");
+      dispatch(listDishes());
+      dispatch(listCategories());
+
+      dispatch(getOrderDetails(id));
+    }
   }, [dispatch, reload]);
 
   return loading ? (
@@ -131,6 +153,9 @@ const OrdersPanel = () => {
                   className=" grid grid-cols-5 "
                   // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
+
+                    setReload(true);
+
                     setDishToDisplay(filteredDish);
                   }}
                 >

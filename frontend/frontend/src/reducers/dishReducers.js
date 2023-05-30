@@ -126,7 +126,9 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
       return { loading: true, orderDishes: [] };
 
     case ORDER_DISH_LIST_SUCCESS:
-      console.log("AKSZYN ", action.payload);
+
+      console.log("ACTION PAYLOAD IN ORDER DISH ", action.payload);
+
       return { loading: false, orderDishes: action.payload };
 
     case ORDER_DISH_LIST_FAIL:
