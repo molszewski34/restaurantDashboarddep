@@ -153,7 +153,9 @@ const OrdersPanel = () => {
                   className=" grid grid-cols-5 "
                   // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
+
                     setReload(true);
+
                     setDishToDisplay(filteredDish);
                   }}
                 >

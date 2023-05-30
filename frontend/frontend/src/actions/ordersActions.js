@@ -20,6 +20,8 @@ import {
   ORDER_DISH_LIST_SUCCESS,
   ORDER_DISH_LIST_FAIL,
 } from "../constants/orderConstants";
+
+import { ORDER_DISH_LIST_SUCCESS } from "../constants/dishConstants";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
