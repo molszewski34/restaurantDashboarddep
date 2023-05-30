@@ -45,6 +45,7 @@ const TablesPanel = () => {
   const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
+  const [tableId, setTableId] = useState(0);
 
   const handleTabChange = (index) => {
     setActiveTab(index);
@@ -132,9 +133,11 @@ const TablesPanel = () => {
                         );
                         setModalOpen(true);
                         setOverlay(true);
+                        setTableId(filteredTable.id);
                         console.log(
                           `console.log z tables ${filteredTable.numberOfPersons}`
                         );
+                        console.log(filteredTable.id);
                       }}
                     >
                       <span className="text-3xl text-[#0f766e]">
