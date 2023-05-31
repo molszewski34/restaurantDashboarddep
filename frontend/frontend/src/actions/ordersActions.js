@@ -16,7 +16,11 @@ import {
   PAST_ORDERS_LIST_REQUEST,
   PAST_ORDERS_LIST_FAIL,
   CHANGE_DISH_QTY,
+  ORDER_DISH_LIST_REQUEST,
+  ORDER_DISH_LIST_SUCCESS,
+  ORDER_DISH_LIST_FAIL,
 } from "../constants/orderConstants";
+
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -162,33 +166,43 @@ export const changeDishQty = (dish, dishQty) => async (dispatch) => {
   dish.qty = dishQty;
   console.log(dish);
 
-  dispatch({
-    type: CHANGE_DISH_QTY,
-    payload: {
-      dish,
-    },
-  });
+  try {
+    dispatch({
+      type: CHANGE_DISH_QTY,
+      payload: {
+        dish,
+      },
+    });
 
-  // New value of qty
-  const body = {
-    qty: dish.qty,
-  };
+    // New value of qty
+    const body = {
+      qty: dish.qty,
+    };
 
-  // Authorization - userInfo is ssending to backend
-  let userInfo = JSON.parse(localStorage.userInfo);
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: "Bearer " + String(userInfo.access),
-    },
-  };
+    // Authorization - userInfo is ssending to backend
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
 
-  //Send POST metod to backend with changed dish qty
-  const { orderedDish } = await axios.post(
-    `/orders/update-qty/${dish.id}`,
-    body, // if POST request, axios send headers as third parameter
-    config
-  );
+    //Send POST metod to backend with changed dish qty
+    const { orderedDish } = await axios.post(
+      `/orders/update-qty/${dish.id}`,
+      body, // if POST request, axios send headers as third parameter
+      config
+    );
+  } catch (error) {
+    dispatch({
+      type: ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
 };
 
 // =============== END ==== CHANGE DISH QTY =========== END ===============

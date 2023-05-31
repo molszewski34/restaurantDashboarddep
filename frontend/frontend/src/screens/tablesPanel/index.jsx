@@ -6,6 +6,7 @@ import { listTables, listRooms } from "../../actions/tablesActions";
 import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdTableBar } from "react-icons/md";
+import { listOrderDishes } from "../../actions/dishActions";
 
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -45,6 +46,9 @@ const TablesPanel = () => {
   const [overlay, setOverlay] = useState(false);
   const [selectedMaxNumOfGuests, setSelectedMaxNumOfGuests] = useState(null);
   const [activeTab, setActiveTab] = useState(0);
+
+  // =========== table ID used to create new order ============
+  const [tableId, setTableId] = useState(null);
 
   const handleTabChange = (index) => {
     setActiveTab(index);
@@ -110,6 +114,9 @@ const TablesPanel = () => {
                           <LinkContainer
                             key={filteredOrder.id}
                             component="button"
+                            onClick={() => {
+                              dispatch(listOrderDishes(filteredOrder.id));
+                            }}
                             to={`/orders/order/${filteredOrder.id}`}
                             style={{
                               border: "2px dashed red",
@@ -141,9 +148,7 @@ const TablesPanel = () => {
                         );
                         setModalOpen(true);
                         setOverlay(true);
-                        console.log(
-                          `console.log z tables ${filteredTable.numberOfPersons}`
-                        );
+                        setTableId(filteredTable.id);
                       }}
                     >
                       <span className="text-3xl text-[#0f766e]">
@@ -163,6 +168,7 @@ const TablesPanel = () => {
       {modalOpen && (
         <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
           <ModalTablesPanel
+            tableId={tableId}
             selectedMaxNumOfGuests={selectedMaxNumOfGuests}
             closeModal={() => setModalOpen(false)}
             closeOverlay={() => setOverlay(false)}

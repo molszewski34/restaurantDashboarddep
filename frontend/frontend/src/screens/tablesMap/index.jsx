@@ -3,7 +3,7 @@ import "./styles.css";
 import NavbarOrders from "../../components/navbars/NavbarOrders";
 import MainRoom from "../../components/TableComponents/MainRoom";
 
-const Invoices = () => {
+const TablesMap = () => {
   return (
     <div>
       <NavbarOrders />
@@ -12,4 +12,4 @@ const Invoices = () => {
   );
 };
 
-export default Invoices;
+export default TablesMap;
