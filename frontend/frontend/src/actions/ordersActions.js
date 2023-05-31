@@ -58,8 +58,6 @@ export const createOrder = (id, orders) => async (dispatch, getState) => {
           ? error.response.data.message
           : error.message,
     });
-
-    console.log(error);
   }
 };
 
@@ -164,7 +162,6 @@ export const getOrderDetails = (id) => async (dispatch) => {
 export const changeDishQty = (dish, dishQty) => async (dispatch) => {
   //replace old value of dish qty by new
   dish.qty = dishQty;
-  console.log(dish);
 
   try {
     dispatch({
@@ -210,8 +207,6 @@ export const changeDishQty = (dish, dishQty) => async (dispatch) => {
 // =============== ADD NEW DISH TO ORDER ==========================
 
 export const addToOrder = (filteredDish, id) => async (dispatch) => {
-  console.log("Fire off addToORder");
-
   dispatch({
     type: ORDER_ADD_NEW_ITEM,
     payload: {

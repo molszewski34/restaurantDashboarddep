@@ -43,7 +43,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
 class DishCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = DishCategory
-        fields = ['id','title']
+        fields = ['id','title','colour']
 
 
 class DishSerializer(serializers.ModelSerializer):

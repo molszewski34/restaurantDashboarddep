@@ -22,7 +22,6 @@ import { BsCheckLg } from "react-icons/bs";
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
-  console.log("START");
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -49,16 +48,16 @@ const OrdersPanel = () => {
   // First states of SECTION:  Change order QTY
   const [dishToChange, setdishToChange] = useState("-");
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
+
   const [dishQty, setDishQty] = useState(0);
   //set first state of clicked dish in order - in case of cancel changes
   const [oldDishQty, setOldDishQty] = useState(0);
   // First states of SECTION:  Change order QTY ==  END ==
 
-  const [reload, setReload] = useState(false);
-  console.log(reload);
-
-  //First state of active category
+  //First state of active category and dish
   const [activeCategory, setActiveCategory] = useState(0);
+  const [activeCategoryColour, setActiveCategoryColour] = useState("white");
+  const [activeDish, setActiveDish] = useState("");
 
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
@@ -90,36 +89,14 @@ const OrdersPanel = () => {
   //Send chenged dish Qty to backend
   const sendDishQty = () => {
     dispatch(changeDishQty(dishToChange, dishQty));
-    setReload(!reload);
-  };
-
-  const handleClick = (event) => {
-    console.log(event.detail);
-    switch (event.detail) {
-      case "single_click": {
-        console.log("single click");
-        break;
-      }
-      case "double_click": {
-        console.log("double click");
-        break;
-      }
-
-      default: {
-        break;
-      }
-    }
   };
 
   useEffect(() => {
-    if (reload == false) {
-      console.log("USE EFF");
-      dispatch(listDishes());
-      dispatch(listCategories());
+    dispatch(listDishes());
+    dispatch(listCategories());
 
-      dispatch(getOrderDetails(id));
-    }
-  }, [dispatch, reload]);
+    dispatch(getOrderDetails(id));
+  }, [dispatch]);
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -154,8 +131,6 @@ const OrdersPanel = () => {
                   className=" grid grid-cols-5 border-b-2 border-gray-light pb-1"
                   // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
-                    setReload(true);
-
                     setDishToDisplay(filteredDish);
                   }}
                 >
@@ -280,7 +255,6 @@ const OrdersPanel = () => {
               <button
                 className="font-bold text-base bg-primary-bg-color text-white py-1 px-2 rounded border"
                 onClick={() => {
-                  console.log(dishNameToDisplay[0]);
                   sendDishQty();
                 }}
               >
@@ -295,9 +269,16 @@ const OrdersPanel = () => {
             {categories.map((category) => (
               <button
                 key={category.id}
-                className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+                className={`uppercase text-sm ${
+                  activeCategory == category.id ? "border-b-4" : ""
+                } shadow-lg font-bold text-center min-w-[80px] h-[60px] text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
+                style={{
+                  backgroundColor: `${category.colour}`,
+                  borderColor: "white",
+                }}
                 onClick={() => {
                   setActiveCategory(category.id);
+                  setActiveCategoryColour(category.colour);
                 }}
               >
                 {category.title}
@@ -315,23 +296,38 @@ const OrdersPanel = () => {
               )
               .map((dishToDisplay) => (
                 <button
+                  style={{
+                    backgroundColor: `${activeCategoryColour}`,
+                    borderColor: "white",
+                  }}
                   onClick={() => {
-                    setReload(!reload);
-                    // set doubledDish - if order contains clicked dish
-                    const doubledDish = orderDishes.filter(
-                      (dishToCheck) => dishToCheck.dish == dishToDisplay.id
+                    setDishNameToDisplay("-");
+                    setDishQty(0);
+                    setActiveDish(dishToDisplay);
+                    console.log(dishToDisplay);
+                    const filteredDishToDisplay = orderDishes.filter(
+                      (filteredDishes) =>
+                        filteredDishes.dish == dishToDisplay.id
                     );
-                    // if clicked dish exist in order, change qty +1
-                    if (doubledDish.length > 0) {
-                      let doubledDishQty = doubledDish[0].qty + 1;
-                      dispatch(changeDishQty(doubledDish[0], doubledDishQty));
-                      // if doesn`t - add dish to order (and also to database)
-                    } else if (doubledDish.length == 0) {
-                      dispatch(addToOrder(dishToDisplay, id));
-                    }
+                    console.log(filteredDishToDisplay);
+
+                    // set doubledDish - if order contains clicked dish
+                    // const doubledDish = orderDishes.filter(
+                    //   (dishToCheck) => dishToCheck.dish == dishToDisplay.id
+                    // );
+                    // // if clicked dish exist in order, change qty +1
+                    // if (doubledDish.length > 0) {
+                    //   let doubledDishQty = doubledDish[0].qty + 1;
+                    //   dispatch(changeDishQty(doubledDish[0], doubledDishQty));
+                    //   // if doesn`t - add dish to order (and also to database)
+                    // } else if (doubledDish.length == 0) {
+                    //   dispatch(addToOrder(dishToDisplay, id));
+                    // }
                   }}
                   key={dishToDisplay.id}
-                  className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+                  className={`${
+                    activeDish == dishToDisplay ? "border-b-4" : ""
+                  } uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[60px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
                 >
                   {dishToDisplay.title}
                 </button>
