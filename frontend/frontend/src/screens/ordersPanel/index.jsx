@@ -123,7 +123,7 @@ const OrdersPanel = () => {
     <>
       <NavbarOrders />
     <main className="grid bg-secondary-bg-color border">
-      <div className="md:min-w-[800px] md:max-w-[50vw] md:place-self-center  md:border-x-2">
+      <div className="md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
       <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1 md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         <div className="flex gap-2">
           <span>#66</span> <span>Table 6</span>
@@ -266,8 +266,8 @@ const OrdersPanel = () => {
       </section>
       <section className="flex justify-between bg-white p-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
         <div className="flex flex-wrap justify-between items-center font-bold gap-4">
-          <span className="text-base">Balance Due:</span>
-          <span className="text-3xl text-red-300">
+          <span className="text-sm">Balance Due:</span>
+          <span className="text-xl text-red-300">
             ${orderDetails.order.totalPrice}
           </span>
         </div>
@@ -277,13 +277,15 @@ const OrdersPanel = () => {
         </div>
       </section>
 
-      <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center">
+      {/* <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b md:min-w-[800px] md:max-w-[50vw] md:place-self-center"> */}
+      <section className="grid auto-cols-[calc(50%_-_4rem)] md:auto-cols-[calc(25%_-_4rem)] grid-flow-col gap-2  overflow-auto py-4"> 
         {/* // ============= SECTION: Display Categories ================ */}
 
         {categories.map((category) => (
           <button
             key={category.id}
-            className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+            // className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+            className="w-auto p-4 uppercase text-sm font-bold text-center border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
             onClick={() => {
               setActiveCategory(category.id);
             }}
