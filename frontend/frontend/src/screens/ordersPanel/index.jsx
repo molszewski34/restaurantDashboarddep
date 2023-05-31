@@ -17,6 +17,7 @@ import {
 import { listCategories } from "../../actions/categoriesActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
+import { BsCheckLg } from "react-icons/bs";
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
@@ -153,7 +154,6 @@ const OrdersPanel = () => {
                   className=" grid grid-cols-5 border-b-2 border-gray-light pb-1"
                   // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
-
                     setReload(true);
 
                     setDishToDisplay(filteredDish);
@@ -206,33 +206,17 @@ const OrdersPanel = () => {
           )}
 
           {/* // ============= END SECTION: Display ordered dishes ================ */}
-
-          <section className="flex justify-center py-2 bg-gray-light gap-2 border-b ">
-            <button className="w-[90px]  bg-primary-gray font-bold border-b py-1">
+          <section className="flex justify-center py-2 bg-gray-light gap-2 border-b">
+            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Tab
             </button>
-            <button className="w-[90px]  bg-primary-gray font-bold border-b py-1">
+            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Item +
             </button>
             <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Split
             </button>
           </section>
-          <section className="flex justify-between bg-white p-2 border-b ">
-            <div className="flex flex-wrap justify-between items-center font-bold gap-4 ">
-              <span className="text-sm ">Balance Due:</span>
-              <span className="text-2xl text-red-300">
-                ${orderDetails.order.totalPrice}
-              </span>
-            </div>
-            <div className="flex flex-wrap  justify-between items-center font-bold gap-4">
-              <span className="text-sm">Total: </span>
-              <span className="text-2xl">${orderDetails.order.totalPrice}</span>
-            </div>
-          </section>
-
-</div>
-          <div className="md:flex md:flex-col ">
 
           <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
             <div className="flex gap-2">
@@ -341,8 +325,7 @@ const OrdersPanel = () => {
               ))}
             {/* // ============= END SECTION: Display Dish From active Category ================ */}
           </section>
-          </div>
-        
+        </div>
       </main>
     </>
   );
