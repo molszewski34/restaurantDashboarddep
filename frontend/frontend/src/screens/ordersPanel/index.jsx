@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
 
-import { listOrderDishes } from "../../actions/dishActions";
 import { listDishes } from "../../actions/dishActions";
 import {
   getOrderDetails,
@@ -22,7 +21,6 @@ import { BsCheckLg } from "react-icons/bs";
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
-  console.log("START");
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -49,27 +47,36 @@ const OrdersPanel = () => {
   // First states of SECTION:  Change order QTY
   const [dishToChange, setdishToChange] = useState("-");
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
+
   const [dishQty, setDishQty] = useState(0);
   //set first state of clicked dish in order - in case of cancel changes
   const [oldDishQty, setOldDishQty] = useState(0);
   // First states of SECTION:  Change order QTY ==  END ==
 
-  const [reload, setReload] = useState(false);
-  console.log(reload);
-
-  //First state of active category
+  //First state of active category and dish
   const [activeCategory, setActiveCategory] = useState(0);
+  const [activeCategoryColour, setActiveCategoryColour] = useState("white");
+  const [activeDish, setActiveDish] = useState("");
 
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
-    const dishToDisplay = dishList.dishes.filter(
-      (dishToDisplay) => dishToDisplay.id == filteredDish.dish
-    );
+    console.log(filteredDish);
 
-    setDishNameToDisplay(dishToDisplay);
-    setdishToChange(filteredDish);
-    setDishQty(filteredDish.qty);
-    setOldDishQty(filteredDish.qty);
+    if (filteredDish.dish) {
+      const dishToDisplayArr = dishList.dishes.filter(
+        (dishToDisplay) => dishToDisplay.id == filteredDish.dish
+      );
+      const dishToDisplay = dishToDisplayArr[0];
+
+      setDishNameToDisplay(dishToDisplay);
+      setdishToChange(filteredDish);
+      setDishQty(filteredDish.qty);
+      setOldDishQty(filteredDish.qty);
+    } else {
+      const dishToDisplay = filteredDish;
+      setDishNameToDisplay(dishToDisplay);
+      setDishQty(1);
+    }
   };
 
   // Increment dish QTY
@@ -90,36 +97,14 @@ const OrdersPanel = () => {
   //Send chenged dish Qty to backend
   const sendDishQty = () => {
     dispatch(changeDishQty(dishToChange, dishQty));
-    setReload(!reload);
-  };
-
-  const handleClick = (event) => {
-    console.log(event.detail);
-    switch (event.detail) {
-      case "single_click": {
-        console.log("single click");
-        break;
-      }
-      case "double_click": {
-        console.log("double click");
-        break;
-      }
-
-      default: {
-        break;
-      }
-    }
   };
 
   useEffect(() => {
-    if (reload == false) {
-      console.log("USE EFF");
-      dispatch(listDishes());
-      dispatch(listCategories());
+    dispatch(listDishes());
+    dispatch(listCategories());
 
-      dispatch(getOrderDetails(id));
-    }
-  }, [dispatch, reload]);
+    dispatch(getOrderDetails(id));
+  }, [dispatch]);
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -127,7 +112,7 @@ const OrdersPanel = () => {
     <div>Something went wrong</div>
   ) : (
     <>
-      <NavbarOrders />
+      <NavbarOrders id={id} />
       <main className="grid bg-secondary-bg-color border md:grid-cols-2 md:h-[93vh]">
         <div className="md:flex md:flex-col md:h-full border-r-2 border-secondary-gray">
           <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
@@ -154,8 +139,6 @@ const OrdersPanel = () => {
                   className=" grid grid-cols-5 border-b-2 border-gray-light pb-1"
                   // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
-                    setReload(true);
-
                     setDishToDisplay(filteredDish);
                   }}
                 >
@@ -210,7 +193,7 @@ const OrdersPanel = () => {
             <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Tab
             </button>
-            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
+            <button className="w-[90px] bg-primary-gray font-bold  py-1">
               Item +
             </button>
             <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
@@ -231,7 +214,7 @@ const OrdersPanel = () => {
           </section>
         </div>
         <div className="md:flex md:flex-col ">
-          <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
+          <section className="flex flex-nowrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
             <div className="flex gap-2">
               <button
                 className="w-[25px] md:w-[60px] font-bold bg-primary-gray border-b-2"
@@ -262,8 +245,8 @@ const OrdersPanel = () => {
               </button>
             </div>
             <span className="text-xs font-bold">
-              {dishNameToDisplay[0].title ? (
-                <div>{dishNameToDisplay[0].title}</div>
+              {dishNameToDisplay.title ? (
+                <div>{dishNameToDisplay.title}</div>
               ) : (
                 <div>dish name</div>
               )}
@@ -280,8 +263,28 @@ const OrdersPanel = () => {
               <button
                 className="font-bold text-base bg-primary-bg-color text-white py-1 px-2 rounded border"
                 onClick={() => {
-                  console.log(dishNameToDisplay[0]);
-                  sendDishQty();
+                  console.log(dishToChange);
+                  if (dishToChange != "-") {
+                    sendDishQty();
+                  } else {
+                    console.log(dishNameToDisplay);
+                    console.log(dishQty);
+                    console.log(id);
+                    dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                  }
+                  //sendDishQty();
+                  // set doubledDish - if order contains clicked dish
+                  // const doubledDish = orderDishes.filter(
+                  //   (dishToCheck) => dishToCheck.dish == dishToDisplay.id
+                  // );
+                  // // if clicked dish exist in order, change qty +1
+                  // if (doubledDish.length > 0) {
+                  //   let doubledDishQty = doubledDish[0].qty + 1;
+                  //   dispatch(changeDishQty(doubledDish[0], doubledDishQty));
+                  //   // if doesn`t - add dish to order (and also to database)
+                  // } else if (doubledDish.length == 0) {
+                  //   dispatch(addToOrder(dishToDisplay, id));
+                  // }
                 }}
               >
                 Done
@@ -295,9 +298,16 @@ const OrdersPanel = () => {
             {categories.map((category) => (
               <button
                 key={category.id}
-                className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+                className={`uppercase text-sm ${
+                  activeCategory == category.id ? "border-b-4" : ""
+                } shadow-lg font-bold text-center min-w-[80px] h-[60px] text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
+                style={{
+                  backgroundColor: `${category.colour}`,
+                  borderColor: "white",
+                }}
                 onClick={() => {
                   setActiveCategory(category.id);
+                  setActiveCategoryColour(category.colour);
                 }}
               >
                 {category.title}
@@ -315,23 +325,19 @@ const OrdersPanel = () => {
               )
               .map((dishToDisplay) => (
                 <button
+                  style={{
+                    backgroundColor: `${activeCategoryColour}`,
+                    borderColor: "white",
+                  }}
                   onClick={() => {
-                    setReload(!reload);
-                    // set doubledDish - if order contains clicked dish
-                    const doubledDish = orderDishes.filter(
-                      (dishToCheck) => dishToCheck.dish == dishToDisplay.id
-                    );
-                    // if clicked dish exist in order, change qty +1
-                    if (doubledDish.length > 0) {
-                      let doubledDishQty = doubledDish[0].qty + 1;
-                      dispatch(changeDishQty(doubledDish[0], doubledDishQty));
-                      // if doesn`t - add dish to order (and also to database)
-                    } else if (doubledDish.length == 0) {
-                      dispatch(addToOrder(dishToDisplay, id));
-                    }
+                    setdishToChange("-");
+                    setActiveDish(dishToDisplay);
+                    setDishToDisplay(dishToDisplay);
                   }}
                   key={dishToDisplay.id}
-                  className="uppercase text-sm font-bold text-center min-w-[80px] h-[60px] border rounded bg-white text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+                  className={`${
+                    activeDish == dishToDisplay ? "border-b-4" : ""
+                  } uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[60px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
                 >
                   {dishToDisplay.title}
                 </button>
