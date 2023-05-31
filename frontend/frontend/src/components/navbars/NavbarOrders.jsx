@@ -16,6 +16,7 @@ const NavbarTop = () => {
         <div className="flex items-center gap-2">
             {/* <button className='uppercase flex items-center  text-[#ecfdf5] gap-2'>Switch user
             <TbSwitch3 className='text-2xl'/> </button>  */}
+            <button className='bg-secondary-gray py-2 px-4 border-2 rounded uppercase'>refresh</button>
             <button className='bg-[#9C332E] py-2 px-4 border-2 border-[#C15959] rounded uppercase'>abort</button>
             <button className='p-2'>
 
