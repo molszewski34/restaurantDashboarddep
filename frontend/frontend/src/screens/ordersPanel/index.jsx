@@ -153,7 +153,6 @@ const OrdersPanel = () => {
                   className=" grid grid-cols-5 border-b-2 border-gray-light pb-1"
                   // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
-
                     setReload(true);
 
                     setDishToDisplay(filteredDish);
@@ -230,10 +229,8 @@ const OrdersPanel = () => {
               <span className="text-2xl">${orderDetails.order.totalPrice}</span>
             </div>
           </section>
-
-</div>
-          <div className="md:flex md:flex-col ">
-
+        </div>
+        <div className="md:flex md:flex-col ">
           <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
             <div className="flex gap-2">
               <button
@@ -341,11 +338,10 @@ const OrdersPanel = () => {
               ))}
             {/* // ============= END SECTION: Display Dish From active Category ================ */}
           </section>
-          </div>
-        
+        </div>
       </main>
     </>
   );
 };
-
+//
 export default OrdersPanel;
