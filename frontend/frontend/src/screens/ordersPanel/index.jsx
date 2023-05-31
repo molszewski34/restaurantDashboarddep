@@ -61,14 +61,23 @@ const OrdersPanel = () => {
 
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
-    const dishToDisplay = dishList.dishes.filter(
-      (dishToDisplay) => dishToDisplay.id == filteredDish.dish
-    );
+    console.log(filteredDish);
 
-    setDishNameToDisplay(dishToDisplay);
-    setdishToChange(filteredDish);
-    setDishQty(filteredDish.qty);
-    setOldDishQty(filteredDish.qty);
+    if (filteredDish.dish) {
+      const dishToDisplayArr = dishList.dishes.filter(
+        (dishToDisplay) => dishToDisplay.id == filteredDish.dish
+      );
+      const dishToDisplay = dishToDisplayArr[0];
+
+      setDishNameToDisplay(dishToDisplay);
+      setdishToChange(filteredDish);
+      setDishQty(filteredDish.qty);
+      setOldDishQty(filteredDish.qty);
+    } else {
+      const dishToDisplay = filteredDish;
+      setDishNameToDisplay(dishToDisplay);
+      setDishQty(1);
+    }
   };
 
   // Increment dish QTY
@@ -104,7 +113,7 @@ const OrdersPanel = () => {
     <div>Something went wrong</div>
   ) : (
     <>
-      <NavbarOrders />
+      <NavbarOrders id={id} />
       <main className="grid bg-secondary-bg-color border md:grid-cols-2 md:h-[93vh]">
         <div className="md:flex md:flex-col md:h-full border-r-2 border-secondary-gray">
           <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
@@ -185,7 +194,7 @@ const OrdersPanel = () => {
             <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Tab
             </button>
-            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
+            <button className="w-[90px] bg-primary-gray font-bold  py-1">
               Item +
             </button>
             <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
@@ -237,8 +246,8 @@ const OrdersPanel = () => {
               </button>
             </div>
             <span className="text-xs font-bold">
-              {dishNameToDisplay[0].title ? (
-                <div>{dishNameToDisplay[0].title}</div>
+              {dishNameToDisplay.title ? (
+                <div>{dishNameToDisplay.title}</div>
               ) : (
                 <div>dish name</div>
               )}
@@ -255,7 +264,28 @@ const OrdersPanel = () => {
               <button
                 className="font-bold text-base bg-primary-bg-color text-white py-1 px-2 rounded border"
                 onClick={() => {
-                  sendDishQty();
+                  console.log(dishToChange);
+                  if (dishToChange != "-") {
+                    sendDishQty();
+                  } else {
+                    console.log(dishNameToDisplay);
+                    console.log(dishQty);
+                    console.log(id);
+                    dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                  }
+                  //sendDishQty();
+                  // set doubledDish - if order contains clicked dish
+                  // const doubledDish = orderDishes.filter(
+                  //   (dishToCheck) => dishToCheck.dish == dishToDisplay.id
+                  // );
+                  // // if clicked dish exist in order, change qty +1
+                  // if (doubledDish.length > 0) {
+                  //   let doubledDishQty = doubledDish[0].qty + 1;
+                  //   dispatch(changeDishQty(doubledDish[0], doubledDishQty));
+                  //   // if doesn`t - add dish to order (and also to database)
+                  // } else if (doubledDish.length == 0) {
+                  //   dispatch(addToOrder(dishToDisplay, id));
+                  // }
                 }}
               >
                 Done
@@ -301,28 +331,9 @@ const OrdersPanel = () => {
                     borderColor: "white",
                   }}
                   onClick={() => {
-                    setDishNameToDisplay("-");
-                    setDishQty(0);
+                    setdishToChange("-");
                     setActiveDish(dishToDisplay);
-                    console.log(dishToDisplay);
-                    const filteredDishToDisplay = orderDishes.filter(
-                      (filteredDishes) =>
-                        filteredDishes.dish == dishToDisplay.id
-                    );
-                    console.log(filteredDishToDisplay);
-
-                    // set doubledDish - if order contains clicked dish
-                    // const doubledDish = orderDishes.filter(
-                    //   (dishToCheck) => dishToCheck.dish == dishToDisplay.id
-                    // );
-                    // // if clicked dish exist in order, change qty +1
-                    // if (doubledDish.length > 0) {
-                    //   let doubledDishQty = doubledDish[0].qty + 1;
-                    //   dispatch(changeDishQty(doubledDish[0], doubledDishQty));
-                    //   // if doesn`t - add dish to order (and also to database)
-                    // } else if (doubledDish.length == 0) {
-                    //   dispatch(addToOrder(dishToDisplay, id));
-                    // }
+                    setDishToDisplay(dishToDisplay);
                   }}
                   key={dishToDisplay.id}
                   className={`${

@@ -63,11 +63,12 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
   switch (action.type) {
     case ORDER_ADD_NEW_ITEM:
       const data = action.payload;
+      console.log(data);
 
       const itemToAddToOrder = {
         order: data.id,
         dish: data.filteredDish.id,
-        qty: 1,
+        qty: data.qty,
       };
 
       return {
@@ -126,7 +127,6 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
       return { loading: true, orderDishes: [] };
 
     case ORDER_DISH_LIST_SUCCESS:
-
       console.log("ACTION PAYLOAD IN ORDER DISH ", action.payload);
 
       return { loading: false, orderDishes: action.payload };
