@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
 
-import { listOrderDishes } from "../../actions/dishActions";
 import { listDishes } from "../../actions/dishActions";
 import {
   getOrderDetails,
@@ -215,7 +214,7 @@ const OrdersPanel = () => {
           </section>
         </div>
         <div className="md:flex md:flex-col ">
-          <section className="flex flex-wrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
+          <section className="flex flex-nowrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
             <div className="flex gap-2">
               <button
                 className="w-[25px] md:w-[60px] font-bold bg-primary-gray border-b-2"
