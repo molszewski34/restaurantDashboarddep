@@ -17,6 +17,7 @@ import {
 import { listCategories } from "../../actions/categoriesActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
+import { BsCheckLg } from "react-icons/bs";
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
@@ -205,12 +206,11 @@ const OrdersPanel = () => {
           )}
 
           {/* // ============= END SECTION: Display ordered dishes ================ */}
-
-          <section className="flex justify-center py-2 bg-gray-light gap-2 border-b ">
-            <button className="w-[90px]  bg-primary-gray font-bold border-b py-1">
+          <section className="flex justify-center py-2 bg-gray-light gap-2 border-b">
+            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Tab
             </button>
-            <button className="w-[90px]  bg-primary-gray font-bold border-b py-1">
+            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
               Item +
             </button>
             <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
