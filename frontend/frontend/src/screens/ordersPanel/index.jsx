@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
@@ -105,6 +105,7 @@ const OrdersPanel = () => {
 
     dispatch(getOrderDetails(id));
   }, [dispatch]);
+  
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -121,7 +122,7 @@ const OrdersPanel = () => {
             </div>
             <p>Name of waiter</p>
           </section>
-          <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-white ">
+          <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-[#e2e8f0] ">
             {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
             <span className="col-start-1 col-end-3 font-bold pl-2">Name</span>
             {/* <span className="w-half col-start-1 col-end-3 ">Name</span> */}
@@ -292,15 +293,17 @@ const OrdersPanel = () => {
             </div>
           </section>
 
-          <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2  ">
+          {/* <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2  "> */}
+          {/* <section className="grid auto-cols-[calc(30%_-_4rem)]  grid-flow-col gap-4 overflow-x-auto  "> */}
+          <section className="relative flex items-center ">
             {/* // ============= SECTION: Display Categories ================ */}
-
+                <div className="w-screen h-full  overflow-scroll whitespace-nowrap scroll-smooth py-4 md:grid md:grid-cols-4 gap-y-2">
             {categories.map((category) => (
               <button
                 key={category.id}
-                className={`uppercase text-sm ${
+                className={`uppercase text-sm w-[100px] md:w-auto inline-block mx-1  ${
                   activeCategory == category.id ? "border-b-4" : ""
-                } shadow-lg font-bold text-center min-w-[80px] h-[60px] text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
+                } shadow-lg font-bold text-center  h-[60px] text-ellipsis whitespace-nowrap  px-2 hover:opacity-70 `}
                 style={{
                   backgroundColor: `${category.colour}`,
                   borderColor: "white",
@@ -313,11 +316,11 @@ const OrdersPanel = () => {
                 {category.title}
               </button>
             ))}
-
+</div>
             {/* // ============= END SECTION: Display Categories ================ */}
           </section>
 
-          <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b ">
+          <section className="grid grid-cols-4 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b ">
             {/* // ============= SECTION: Display Dish From active Category ================ */}
             {dishList.dishes
               .filter(
