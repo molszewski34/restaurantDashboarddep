@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
@@ -18,9 +18,19 @@ import { listCategories } from "../../actions/categoriesActions";
 import NavbarOrders from "../../components/navbars/NavbarOrders";
 import { BsCheckLg } from "react-icons/bs";
 
+import RemoveIcon from "@mui/icons-material/Remove";
+import AddIcon from "@mui/icons-material/Add";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+
+import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
+
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
+  let navigate = useNavigate();
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -49,8 +59,7 @@ const OrdersPanel = () => {
   const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
 
   const [dishQty, setDishQty] = useState(0);
-  //set first state of clicked dish in order - in case of cancel changes
-  const [oldDishQty, setOldDishQty] = useState(0);
+
   // First states of SECTION:  Change order QTY ==  END ==
 
   //First state of active category and dish
@@ -71,7 +80,6 @@ const OrdersPanel = () => {
       setDishNameToDisplay(dishToDisplay);
       setdishToChange(filteredDish);
       setDishQty(filteredDish.qty);
-      setOldDishQty(filteredDish.qty);
     } else {
       const dishToDisplay = filteredDish;
       setDishNameToDisplay(dishToDisplay);
@@ -106,6 +114,24 @@ const OrdersPanel = () => {
     dispatch(getOrderDetails(id));
   }, [dispatch]);
 
+  const setOrderAsPaid = async () => {
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: {
+        isPaid: true,
+      },
+    };
+
+    const { setOrderAsPaid } = await axios.post(
+      `/orders/update-order/${id}`,
+      config
+    );
+
+    navigate("/services");
+  };
+
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
@@ -113,7 +139,7 @@ const OrdersPanel = () => {
   ) : (
     <>
       <NavbarOrders id={id} />
-      <main className="grid bg-secondary-bg-color border md:grid-cols-2 md:h-[93vh]">
+      <main className="grid border md:grid-cols-2 md:h-[93vh]">
         <div className="md:flex md:flex-col md:h-full border-r-2 border-secondary-gray">
           <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
             <div className="flex gap-2">
@@ -121,7 +147,7 @@ const OrdersPanel = () => {
             </div>
             <p>Name of waiter</p>
           </section>
-          <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-white ">
+          <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-[#e2e8f0] ">
             {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
             <span className="col-start-1 col-end-3 font-bold pl-2">Name</span>
             {/* <span className="w-half col-start-1 col-end-3 ">Name</span> */}
@@ -189,15 +215,30 @@ const OrdersPanel = () => {
           )}
 
           {/* // ============= END SECTION: Display ordered dishes ================ */}
-          <section className="flex justify-center py-2 bg-gray-light gap-2 border-b">
-            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
-              Tab
+
+          <section className="flex justify-items-stretch justify-center py-2 bg-white gap-0.5 border-b h-20 md:h-[150px]">
+            <button
+              className="w-[100px] grow font-bold  py-1"
+              style={{ backgroundColor: "#00D100" }}
+            >
+              Cash
+              <AttachMoneyIcon />
             </button>
-            <button className="w-[90px] bg-primary-gray font-bold  py-1">
-              Item +
+            <button
+              className="w-[100px] grow font-bold  py-1"
+              style={{ backgroundColor: "#1877F2" }}
+            >
+              Card
+              <CreditCardIcon />
             </button>
-            <button className="w-[90px] bg-primary-gray font-bold border-b py-1">
-              Split
+            <button
+              className="w-[100px] grow  font-bold  py-1"
+              style={{ backgroundColor: "#00a8e8" }}
+              onClick={() => {
+                setOrderAsPaid(id);
+              }}
+            >
+              Set as paid and remove
             </button>
           </section>
           <section className="flex justify-between bg-white p-2 border-b ">
@@ -214,54 +255,36 @@ const OrdersPanel = () => {
           </section>
         </div>
         <div className="md:flex md:flex-col ">
-          <section className="flex flex-nowrap justify-between items-center gap-2 px-1 py-2 border-b bg-secondary-bg-color  border-x-1 md:bg-white">
+          <section className="flex flex-nowrap justify-between items-center gap-2 px-1 border-b h-14 border-x-1 bg-white">
             <div className="flex gap-2">
               <button
-                className="w-[25px] md:w-[60px] font-bold bg-primary-gray border-b-2"
+                className="w-16 h-12 w-9 font-bold border-2 rounded-sm border-black text-lg"
                 onClick={() => {
                   decrementDishQty();
                 }}
               >
-                -
+                {dishQty == 1 ? <DeleteOutlineIcon /> : <RemoveIcon />}
               </button>
               {/* // ============= SECTION: Display QTY of selected dish ================ */}
 
-              <button
-                className="w-[25px] md:w-[60px] font-bold bg-primary-gray border-b-2"
-                type=""
-              >
-                {dishQty}
-              </button>
+              <button className=" w-16 h-12 w-9 font-bold">{dishQty}</button>
 
               {/* // ============= END SECTION: Display QTY of selected dish ================ */}
 
               <button
-                className="w-[25px] md:w-[60px] font-bold bg-primary-gray border-b-2"
+                className=" w-16 h-12 w-9 font-bold border-2 rounded-sm border-black"
                 onClick={() => {
                   incrementDishQty();
                 }}
               >
-                +
+                <AddIcon />
               </button>
             </div>
-            <span className="text-xs font-bold">
-              {dishNameToDisplay.title ? (
-                <div>{dishNameToDisplay.title}</div>
-              ) : (
-                <div>dish name</div>
-              )}
-            </span>
             <div className="flex gap-4">
               <button
-                onClick={() => {
-                  setDishQty(oldDishQty);
-                }}
-                className="font-bold text-base bg-primary-gray p-1 rounded border "
-              >
-                Cancel
-              </button>
-              <button
-                className="font-bold text-base bg-primary-bg-color text-white py-1 px-2 rounded border"
+                type=""
+                className="uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[40px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
+                style={{ backgroundColor: "#00a8e8" }}
                 onClick={() => {
                   console.log(dishToChange);
                   if (dishToChange != "-") {
@@ -272,52 +295,51 @@ const OrdersPanel = () => {
                     console.log(id);
                     dispatch(addToOrder(dishNameToDisplay, id, dishQty));
                   }
-                  //sendDishQty();
-                  // set doubledDish - if order contains clicked dish
-                  // const doubledDish = orderDishes.filter(
-                  //   (dishToCheck) => dishToCheck.dish == dishToDisplay.id
-                  // );
-                  // // if clicked dish exist in order, change qty +1
-                  // if (doubledDish.length > 0) {
-                  //   let doubledDishQty = doubledDish[0].qty + 1;
-                  //   dispatch(changeDishQty(doubledDish[0], doubledDishQty));
-                  //   // if doesn`t - add dish to order (and also to database)
-                  // } else if (doubledDish.length == 0) {
-                  //   dispatch(addToOrder(dishToDisplay, id));
-                  // }
                 }}
               >
                 Done
               </button>
             </div>
           </section>
+          <section className="py-2 bg-white">
+            {" "}
+            <span className="text-s font-bold text-center">
+              {dishNameToDisplay.title ? (
+                <div>{dishNameToDisplay.title}</div>
+              ) : (
+                <div>dish name</div>
+              )}
+            </span>
+          </section>
 
-          <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2  ">
+          {/* <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2  "> */}
+          {/* <section className="grid auto-cols-[calc(30%_-_4rem)]  grid-flow-col gap-4 overflow-x-auto  "> */}
+          <section className="relative flex items-center ">
             {/* // ============= SECTION: Display Categories ================ */}
-
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                className={`uppercase text-sm ${
-                  activeCategory == category.id ? "border-b-4" : ""
-                } shadow-lg font-bold text-center min-w-[80px] h-[60px] text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
-                style={{
-                  backgroundColor: `${category.colour}`,
-                  borderColor: "white",
-                }}
-                onClick={() => {
-                  setActiveCategory(category.id);
-                  setActiveCategoryColour(category.colour);
-                }}
-              >
-                {category.title}
-              </button>
-            ))}
-
+            <div className="w-screen h-full  overflow-auto whitespace-nowrap scroll-smooth py-4 md:grid md:grid-cols-4 gap-y-2 bg-white">
+              {categories.map((category) => (
+                <button
+                  key={category.id}
+                  className={`uppercase text-sm w-[100px] md:w-auto inline-block mx-1  ${
+                    activeCategory == category.id ? "border-b-4" : ""
+                  } shadow-lg font-bold text-center  h-[60px] text-ellipsis whitespace-nowrap  px-2 hover:opacity-70 `}
+                  style={{
+                    backgroundColor: `${category.colour}`,
+                    borderColor: "white",
+                  }}
+                  onClick={() => {
+                    setActiveCategory(category.id);
+                    setActiveCategoryColour(category.colour);
+                  }}
+                >
+                  {category.title}
+                </button>
+              ))}
+            </div>
             {/* // ============= END SECTION: Display Categories ================ */}
           </section>
 
-          <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2 border-b ">
+          <section className="grid grid-cols-4 grid-flow-row px-2 py-4 bg-white gap-2  ">
             {/* // ============= SECTION: Display Dish From active Category ================ */}
             {dishList.dishes
               .filter(

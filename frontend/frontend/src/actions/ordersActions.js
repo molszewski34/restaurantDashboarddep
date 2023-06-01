@@ -212,7 +212,7 @@ export const removeFromOrder = (filteredDish, id) => async (dispatch) => {
   //filteredDish - dish we want to change
   //id - order id
   const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
-
+  console.log("dishQty");
   dispatch({
     type: ORDER_REMOVE_ITEM,
     payload: {

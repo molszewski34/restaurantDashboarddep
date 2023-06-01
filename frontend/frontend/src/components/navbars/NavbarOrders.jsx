@@ -9,7 +9,10 @@ import { useDispatch } from "react-redux";
 const NavbarTop = (id) => {
   let dispatch = useDispatch();
   return (
-    <div className="flex justify-between items-center p-2 text-white text-sm font-bold bg-primary-bg-color border-b-2 border-white">
+    <div
+      className="flex justify-between items-center p-2 text-white text-sm font-bold bg-primary-bg-color border-b-2 border-white"
+      style={{ backgroundColor: "#00a8e8" }}
+    >
       <Link to="../" className="flex items-center gap-2">
         <AiOutlineRollback className="text-xl" />
         <p className="text-base text-[#ecfdf5]">Back</p>
