@@ -78,16 +78,13 @@ def updateOrder(request,pk):
 def addDishToOrder(request):
     data=request.data 
     user = request.user  
-    print(data)
-
-  
     
     order = Order.objects.get(id=data['order'])      
     dish = Dish.objects.get(id=data['dish'])
     qty = int(data['qty'])
 
     orderedDishes = OrderDish.objects.filter(order=order)
-    print(orderedDishes)
+  
 
     
     existOrderDish = orderedDishes.filter(dish=dish)
@@ -103,7 +100,7 @@ def addDishToOrder(request):
 
         )
 
-    order.totalPrice = float(order.totalPrice) + float(data['price'])
+    order.totalPrice = float(order.totalPrice) + float(data['price'] * float(data['qty']))
     order.save()
       
     serializer = OrderDishSerializer(dishToOrder, many=False)
