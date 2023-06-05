@@ -19,6 +19,7 @@ urlpatterns = [
     path('get-order/<str:pk>',views.getOrderById, name='get-order'),
     path('update-qty/<str:pk>',views.changeDishQty, name='update-qty'),
     path('remove-table/<str:pk>',views.removeTable, name='remove-table'),
+    path('update-payment-method/<str:pk>', views.setPaymentMenthod, name="update-payment-method")
     
 
    

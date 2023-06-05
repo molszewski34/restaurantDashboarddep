@@ -19,6 +19,7 @@ import {
   ORDER_DISH_LIST_REQUEST,
   ORDER_DISH_LIST_SUCCESS,
   ORDER_DISH_LIST_FAIL,
+  CHANGE_PAYMENT_METHOD,
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -129,48 +130,69 @@ export const getOrderDetails = (id) => async (dispatch) => {
 };
 
 // =============== CHANGE DISH QTY ==========================
-export const changeDishQty = (dish, dishQty) => async (dispatch) => {
-  //replace old value of dish qty by new
-  dish.qty = dishQty;
+export const changeDishQty =
+  (dish, dishQty, orderId, dishFromMenu) => async (dispatch) => {
+    let priceValueToChange;
 
-  try {
-    dispatch({
-      type: CHANGE_DISH_QTY,
-      payload: {
-        dish,
-      },
-    });
+    //Old value of dish qty is greater then new
+    if (dish.qty > dishQty) {
+      priceValueToChange = (dishQty - dish.qty) * dishFromMenu.price;
+      console.log(priceValueToChange);
+    }
+    //Old value of dish qty is lower then new
+    if (dish.qty < dishQty) {
+      priceValueToChange = (dishQty - dish.qty) * dishFromMenu.price;
+      console.log(priceValueToChange);
+    }
 
-    // New value of qty
-    const body = {
-      qty: dish.qty,
-    };
+    if (dish.qty == dishQty) {
+      priceValueToChange = 0;
+    }
 
-    // Authorization - userInfo is ssending to backend
-    let userInfo = JSON.parse(localStorage.userInfo);
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(userInfo.access),
-      },
-    };
+    //replace old value of dish qty by new
+    dish.qty = dishQty;
 
-    //Send POST metod to backend with changed dish qty
-    const { orderedDish } = await axios.post(
-      `/orders/update-qty/${dish.id}`,
-      body, // if POST request, axios send headers as third parameter
-      config
-    );
-  } catch (error) {
-    dispatch({
-      type: ORDER_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.detail
-          ? error.response.data.detail
-          : error.message,
-    });
-  }
-};
+    try {
+      dispatch({
+        type: CHANGE_DISH_QTY,
+        payload: {
+          dish,
+          orderId,
+          priceValueToChange,
+        },
+      });
+
+      // New value of qty
+      const body = {
+        qty: dish.qty,
+      };
+
+      // Authorization - userInfo is sending to backend
+      let userInfo = JSON.parse(localStorage.userInfo);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + String(userInfo.access),
+        },
+      };
+
+      //Send POST metod to backend with changed dish qty
+
+      const { orderedDish } = await axios.post(
+        `/orders/update-qty/${dish.id}`,
+        body, // if POST request, axios send headers as third parameter
+        config
+      );
+    } catch (error) {
+      dispatch({
+        type: ORDER_DETAILS_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : error.message,
+      });
+    }
+  };
 
 // =============== END ==== CHANGE DISH QTY =========== END ===============
 
@@ -261,6 +283,52 @@ export const deleteFromOrder = (filteredDish, id) => async (dispatch) => {
     `/orders/remove-dish-from-order/${filteredDish.id}`,
     config
   );
-
-  window.location.reload();
 };
+
+// =============== UPDATE PAYMENT METHOD  ==========================
+
+export const updatePaymentMethod = (id, paymentMethod) => async (dispatch) => {
+  console.log("DZIAŁAM");
+  console.log("ID: ", id.id);
+  console.log("Payment: ", paymentMethod);
+  try {
+    dispatch({
+      type: CHANGE_PAYMENT_METHOD,
+      payload: {
+        paymentMethod,
+      },
+    });
+
+    const body = {
+      paymentMethod: paymentMethod,
+      id: id.id,
+    };
+
+    // Authorization - userInfo is sending to backend
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    //Send POST metod to backend with changed patyment method
+
+    const { data } = await axios.post(
+      `/orders/update-payment-method/${id}`,
+      body, // if POST request, axios send headers as third parameter
+      config
+    );
+  } catch (error) {
+    dispatch({
+      type: ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+// =============== end:  UPDATE PAYMENT METHOD  ==========================

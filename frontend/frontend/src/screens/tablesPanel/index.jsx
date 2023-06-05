@@ -7,6 +7,7 @@ import { listOrders } from "../../actions/ordersActions";
 import CircularProgress from "@mui/material/CircularProgress";
 import { MdTableBar } from "react-icons/md";
 import { listOrderDishes } from "../../actions/dishActions";
+import { getOrderDetails } from "../../actions/ordersActions";
 
 import { LinkContainer } from "react-router-bootstrap";
 
@@ -116,6 +117,7 @@ const TablesPanel = () => {
                             component="button"
                             onClick={() => {
                               dispatch(listOrderDishes(filteredOrder.id));
+                              dispatch(getOrderDetails(filteredOrder.id));
                             }}
                             to={`/orders/order/${filteredOrder.id}`}
                             style={{

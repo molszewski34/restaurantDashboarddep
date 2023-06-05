@@ -12,8 +12,11 @@ import {
   removeFromOrder,
   deleteFromOrder,
   increaseDishQty,
+  listOrders,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
+import { listOrderDishes } from "../../actions/dishActions";
+import { updatePaymentMethod } from "../../actions/ordersActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
 import { BsCheckLg } from "react-icons/bs";
@@ -69,8 +72,6 @@ const OrdersPanel = () => {
 
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
-    console.log(filteredDish);
-
     if (filteredDish.dish) {
       const dishToDisplayArr = dishList.dishes.filter(
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
@@ -104,14 +105,21 @@ const OrdersPanel = () => {
 
   //Send chenged dish Qty to backend
   const sendDishQty = () => {
-    dispatch(changeDishQty(dishToChange, dishQty));
+    if (dishQty > 0) {
+      dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
+    } else {
+      dispatch(deleteFromOrder(dishToChange));
+      dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
+    }
   };
 
   useEffect(() => {
     dispatch(listDishes());
     dispatch(listCategories());
-
     dispatch(getOrderDetails(id));
+    setTimeout(() => {
+      dispatch(listOrderDishes(id));
+    }, 2000);
   }, [dispatch]);
 
   const setOrderAsPaid = async () => {
@@ -130,6 +138,7 @@ const OrdersPanel = () => {
     );
 
     navigate("/services");
+    dispatch(listOrders);
   };
 
   return loading ? (
@@ -143,9 +152,10 @@ const OrdersPanel = () => {
         <div className="md:flex md:flex-col md:h-full border-r-2 border-secondary-gray">
           <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
             <div className="flex gap-2">
-              <span>#66</span> <span>Table 6</span>
+              <span>Table #{orderDetails.order.table}</span>
+              <span>Payment: {orderDetails.order.paymentMethod}</span>
             </div>
-            <p>Name of waiter</p>
+            <p>{userInfo.first_name}</p>
           </section>
           <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-[#e2e8f0] ">
             {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
@@ -220,6 +230,9 @@ const OrdersPanel = () => {
             <button
               className="w-[100px] grow font-bold  py-1"
               style={{ backgroundColor: "#00D100" }}
+              onClick={() => {
+                dispatch(updatePaymentMethod(id, "CASH"));
+              }}
             >
               Cash
               <AttachMoneyIcon />
@@ -227,6 +240,9 @@ const OrdersPanel = () => {
             <button
               className="w-[100px] grow font-bold  py-1"
               style={{ backgroundColor: "#1877F2" }}
+              onClick={() => {
+                dispatch(updatePaymentMethod(id, "CARD"));
+              }}
             >
               Card
               <CreditCardIcon />
@@ -263,7 +279,7 @@ const OrdersPanel = () => {
                   decrementDishQty();
                 }}
               >
-                {dishQty == 1 ? <DeleteOutlineIcon /> : <RemoveIcon />}
+                <RemoveIcon />
               </button>
               {/* // ============= SECTION: Display QTY of selected dish ================ */}
 
@@ -286,14 +302,20 @@ const OrdersPanel = () => {
                 className="uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[40px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
                 style={{ backgroundColor: "#00a8e8" }}
                 onClick={() => {
-                  console.log(dishToChange);
-                  if (dishToChange != "-") {
-                    sendDishQty();
-                  } else {
-                    console.log(dishNameToDisplay);
-                    console.log(dishQty);
-                    console.log(id);
-                    dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                  // dishNameToDisplay - dish from menu with 'price' table in data base
+                  //dishToCHange - dish from order with 'qty' table in data base
+
+                  //If there is no dishNameToDisplay or dishToChange, don`t do anything
+                  //after "DONE" is cklicked
+                  if (dishNameToDisplay != "-" || dishToChange != "-") {
+                    if (dishToChange != "-") {
+                      sendDishQty();
+                    } else {
+                      dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                      setTimeout(() => {
+                        dispatch(listOrderDishes(id));
+                      }, 2000);
+                    }
                   }
                 }}
               >
