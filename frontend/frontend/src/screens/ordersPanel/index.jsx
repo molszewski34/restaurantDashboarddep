@@ -14,6 +14,7 @@ import {
   increaseDishQty,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
+import { listOrderDishes } from "../../actions/dishActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
 import { BsCheckLg } from "react-icons/bs";
@@ -113,6 +114,10 @@ const OrdersPanel = () => {
   useEffect(() => {
     dispatch(listDishes());
     dispatch(listCategories());
+    dispatch(getOrderDetails(id));
+    setTimeout(() => {
+      dispatch(listOrderDishes(id));
+    }, 2000);
   }, [dispatch]);
 
   const setOrderAsPaid = async () => {
@@ -144,9 +149,9 @@ const OrdersPanel = () => {
         <div className="md:flex md:flex-col md:h-full border-r-2 border-secondary-gray">
           <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
             <div className="flex gap-2">
-              <span>#66</span> <span>Table 6</span>
+              <span>Table #{orderDetails.order.table}</span>
             </div>
-            <p>Name of waiter</p>
+            <p>{userInfo.first_name}</p>
           </section>
           <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-[#e2e8f0] ">
             {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
@@ -297,6 +302,9 @@ const OrdersPanel = () => {
                       sendDishQty();
                     } else {
                       dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                      setTimeout(() => {
+                        dispatch(listOrderDishes(id));
+                      }, 2000);
                     }
                   }
                 }}
