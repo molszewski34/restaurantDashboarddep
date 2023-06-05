@@ -138,7 +138,8 @@ const OrdersPanel = () => {
     );
 
     navigate("/services");
-    dispatch(listOrders);
+    //list orders after close old order
+    dispatch(listOrders());
   };
 
   return loading ? (
