@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import NavbarTop from '../../../components/navbars/NavbarTop';
-import { useSelector } from 'react-redux';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from 'react-router-dom';
-import ModalAddEmployee from '../../../components/modals/ModalAddEmployee';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import React, { useState } from "react";
+import NavbarTop from "../../../components/navbars/NavbarTop";
+import { useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
+import ModalAddEmployee from "../../../components/modals/ModalAddEmployee";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
 
 const Labor = () => {
   let navigate = useNavigate();
@@ -47,9 +47,9 @@ const Labor = () => {
                   <b>Name: </b>
                   <label className="" htmlFor="">
                     <input
-                      className={`${isDisabled ? ' ' : 'border pl-1'}`}
+                      className={`${isDisabled ? " " : "border pl-1"}`}
                       type="text"
-                      value={'Alice Westwood'}
+                      value={"Alice Westwood"}
                       disabled={isDisabled}
                     />
                   </label>
@@ -69,7 +69,7 @@ const Labor = () => {
                   <b>Position: </b>
                   <select
                     className={` bg-white
-                    ${isDisabled ? 'appearance-none ' : 'border pl-1'}`}
+                    ${isDisabled ? "appearance-none " : "border pl-1"}`}
                     name=""
                     id=""
                     disabled={isDisabled}
@@ -92,7 +92,7 @@ const Labor = () => {
                   <label className="" htmlFor="">
                     <select
                       className={` bg-white
-                    ${isDisabled ? 'appearance-none' : 'border pl-1'}`}
+                    ${isDisabled ? "appearance-none" : "border pl-1"}`}
                       name=""
                       id=""
                       required
@@ -114,7 +114,7 @@ const Labor = () => {
                   <label className="" htmlFor="">
                     <select
                       className={` bg-white
-                    ${isDisabled ? 'appearance-none' : 'border pl-1'}`}
+                    ${isDisabled ? "appearance-none" : "border pl-1"}`}
                       name=""
                       id=""
                       required
@@ -135,7 +135,7 @@ const Labor = () => {
                   <label className="" htmlFor="">
                     <select
                       className={` bg-white
-                    ${isDisabled ? 'appearance-none' : 'border pl-1'}`}
+                    ${isDisabled ? "appearance-none" : "border pl-1"}`}
                       name=""
                       id=""
                       required
@@ -155,9 +155,9 @@ const Labor = () => {
                   <b>Phone: </b>
                   <label className="" htmlFor="">
                     <input
-                      className={`${isDisabled ? ' ' : 'border pl-1'}`}
+                      className={`${isDisabled ? " " : "border pl-1"}`}
                       type="text"
-                      value={'+1 555-123-4567'}
+                      value={"+1 555-123-4567"}
                       disabled={isDisabled}
                     />
                   </label>
@@ -171,9 +171,9 @@ const Labor = () => {
                   <b>Email: </b>
                   <label className="w-full flex" htmlFor="">
                     <input
-                      className={`w-full ${isDisabled ? ' ' : 'border pl-1'}`}
+                      className={`w-full ${isDisabled ? " " : "border pl-1"}`}
                       type="text"
-                      value={'alicewestwood@example.com'}
+                      value={"alicewestwood@example.com"}
                       disabled={isDisabled}
                     />
                   </label>
