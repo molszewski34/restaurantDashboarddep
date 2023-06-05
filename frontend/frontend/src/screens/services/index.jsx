@@ -15,19 +15,20 @@ const Services = () => {
     // WADOMOŚĆ  GDY HASŁO NIE PASUJE (LUB LOGIN)
     <div>Ups! Password and login doesn`t match!</div>
   ) : (
-    <main className="bg-secondary-bg-color h-screen">
+    <main className=" flex flex-col items-center bg-secondary-bg-color h-screen">
       <NavbarTop />
       {userInfo.id ? (
-        <div className=" mx-6 my-8">
+       <div className="">
+        <div className=" mx-6 my-8 grid max-w-[800px]">
           <div className="text-xl text-center text-white bg-[#629D93] p-1">
-            <h1>Chose service</h1>
+            <h1>Mode</h1>
           </div>
-          <div className="grid grid-rows-layout grid-cols-2 gap-1">
+          <div className="grid grid-cols-2 grid-rows-2 gap-1">
             <button
               onClick={() => {
                 navigate("/tablesPanel");
               }}
-              className="flex justify-center items-center  bg-white text-center font-bold text-xl"
+              className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
             >
               Table Service
             </button>
@@ -44,6 +45,34 @@ const Services = () => {
         <div className="p-8 bg-white">Quick Orders</div>
         <div className="p-8 bg-white">Delivery</div> */}
           </div>
+        </div>
+        <div className=" mx-6 my-8 grid max-w-[800px]">
+          <div className="text-xl text-center text-white bg-[#629D93] p-1">
+            <h1>Manager Activities</h1>
+          </div>
+          <div className="grid grid-cols-2 grid-rows-2 gap-1">
+            <button
+              className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
+            >
+              Menu
+            </button>
+            <button
+              onClick={() => {
+                navigate("/labor");
+              }}
+            className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+              Labor
+            </button>
+        
+            <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+              Tables
+            </button>
+            {/* <div className="p-8 bg-white">Pending Orders</div>
+        <div className="p-8 bg-white">Quick Orders</div>
+        <div className="p-8 bg-white">Delivery</div> */}
+          </div>
+        </div>
+
         </div>
       ) : (
         // WADOMOŚĆ  GDY UŻYTKOWNIK NIE JEST ZALOGOWANY

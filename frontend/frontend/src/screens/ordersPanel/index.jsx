@@ -69,8 +69,6 @@ const OrdersPanel = () => {
 
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
-    console.log(filteredDish);
-
     if (filteredDish.dish) {
       const dishToDisplayArr = dishList.dishes.filter(
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
@@ -104,14 +102,17 @@ const OrdersPanel = () => {
 
   //Send chenged dish Qty to backend
   const sendDishQty = () => {
-    dispatch(changeDishQty(dishToChange, dishQty));
+    if (dishQty > 0) {
+      dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
+    } else {
+      dispatch(deleteFromOrder(dishToChange));
+      dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
+    }
   };
 
   useEffect(() => {
     dispatch(listDishes());
     dispatch(listCategories());
-
-    dispatch(getOrderDetails(id));
   }, [dispatch]);
 
   const setOrderAsPaid = async () => {
@@ -263,7 +264,7 @@ const OrdersPanel = () => {
                   decrementDishQty();
                 }}
               >
-                {dishQty == 1 ? <DeleteOutlineIcon /> : <RemoveIcon />}
+                <RemoveIcon />
               </button>
               {/* // ============= SECTION: Display QTY of selected dish ================ */}
 
@@ -286,14 +287,17 @@ const OrdersPanel = () => {
                 className="uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[40px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
                 style={{ backgroundColor: "#00a8e8" }}
                 onClick={() => {
-                  console.log(dishToChange);
-                  if (dishToChange != "-") {
-                    sendDishQty();
-                  } else {
-                    console.log(dishNameToDisplay);
-                    console.log(dishQty);
-                    console.log(id);
-                    dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                  // dishNameToDisplay - dish from menu with 'price' table in data base
+                  //dishToCHange - dish from order with 'qty' table in data base
+
+                  //If there is no dishNameToDisplay or dishToChange, don`t do anything
+                  //after "DONE" is cklicked
+                  if (dishNameToDisplay != "-" || dishToChange != "-") {
+                    if (dishToChange != "-") {
+                      sendDishQty();
+                    } else {
+                      dispatch(addToOrder(dishNameToDisplay, id, dishQty));
+                    }
                   }
                 }}
               >
