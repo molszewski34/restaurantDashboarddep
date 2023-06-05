@@ -138,7 +138,7 @@ const OrdersPanel = () => {
     );
 
     navigate("/services");
-    dispatch(listOrders);
+    dispatch(listOrders());
   };
 
   return loading ? (
