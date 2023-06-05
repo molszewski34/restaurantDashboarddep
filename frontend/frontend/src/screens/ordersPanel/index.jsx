@@ -12,9 +12,11 @@ import {
   removeFromOrder,
   deleteFromOrder,
   increaseDishQty,
+  listOrders,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
 import { listOrderDishes } from "../../actions/dishActions";
+import { updatePaymentMethod } from "../../actions/ordersActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
 import { BsCheckLg } from "react-icons/bs";
@@ -136,6 +138,7 @@ const OrdersPanel = () => {
     );
 
     navigate("/services");
+    dispatch(listOrders);
   };
 
   return loading ? (
@@ -150,6 +153,7 @@ const OrdersPanel = () => {
           <section className="flex justify-between bg-gray-light text-secondary-gray text-sm font-semibold border-b px-2 py-1">
             <div className="flex gap-2">
               <span>Table #{orderDetails.order.table}</span>
+              <span>Payment: {orderDetails.order.paymentMethod}</span>
             </div>
             <p>{userInfo.first_name}</p>
           </section>
@@ -226,6 +230,9 @@ const OrdersPanel = () => {
             <button
               className="w-[100px] grow font-bold  py-1"
               style={{ backgroundColor: "#00D100" }}
+              onClick={() => {
+                dispatch(updatePaymentMethod(id, "CASH"));
+              }}
             >
               Cash
               <AttachMoneyIcon />
@@ -233,6 +240,9 @@ const OrdersPanel = () => {
             <button
               className="w-[100px] grow font-bold  py-1"
               style={{ backgroundColor: "#1877F2" }}
+              onClick={() => {
+                dispatch(updatePaymentMethod(id, "CARD"));
+              }}
             >
               Card
               <CreditCardIcon />
