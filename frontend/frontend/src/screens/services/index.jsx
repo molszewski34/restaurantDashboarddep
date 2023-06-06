@@ -52,6 +52,9 @@ const Services = () => {
           </div>
           <div className="grid grid-cols-2 grid-rows-2 gap-1">
             <button
+                 onClick={() => {
+                  navigate("/menu");
+                }}
               className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
             >
               Menu

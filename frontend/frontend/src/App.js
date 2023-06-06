@@ -16,6 +16,8 @@ import StartingPanel from './screens/startingPanel';
 import Invite from './screens/invite';
 import TablesPanel from './screens/tablesPanel';
 import OrdersPanel from './screens/ordersPanel';
+import Labor from './screens/manager_activities/labor';
+import Dishes from './screens/manager_activities/dishes';
 
 const darkTheme = createTheme({
   palette: {
@@ -44,6 +46,8 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/services" element={<Services />} />
               <Route path="/tablesPanel" element={<TablesPanel />} />
+              <Route path="/labor" element={<Labor />} />
+              <Route path="/menu" element={<Dishes />} />
             </Routes>
           </main>
         </div>

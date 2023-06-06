@@ -35,6 +35,8 @@ const OrdersPanel = () => {
   let { id } = useParams();
   let navigate = useNavigate();
 
+
+
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
 
@@ -47,10 +49,11 @@ const OrdersPanel = () => {
 
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-
+  console.log(dishes)
   const categoriesList = useSelector((state) => state.categoriesList);
+  
   const { categoriesError, categoriesLoading, categories } = categoriesList;
-
+  console.log(categories)
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -77,6 +80,7 @@ const OrdersPanel = () => {
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
       );
       const dishToDisplay = dishToDisplayArr[0];
+     
 
       setDishNameToDisplay(dishToDisplay);
       setdishToChange(filteredDish);
@@ -87,7 +91,6 @@ const OrdersPanel = () => {
       setDishQty(1);
     }
   };
-
   // Increment dish QTY
   const incrementDishQty = () => {
     setDishQty(dishQty + 1);
@@ -141,6 +144,8 @@ const OrdersPanel = () => {
     //list orders after close old order
     dispatch(listOrders());
   };
+
+
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -367,9 +372,10 @@ const OrdersPanel = () => {
             {dishList.dishes
               .filter(
                 (filteredDishes) => filteredDishes.category == activeCategory
-              )
-              .map((dishToDisplay) => (
-                <button
+               
+                )
+                .map((dishToDisplay) => (
+                  <button
                   style={{
                     backgroundColor: `${activeCategoryColour}`,
                     borderColor: "white",
@@ -383,10 +389,11 @@ const OrdersPanel = () => {
                   className={`${
                     activeDish == dishToDisplay ? "border-b-4" : ""
                   } uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[60px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
-                >
+                  >
                   {dishToDisplay.title}
                 </button>
               ))}
+         
             {/* // ============= END SECTION: Display Dish From active Category ================ */}
           </section>
         </div>
