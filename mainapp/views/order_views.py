@@ -70,6 +70,21 @@ def updateOrder(request,pk):
     return Response("Order updated")
 
 
+@api_view(["POST"])
+def setPaymentMenthod(request, pk):
+    data= request.data['paymentMethod']
+    order =Order.objects.get(id=pk)
+    order.paymentMethod = data
+    print(order.paymentMethod)
+    order.save()
+
+
+  
+
+    return Response("Payment method updated")
+
+
+
 
 # add dish to order
 
