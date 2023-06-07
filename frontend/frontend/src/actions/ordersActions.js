@@ -19,6 +19,7 @@ import {
   ORDER_DISH_LIST_REQUEST,
   ORDER_DISH_LIST_SUCCESS,
   ORDER_DISH_LIST_FAIL,
+  CHANGE_PAYMENT_METHOD,
 } from "../constants/orderConstants";
 
 import axios from "axios";
@@ -132,7 +133,6 @@ export const getOrderDetails = (id) => async (dispatch) => {
 export const changeDishQty =
   (dish, dishQty, orderId, dishFromMenu) => async (dispatch) => {
     let priceValueToChange;
-    dish.qty > dishQty ? console.log("odejmujemy") : console.log("dodajemy");
 
     //Old value of dish qty is greater then new
     if (dish.qty > dishQty) {
@@ -284,3 +284,51 @@ export const deleteFromOrder = (filteredDish, id) => async (dispatch) => {
     config
   );
 };
+
+// =============== UPDATE PAYMENT METHOD  ==========================
+
+export const updatePaymentMethod = (id, paymentMethod) => async (dispatch) => {
+  console.log("DZIAŁAM");
+  console.log("ID: ", id.id);
+  console.log("Payment: ", paymentMethod);
+  try {
+    dispatch({
+      type: CHANGE_PAYMENT_METHOD,
+      payload: {
+        paymentMethod,
+      },
+    });
+
+    const body = {
+      paymentMethod: paymentMethod,
+      id: id.id,
+    };
+
+    // Authorization - userInfo is sending to backend
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    //Send POST metod to backend with changed patyment method
+
+    const { data } = await axios.post(
+      `/orders/update-payment-method/${id}`,
+      body, // if POST request, axios send headers as third parameter
+      config
+    );
+  } catch (error) {
+    dispatch({
+      type: ORDER_DETAILS_FAIL,
+      payload:
+        error.response && error.response.data.detail
+          ? error.response.data.detail
+          : error.message,
+    });
+  }
+};
+
+// =============== end:  UPDATE PAYMENT METHOD  ==========================
