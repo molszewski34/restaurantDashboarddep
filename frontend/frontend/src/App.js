@@ -5,7 +5,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import Dashboard from "./screens/dashboard";
 import DishMenu from "./screens/DishMenu";
-import Tables from "./screens/Tables";
+import Tables from "./screens/manager_activities/tables";
 import Orders from "./screens/orders/index";
 import Admin from "./screens/admin";
 import TablesMap from "./screens/tablesMap";
@@ -13,9 +13,6 @@ import Staff from "./screens/staff";
 import Login from "./screens/login";
 import Services from "./screens/services";
 import StartingPanel from "./screens/startingPanel";
-import OrderNew from "./screens/orderNew";
-// import SideBarComponent from './components/SideBarComponent';
-
 import Invite from "./screens/invite";
 import { red, purple } from "@mui/material/colors";
 import TablesPanel from "./screens/tablesPanel";
@@ -49,6 +46,8 @@ function App() {
               <Route path="/services" element={<Services />} />
               <Route path="/tablesPanel" element={<TablesPanel />} />
               <Route path="/labor" element={<Labor />} />
+              <Route path="/tables" element={<Tables />} />
+
               {/* <Route path="/ordersPanel" element={<OrdersPanel />} /> */}
             </Routes>
           </main>
