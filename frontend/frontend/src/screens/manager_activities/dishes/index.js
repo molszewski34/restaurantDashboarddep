@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
 import ModalAddDishes from '../../../components/modals/ModalAddDishes';
+import ModalEditiDishes from '../../../components/modals/ModalEditDishes';
 import ModalAddCategory from '../../../components/modals/ModalAddCategory';
 import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
 import { listCategories } from '../../../actions/categoriesActions';
@@ -17,7 +18,12 @@ const Labor = () => {
 
   const [newDishmodalOpen, setNewDishModalOpen] = useState(false);
   const [newCategoryModalOpen, setCategoryModalOpen] = useState(false);
+  const [editDishModalOpen, setEditDishModalOpen] = useState(false);
   const [overlay, setOverlay] = useState(false);
+
+  const [selectedNameOFDish, setSelectedNameOFDish] = useState(null);
+  const [selectedCategoryOFDish, setSelectedCategoryOFDish] = useState(null);
+  const [selectedPriceOFDish, setSelectedPriceOFDish] = useState(null);
 
   const [selectedCategories, setSelectedCategories] = useState(null);
 
@@ -70,7 +76,9 @@ const Labor = () => {
                 <b>Filter Category</b>
               </option>
               {categoriesList.categories.map((categoryItem) => (
-                <option value={categoryItem.title}>{categoryItem.title}</option>
+                <option key={categoryItem.id} value={categoryItem.title}>
+                  {categoryItem.title}
+                </option>
                 // <div className="">
 
                 //     {/* {categoryItem.title} */}
@@ -101,9 +109,13 @@ const Labor = () => {
                   <span>{dishList.price}</span>
                   <span className="flex justify-center">
                     <button
+                      key={dishList.id}
                       onClick={() => {
-                        setCategoryModalOpen(true);
+                        setEditDishModalOpen(true);
                         setOverlay(true);
+                        setSelectedNameOFDish(dishList.title);
+                        setSelectedCategories(dishList.category);
+                        setSelectedPriceOFDish(dishList.price);
                       }}
                       className="w-[40px] h-[40px] flex justify-center items-center"
                     >
@@ -128,6 +140,17 @@ const Labor = () => {
                 closeModal={() => setCategoryModalOpen(false)}
                 closeOverlay={() => setOverlay(false)}
                 selectedCategories={selectedCategories}
+              />
+            </div>
+          )}
+          {editDishModalOpen && (
+            <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+              <ModalEditiDishes
+                closeModal={() => setEditDishModalOpen(false)}
+                closeOverlay={() => setOverlay(false)}
+                selectedCategories={selectedCategories}
+                selectedNameOFDish={selectedNameOFDish}
+                selectedPriceOFDish={selectedPriceOFDish}
               />
             </div>
           )}

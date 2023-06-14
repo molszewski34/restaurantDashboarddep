@@ -16,7 +16,7 @@ import StartingPanel from './screens/startingPanel';
 import Invite from './screens/invite';
 import TablesPanel from './screens/tablesPanel';
 import OrdersPanel from './screens/ordersPanel';
-import Labor from './screens/manager_activities/labor';
+import Labor from './screens/manager_activities/labor/editLabor';
 import Dishes from './screens/manager_activities/dishes';
 import CategoriesList from './screens/manager_activities/dishes/categoriesList';
 import NewCategory from './screens/manager_activities/dishes/newCategory';
@@ -26,6 +26,8 @@ import NewRoom from './screens/manager_activities/tables/addRoom';
 import EditRoom from './screens/manager_activities/tables/editRoom';
 import AddTable from './screens/manager_activities/tables/addTable';
 import TablesList from './screens/manager_activities/tables/tablesList';
+import LaborsList from './screens/manager_activities/labor/laborsList';
+import NewLabor from './screens/manager_activities/labor/newLabor';
 const darkTheme = createTheme({
   palette: {
     mode: 'dark',
@@ -63,6 +65,8 @@ function App() {
               <Route path="/editRoom" element={<EditRoom />} />
               <Route path="/addTable" element={<AddTable />} />
               <Route path="/tablesList" element={<TablesList />} />
+              <Route path="/laborsList" element={<LaborsList />} />
+              <Route path="/newLabor" element={<NewLabor />} />
             </Routes>
           </main>
         </div>

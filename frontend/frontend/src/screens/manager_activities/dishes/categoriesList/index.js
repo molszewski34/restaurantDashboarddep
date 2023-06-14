@@ -13,7 +13,7 @@ const CategoriesList = () => {
   const { categoriesError, categoriesLoading, categories } = categoriesList;
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-  // console.log(dishes);
+  console.log(dishes);
   // console.log(categoriesList);
 
   const dispatch = useDispatch();
@@ -38,8 +38,8 @@ const CategoriesList = () => {
         <header className="font-bold py-1 border-b border-[#cbd5e1]">
           Categories
         </header>
-        <section className="mt-4">
-          <div className="grid grid-cols-4 justify-items-center">
+        <section className="mt-4 flex flex-col gap-3">
+          <div className="grid grid-cols-4 ">
             <span className="text-sm font-bold border-b border-[#cbd5e1] pl-2">
               Name
             </span>
@@ -54,17 +54,17 @@ const CategoriesList = () => {
             </div>
           </button> */}
           {categoriesList.categories.map((categoryItem) => (
-            <div key={categoryItem.id} className="flex flex-col w-full">
+            <div key={categoryItem.id} className="flex flex-col w-full gap-2">
               {/* <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white"> */}
-              <div className="grid grid-cols-4 justify-items-center px-2 bg-[#e5e7eb] py-2 border-b border-white">
-                <button className="uppercase text-sm text-[#0369a1]">
+              <div className="grid grid-cols-4 items-center  px-2 bg-[#e5e7eb] py-2 border-b border-white">
+                <p className="uppercase text-sm text-[#0369a1]">
                   {categoryItem.title}
-                </button>
-                <button
-                  className="cursor-pointer w-6 h-6 grow flex"
+                </p>
+                <span
+                  className=" w-6 h-6 grow flex"
                   style={{ backgroundColor: categoryItem.colour }}
-                ></button>
-                <button className="flex justify-center items-center w-8 h-8 ">
+                ></span>
+                <button className="flex justify-center items-center w-8 h-8 text-[#0369a1]">
                   <AiFillEdit />
                 </button>
                 <button
@@ -72,14 +72,15 @@ const CategoriesList = () => {
                     setModalOpen(true);
                     setOverlay(true);
                   }}
-                  className="flex justify-center items-center w-8 h-8 "
+                  className="flex justify-center items-center  place-self-end text-[#ef4444] text-xs border rounded-full bg-white shadowed px-2 py-1"
                 >
-                  <RiDeleteBin6Line className="text-[#ef4444] text-lg" />
+                  {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
+                  Remove
                 </button>
               </div>
-              <div className="grid grid-cols-3  py-2">
+              <div className="grid grid-cols-3  p-2 border border-[#e5e7eb] rounded">
                 <input
-                  className="border uppercase border-[#cbd5e1]"
+                  className="border uppercase border-[#cbd5e1] text-sm pl-1"
                   type="text"
                   placeholder={categoryItem.title}
                 />
@@ -92,27 +93,42 @@ const CategoriesList = () => {
                     setOpenColorPicker(false);
                   }}
                 ></button>
-                <button className="place-self-center text-2xl">
-                  <GiConfirmed />
+                <button className="flex justify-center items-center  place-self-end text-[#0369a1] text-xs border rounded-full bg-white shadowed px-2 py-1">
+                  {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
+                  Confirm
                 </button>
+                {/* <div className="flex flex-col w-full pr-2 my-4"> */}
+              </div>
+              <div className="grid grid-cols-1">
+                <div className="grid grid-cols-2 border border-b-0 bg-[#e5e7eb]">
+                  <span className="font-bold pl-2 text-sm">Name</span>
+                  <span className="font-bold text-sm">Price</span>
+                </div>
                 {dishes
-                  .filter((dish) => dish.categoryItem === categoryItem.id)
+                  .filter((dish) => dish.category === dish.category)
                   .map((filteredDish) => {
-                    console.log(categoryItem);
+                    console.log(filteredDish);
                     return (
-                      <div key={filteredDish.id} className="">
-                        {filteredDish.title}
+                      <div
+                        key={filteredDish.id}
+                        className="grid grid-cols-2 border border-b-0 text-sm last:border-b"
+                      >
+                        <span className="pl-2 text-[#0369a1] cursor-pointer">
+                          {filteredDish.title}
+                        </span>
+                        <span className="text-[#0369a1] cursor-pointer">
+                          {filteredDish.price}
+                        </span>
                       </div>
                     );
                   })}
               </div>
-
+              <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold">
+                + Add
+              </button>
               {/* <div className="">No siema</div> */}
             </div>
           ))}
-          <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold">
-            + Add
-          </button>
         </section>
       </main>
       {modalOpen && (

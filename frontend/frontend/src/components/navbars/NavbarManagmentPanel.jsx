@@ -4,11 +4,18 @@ import { BiUserCircle } from 'react-icons/bi';
 import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown } from 'react-icons/md';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { GiCook } from 'react-icons/gi';
-
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 const NavbarManagmentPanel = () => {
+  let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [buttonActive, setButtonActive] = useState(false); // Stan określający, czy przycisk jest aktywny
-
+  const userLogin = useSelector((state) => state.userLogin);
+  const {
+    error: userLoginError,
+    loading: userLoginLoading,
+    userInfo,
+  } = userLogin;
   // const handleTabChange = (index) => {
   //   setActiveTab(index);
   // };
@@ -34,7 +41,7 @@ const NavbarManagmentPanel = () => {
         </button>
         <div className="flex p-2 gap-1 items-center">
           <span className='flex gap-1 items-center text-sm'>
-            <BiUserCircle className='text-2xl' /> User Name
+            <BiUserCircle className='text-2xl' /> {userInfo.first_name}
           </span>
           <span className='p-1'>
             <MdOutlineKeyboardArrowDown className='font-bold' />
@@ -43,26 +50,29 @@ const NavbarManagmentPanel = () => {
       </section>
       <section className='flex md:hidden w-screen justify-around text-xl  shadow-md text-[#6b7280]'>
         <button
-          className={`py-2 px-4 ${activeTab === 0 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
-        
-          onClick={() => handleButtonClick(0)}
+          className={`py-2 px-4 flex flex-col items-center ${activeTab === 0 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
+          onClick={() =>{ handleButtonClick(0); navigate("/laborList")}}
+          
           // onBlur={handleButtonBlur}
         >
           <FaUsers />
+          <span className='text-xs'>Labors</span>
         </button>
         <button
-          className={`py-2 px-4 ${activeTab === 1 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
-          onClick={() => handleButtonClick(1)}
+          className={`py-2 px-4 flex flex-col items-center ${activeTab === 1 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
+          onClick={() => {handleButtonClick(1); navigate("/menu")}}
           // onBlur={handleButtonBlur}
         >
           <MdMenuBook />
+          <span className='text-xs'>Products</span>
         </button>
         <button
-          className={`py-2 px-4 ${activeTab === 2 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
-          onClick={() => handleButtonClick(2)}
+          className={`py-2 px-4 flex flex-col items-center ${activeTab === 2 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
+          onClick={() => {handleButtonClick(2); navigate("/tablesList")}}
           // onBlur={handleButtonBlur}
         >
           <MdTableBar />
+          <span className='text-xs'>Tables</span>
         </button>
       </section>
     </main>
