@@ -1,4 +1,6 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+
 import { useDispatch, useSelector } from 'react-redux';
 import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
 import { FiMoreHorizontal } from 'react-icons/fi';
@@ -15,8 +17,8 @@ const TablesList = () => {
     loading: tableListLoading,
     tables,
   } = tableList;
-  console.log(tables);
-  console.log(rooms);
+  // console.log(tables);
+  // console.log(rooms);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listTables());
@@ -43,9 +45,12 @@ const TablesList = () => {
           {rooms.map((room, index) => (
             <div key={room.id} className="flex flex-col ">
               <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
-                <p className="uppercase text-sm font-bold text-[#0369a1]">
+                <Link
+                  to={`/tablesList/${room.id}`}
+                  className="uppercase text-sm font-bold text-[#0369a1]"
+                >
                   {room.name}
-                </p>
+                </Link>
                 <FiMoreHorizontal />
               </div>
               <div className="grid grid-cols-2 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] ">

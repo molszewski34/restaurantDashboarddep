@@ -93,7 +93,7 @@ const Services = () => {
             >
               Menu
             </button>
-            <button
+            {/* <button
               onClick={() => {
                 navigate("/labor");
               }}
@@ -103,7 +103,7 @@ const Services = () => {
         
             <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
               Tables
-            </button>
+            </button> */}
             {/* <div className="p-8 bg-white">Pending Orders</div>
 >>>>>>> a18e014503215b5032894e777e4de31b2550447f
         <div className="p-8 bg-white">Quick Orders</div>
