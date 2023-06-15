@@ -41,7 +41,7 @@ const TablesList = () => {
           <header className="text-sm font-bold border-b border-[#cbd5e1] pl-2">
             Name
           </header>
-
+          {/*  */}
           {rooms.map((room, index) => (
             <div key={room.id} className="flex flex-col ">
               <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
@@ -52,6 +52,7 @@ const TablesList = () => {
                   {room.name}
                 </Link>
                 <FiMoreHorizontal />
+                {/*  */}
               </div>
               <div className="grid grid-cols-2 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] ">
                 <p>Table Number</p>
