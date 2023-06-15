@@ -67,6 +67,7 @@ function App() {
               <Route path="/tablesList" element={<TablesList />} />
               <Route path="/laborsList" element={<LaborsList />} />
               <Route path="/newLabor" element={<NewLabor />} />
+              <Route path="/tablesList/:roomId" element={<EditRoom />} />
             </Routes>
           </main>
         </div>
