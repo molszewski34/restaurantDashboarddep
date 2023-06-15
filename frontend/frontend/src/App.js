@@ -62,11 +62,12 @@ function App() {
               <Route path="/editCategory" element={<EditCategory />} />
               <Route path="/newDish" element={<NewDish />} />
               <Route path="/newRoom" element={<NewRoom />} />
-              <Route path="/editRoom" element={<EditRoom />} />
+              {/* <Route path="/editRoom" element={<EditRoom />} /> */}
               <Route path="/addTable" element={<AddTable />} />
               <Route path="/tablesList" element={<TablesList />} />
               <Route path="/laborsList" element={<LaborsList />} />
               <Route path="/newLabor" element={<NewLabor />} />
+              <Route path="/tablesList/:roomId" element={<EditRoom />} />
             </Routes>
           </main>
         </div>
