@@ -49,7 +49,6 @@ const Services = () => {
         <div className="p-8 bg-white">Delivery</div> */}
             </div>
           </div>
-<<<<<<< HEAD
           <div className=" mx-6 my-8 grid max-w-[800px]">
             <div className="text-xl text-center text-white bg-[#629D93] p-1">
               <h1>Manager Activities</h1>
@@ -78,34 +77,6 @@ const Services = () => {
                 Tables
               </button>
               {/* <div className="p-8 bg-white">Pending Orders</div>
-=======
-        </div>
-        <div className=" mx-6 my-8 grid max-w-[800px]">
-          <div className="text-xl text-center text-white bg-[#629D93] p-1">
-            <h1>Manager Activities</h1>
-          </div>
-          <div className="grid grid-cols-2 grid-rows-2 gap-1">
-            <button
-                 onClick={() => {
-                  navigate("/menu");
-                }}
-              className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
-            >
-              Menu
-            </button>
-            {/* <button
-              onClick={() => {
-                navigate("/labor");
-              }}
-            className="flex justify-center items-center  bg-white text-center font-bold text-xl">
-              Labor
-            </button>
-        
-            <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
-              Tables
-            </button> */}
-            {/* <div className="p-8 bg-white">Pending Orders</div>
->>>>>>> a18e014503215b5032894e777e4de31b2550447f
         <div className="p-8 bg-white">Quick Orders</div>
         <div className="p-8 bg-white">Delivery</div> */}
             </div>
