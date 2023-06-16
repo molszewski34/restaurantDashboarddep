@@ -13,7 +13,7 @@ const CategoriesList = () => {
   const { categoriesError, categoriesLoading, categories } = categoriesList;
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-  console.log(dishes);
+  // console.log(dishes);
   // console.log(categoriesList);
 
   const dispatch = useDispatch();
@@ -100,18 +100,18 @@ const CategoriesList = () => {
                 {/* <div className="flex flex-col w-full pr-2 my-4"> */}
               </div>
               <div className="grid grid-cols-1">
-                <div className="grid grid-cols-2 border border-b-0 bg-[#e5e7eb]">
+                <div className="grid grid-cols-4 border border-b-0 bg-[#e5e7eb]">
                   <span className="font-bold pl-2 text-sm">Name</span>
                   <span className="font-bold text-sm">Price</span>
                 </div>
                 {dishes
-                  .filter((dish) => dish.category === dish.category)
+                  .filter((dish) => dish.category == categoryItem.id)
                   .map((filteredDish) => {
                     console.log(filteredDish);
                     return (
                       <div
                         key={filteredDish.id}
-                        className="grid grid-cols-2 border border-b-0 text-sm last:border-b"
+                        className="grid grid-cols-4 items-center border border-b-0 text-sm last:border-b"
                       >
                         <span className="pl-2 text-[#0369a1] cursor-pointer">
                           {filteredDish.title}
@@ -119,6 +119,19 @@ const CategoriesList = () => {
                         <span className="text-[#0369a1] cursor-pointer">
                           {filteredDish.price}
                         </span>
+                        <button className="flex justify-center items-center w-8 h-8 text-[#0369a1]">
+                          <AiFillEdit />
+                        </button>
+                        <button
+                          onClick={() => {
+                            setModalOpen(true);
+                            setOverlay(true);
+                          }}
+                          className="flex justify-end items-center   text-[#ef4444] text-xs border rounded-full bg-white shadowed px-2 py-1"
+                        >
+                          {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
+                          Remove
+                        </button>
                       </div>
                     );
                   })}

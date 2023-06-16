@@ -2,11 +2,16 @@ import React from 'react'
 import {CgClose} from "react-icons/cg";
 import { useDispatch, useSelector } from 'react-redux';
 
-const ModalAddDishes = ({
+const ModalEditiDishes = ({
     closeModal,
   closeOverlay,
-  selectedCategories
+  selectedNameOFDish,
+  selectedCategories,
+  selectedPriceOFDish
 }) => {
+    const dishList = useSelector((state) => state.dishList);
+    const { error: dishListError, loading: dishListloading, dishes } = dishList;
+    console.log(selectedNameOFDish, selectedCategories, selectedPriceOFDish)
     // const categoriesList = selectedCategories
     // console.log(categoriesList)
     const categoriesList = useSelector((state) => state.categoriesList);
@@ -16,7 +21,7 @@ const ModalAddDishes = ({
    
     <div className="flex justify-between items-center pb-2 border-b-2">
     
-    <header className="text-2xl font-bold">Add Dish</header>
+    <header className="text-2xl font-bold">Edit Dish</header>
     <button
            onClick={() => {
             closeModal(false);
@@ -26,12 +31,13 @@ const ModalAddDishes = ({
     </div>
   
     <section className='flex flex-col gap-1'>
-    <label htmlFor="">
+    <label className='flex' htmlFor="">
         Name: 
-        <input type="text" placeholder='Name of Dish'/>
+        <input className='w-full' type="text" value={selectedNameOFDish} placeholder='Name of Dish'/>
     </label>
     <label htmlFor="">Select category:
 <select name="" id="">
+    <option>{selectedCategories}</option>
 {categoriesList.categories.map((categoryItem)=>(
     <option value={categoryItem.title}>{categoryItem.title}</option>
     // <div className="">
@@ -43,9 +49,9 @@ const ModalAddDishes = ({
 </label>
 <label htmlFor="">
         Price: 
-        <input type="text" placeholder='Price'/>
+        <input type="text" value={selectedPriceOFDish} placeholder='Price'/>
     </label>
-    <button>Add</button>
+    <button>Update</button>
 </section>
   
 
@@ -56,4 +62,4 @@ const ModalAddDishes = ({
     )
 }
 
-export default ModalAddDishes
+export default ModalEditiDishes

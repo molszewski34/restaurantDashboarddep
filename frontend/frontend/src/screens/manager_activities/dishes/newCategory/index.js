@@ -1,36 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 import { listCategories } from '../../../../actions/categoriesActions';
-import { listTables, listRooms } from '../../../../actions/tablesActions';
-import { listOrders } from '../../../../actions/ordersActions';
-const EditRoom = () => {
+// import ModalColorPicker from '../../../../components/modals/ModalColorPicker';
+const NewCategory = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { categoriesError, categoriesLoading, categories } = categoriesList;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listCategories());
-    dispatch(listTables());
-    dispatch(listRooms());
-    dispatch(listOrders());
   }, []);
-  const roomsList = useSelector((state) => state.roomsList);
-  const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
-
-  const { roomId } = useParams();
-  // console.log(rooms);
-  const filteredRoom = rooms.filter((room) => room.id == roomId);
-  // console.log(filteredRoom);
-
-  const tableList = useSelector((state) => state.tableList);
-  const {
-    error: tableListError,
-    loading: tableListLoading,
-    tables,
-  } = tableList;
 
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
@@ -56,12 +37,38 @@ const EditRoom = () => {
             >
               Name
               <input
-                className="border border-[#cbd5e1] py-1 pl-1 font-normal placeholder:bg-[#e0f2fe] placeholder:text-black"
+                className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                 type="text "
-                // value={'Category Name'}
-                placeholder={filteredRoom.name}
+                value={'Category Name'}
               />
             </label>
+          </div>
+          <div className="flex gap-2 items-center">
+            <p className="font-bold text-sm">Button Color</p>
+
+            <main className=" grid grid-cols-4 grid-flow-row gap-1 relative">
+              <button
+                onClick={() => setOpenColorPicker(!openColorPicker)}
+                className="w-6 h-6 grow flex bg-secondary-bg-color border border-[#cbd5e1]"
+                style={{ backgroundColor: selectedColor }}
+              ></button>
+
+              {openColorPicker && (
+                <div className=" grid grid-cols-3 grid-flow-row gap-1 absolute top-0 left-10 border border-[#cbd5e1] p-1 w-24">
+                  {categories.map((category) => (
+                    <button
+                      className=" cursor-pointer w-6 h-6 grow flex"
+                      key={category.id}
+                      style={{ backgroundColor: category.colour }}
+                      onClick={() => {
+                        handleColorClick(category.colour);
+                        setOpenColorPicker(false);
+                      }}
+                    ></button>
+                  ))}
+                </div>
+              )}
+            </main>
           </div>
         </section>
         <section className="">
@@ -72,31 +79,9 @@ const EditRoom = () => {
             <header className="text-sm font-bold border-b border-[#cbd5e1] pl-2">
               Name
             </header>
-            <div className="grid grid-cols-2 px-2 font-bold py-1 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] ">
-              <p>Table Number</p>
-              <p>Max Guests</p>
-            </div>
-            <div className="grid grid-cols-2 px-2  py-2 border-b border-r border-l border-[#e5e7eb] ">
-              <p>3</p>
-              <p>4</p>
-            </div>
-            <div className="grid grid-cols-2 px-2  py-2 border-b border-r border-l border-[#e5e7eb] ">
-              <p>3</p>
-              <p>4</p>
-            </div>
-            <div className="grid grid-cols-2 px-2  py-2 border-b border-r border-l border-[#e5e7eb] ">
-              <p>3</p>
-              <p>4</p>
-            </div>
-            <div className="grid grid-cols-2 px-2  py-2 border-b border-r border-l border-[#e5e7eb] ">
-              <p>3</p>
-              <p>4</p>
-            </div>
+
             <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold">
               + Add
-            </button>
-            <button className="flex justify-center w-20 border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold">
-              Confirm
             </button>
           </div>
         </section>
@@ -105,4 +90,4 @@ const EditRoom = () => {
   );
 };
 
-export default EditRoom;
+export default NewCategory;
