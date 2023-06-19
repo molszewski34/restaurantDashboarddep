@@ -26,14 +26,24 @@ const NewCategory = () => {
 
   const handleSelectProduct = (productId) => {
     const product = dishes.find((item) => item.id == productId);
+    const isAlreadySelected = selectedProducts.some(
+      (product) => product.id === productId
+    );
 
-    setSelectedProducts((prevSelectedProducts) => [
-      ...prevSelectedProducts,
-      product,
-    ]);
+    if (!isAlreadySelected) {
+      setSelectedProducts((prevSelectedProducts) => [
+        ...prevSelectedProducts,
+        product,
+      ]);
+    }
+  };
+
+  const handleRemoveProduct = (productId) => {
+    setSelectedProducts((prevSelectedProducts) =>
+      prevSelectedProducts.filter((product) => product.id !== productId)
+    );
   };
   return (
-    // <div className="flex flex-col md:flex-row">
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
@@ -43,7 +53,7 @@ const NewCategory = () => {
             <header className="font-bold py-1 border-b text-xl border-[#cbd5e1]">
               Add Category
             </header>
-            <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 bg-[#0369a1] text-white font-bold rounded">
+            <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 bg-[#0369a1] hover:bg-[#0284c7] text-white font-bold rounded">
               Save
             </button>
           </div>
@@ -92,28 +102,49 @@ const NewCategory = () => {
           </div>
         </section>
         <section className="">
-          <div className="flex justify-between border-b border-[#cbd5e1]">
+          <div className="flex justify-between items-center border-b border-[#cbd5e1]">
             <header className="font-bold py-1 ">Products</header>
             <div className="flex gap-2">
               <button
                 onClick={() => setOpenListDishes(!openListDishes)}
-                className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9]"
               >
                 + Add from list
               </button>
-              <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold">
+              <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9]">
                 + Add new product
               </button>
             </div>
           </div>
-          <div className="my-4">
+          <div className="py-2 flex flex-wrap  items-center gap-2 text-sm">
+            <label className="font-bold flex items-center gap-2" htmlFor="">
+              Product Name:
+              <input
+                className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                type="text"
+                placeholder="Provide Name"
+              />
+            </label>
+            <label className="font-bold flex items-center gap-2" htmlFor="">
+              Product Price:
+              <input
+                className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                type="text"
+                placeholder="Provide price"
+              />
+            </label>
+            <button className="border w-[110px] border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]">
+              + Add
+            </button>
+          </div>
+          <div className="my-4 ">
             <div className="grid grid-cols-3 border-b border-[#cbd5e1] ">
               <span className="text-sm font-bold pl-2">Name</span>
               <span className="text-sm font-bold  pl-2 place-self-center">
                 Price
               </span>
             </div>
-            {selectedProducts.map((product) => (
+            {selectedProducts.map((product, index) => (
               <div
                 key={product.id}
                 className="grid grid-cols-3 items-center  rounded bg-[#f3f4f6] my-1 gap-1"
@@ -125,7 +156,10 @@ const NewCategory = () => {
                   {product.price}
                 </span>
 
-                <button className="place-self-end self-center mr-2 font-bold text-sm text-[#ef4444]">
+                <button
+                  onClick={() => handleRemoveProduct(product.id)}
+                  className="place-self-end self-center mr-2 font-bold text-sm text-[#ef4444]"
+                >
                   Remove
                 </button>
               </div>

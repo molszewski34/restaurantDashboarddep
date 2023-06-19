@@ -8,13 +8,14 @@ import { GiConfirmed } from 'react-icons/gi';
 import { listDishes } from '../../../../actions/dishActions';
 import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 import { listCategories } from '../../../../actions/categoriesActions';
+import { Link } from 'react-router-dom';
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { categoriesError, categoriesLoading, categories } = categoriesList;
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-  // console.log(dishes);
-  // console.log(categoriesList);
+
+  console.log(categoriesList);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -22,10 +23,12 @@ const CategoriesList = () => {
     dispatch(listDishes());
   }, []);
   const [modalOpen, setModalOpen] = useState(false);
+  const [addProductModal, setAddProductModal] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [openColorPicker, setOpenColorPicker] = useState(false);
   const [selectedColor, setSelectedColor] = useState('');
   const [selectedDishId, setSelectedDishId] = useState(null);
+  const [categoryName, setCategoryName] = useState(null);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -47,10 +50,15 @@ const CategoriesList = () => {
         <h1 className="font-bold text-3xl py-1 border-b border-[#cbd5e1] mt-4">
           Menu
         </h1>
-        <div className="flex justify-between px-1"></div>
-        <header className="font-bold py-1 border-b border-[#cbd5e1] mt-4">
-          Categories
-        </header>
+        <div className="flex justify-between px-1 items-center border-b border-[#cbd5e1] my-2">
+          <header className="font-bold py-1  mt-4">Categories</header>
+          <Link
+            className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9]"
+            to="/add-category"
+          >
+            + Add Category
+          </Link>
+        </div>
         <section className="mt-4 flex flex-col gap-3">
           <div className="grid grid-cols-4 ">
             <span className="text-sm font-bold border-b border-[#cbd5e1] pl-2">
@@ -90,7 +98,7 @@ const CategoriesList = () => {
                       setModalOpen(true);
                       setOverlay(true);
                     }}
-                    className="flex justify-center items-center  place-self-end text-[#ef4444] text-xs  shadowed px-2 py-1"
+                    className="flex justify-center items-center  place-self-end text-[#ef4444] text-xs  shadowed px-2 py-1 hover:font-bold"
                   >
                     {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
                     Remove
@@ -175,7 +183,7 @@ const CategoriesList = () => {
                             //   setModalOpen(true);
                             //   setOverlay(true);
                             // }}
-                            className="flex items-center justify-center place-self-end self-center text-[#ef4444] text-xs    shadowed px-2 py-1"
+                            className="flex items-center justify-center place-self-end self-center text-[#ef4444] text-xs    shadowed px-2 py-1 hover:font-bold"
                           >
                             {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
                             Remove
@@ -206,48 +214,114 @@ const CategoriesList = () => {
                       );
                     })}
                 </div>
-                <button className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold">
+                <button
+                  onClick={() => {
+                    setAddProductModal(true);
+                    setOverlay(true);
+                    setCategoryName(categoryItem.title);
+                  }}
+                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9]"
+                >
                   + Add
                 </button>
               </div>
             );
           })}
         </section>
-      </main>
-      {modalOpen && (
-        <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-          {/* <ModalAddEmployee
+        {modalOpen && (
+          <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+            {/* <ModalAddEmployee
                 closeModal={() => setModalOpen(false)}
                 closeOverlay={() => setOverlay(false)}
               /> */}
-          <main className="bg-white p-4 max-w-[400px] w-full">
-            <b className="">Do you want to delete room and all items inside?</b>
-            <div className="flex justify-between gap-2">
-              {' '}
-              <button
-                onClick={() => {
-                  setModalOpen(false);
-                  setOverlay(false);
-                }}
-                className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
-              >
-                Confirm
-              </button>
-              <button
-                onClick={() => {
-                  setModalOpen(false);
-                  setOverlay(false);
-                }}
-                className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
-              >
-                Cancel
-              </button>
-            </div>
-          </main>
-        </div>
-      )}
+            <main className="bg-white p-4 max-w-[400px] w-full">
+              <b className="">
+                Do you want to delete room and all items inside?
+              </b>
+              <div className="flex justify-between gap-2">
+                {' '}
+                <button
+                  onClick={() => {
+                    setModalOpen(false);
+                    setOverlay(false);
+                  }}
+                  className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={() => {
+                    setModalOpen(false);
+                    setOverlay(false);
+                  }}
+                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                >
+                  Cancel
+                </button>
+              </div>
+            </main>
+          </div>
+        )}{' '}
+        {addProductModal && (
+          <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+            {/* <ModalAddEmployee
+                closeModal={() => setModalOpen(false)}
+                closeOverlay={() => setOverlay(false)}
+              /> */}
+            <main className="bg-white p-4 max-w-[400px] w-full">
+              <b className="">Adding new product to {categoryName} </b>
+              <div className="flex justify-between gap-2">
+                <div className="py-2 flex flex-wrap  items-center gap-2 text-sm">
+                  <label
+                    className="font-bold flex items-center gap-2"
+                    htmlFor=""
+                  >
+                    Product Name:
+                    <input
+                      className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                      type="text"
+                      placeholder="Provide Name"
+                    />
+                  </label>
+                  <label
+                    className="font-bold flex items-center gap-2"
+                    htmlFor=""
+                  >
+                    Product Price:
+                    <input
+                      className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                      type="text"
+                      placeholder="Provide price"
+                    />
+                  </label>
+                  <div className="flex justify-between items-center w-full">
+                    <button
+                      onClick={() => {
+                        setAddProductModal(false);
+                        setOverlay(false);
+                      }}
+                      className="border w-[110px] border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                    >
+                      + Add
+                    </button>
+                    <button
+                      onClick={() => {
+                        setAddProductModal(false);
+                        setOverlay(false);
+                      }}
+                      className="border w-[110px] border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </main>
+          </div>
+        )}
+      </main>
       {overlay && (
-        <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
+        <div className="fixed z-40 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
       )}
     </div>
   );
