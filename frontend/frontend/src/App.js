@@ -21,6 +21,8 @@ import CategoriesList from './screens/manager_activities/dishes/categoriesList';
 import EditRoom from './screens/manager_activities/tables/editRoom';
 import TablesList from './screens/manager_activities/tables/tablesList';
 import NewCategory from './screens/manager_activities/dishes/newCategory';
+import NewRoom from './screens/manager_activities/tables/addRoom';
+
 function App() {
   return (
     <>
@@ -47,6 +49,7 @@ function App() {
               <Route path="/tablesList" element={<TablesList />} />
               <Route path="/add-category" element={<NewCategory />} />
               <Route path="/tablesList/:roomId" element={<EditRoom />} />
+              <Route path="/add-room" element={<NewRoom />} />
             </Routes>
           </main>
         </div>

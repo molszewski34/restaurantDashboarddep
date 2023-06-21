@@ -1,9 +1,9 @@
 import React from 'react'
 import {GiCook} from 'react-icons/gi'
 import { FaUsers } from 'react-icons/fa';
-import {MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown} from 'react-icons/md'
+import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown, MdFastfood } from 'react-icons/md';
 import { useNavigate } from "react-router-dom";
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const NavbarManagmentPanelSide = () => {
   let navigate = useNavigate();
@@ -15,17 +15,17 @@ const NavbarManagmentPanelSide = () => {
 </div>
 <div className="flex flex-col  border-b-2 border-[#e2e8f0] w-full py-4">
 <NavLink to='/menu' className={({isActive}) => (isActive ? 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer bg-secondary-bg-color': 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer')}>
-    <li onClick={() => { navigate("/menu")}} className='flex items-center gap-2 text-[#6b7280] text-sm font-bold '><MdMenuBook className='text-xl'/>Menu</li>
-    <li onClick={() => { navigate("/add-category")}}className='flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline'>+ Add Category</li>
+    <Link to='/menu' className='flex items-center gap-2 text-[#6b7280] text-sm font-bold '><MdFastfood className='text-xl'/>Menu</Link>
+    <Link to='/add-category'className='flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline'>+ Add Category</Link>
   
 </NavLink>
 <NavLink to='/labor' className={({isActive}) => (isActive ? 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer bg-secondary-bg-color': 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer')}>
-    <li  className='flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer'><FaUsers className='text-xl'/>Labor</li>
+    <li  className='flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer'><GiCook className='text-xl'/>Employess</li>
     <li className='flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline'>+ Add Employee</li>
 </NavLink>
 <NavLink to='/tablesList' className={({isActive}) => (isActive ? 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer bg-secondary-bg-color': 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer')}>
     <li  className='flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer'><MdTableBar className='text-xl'/>Tables</li>
-    <li className='flex items-center  text-[#6b7280] text-xs font-bold  cursor-pointer hover:underline'>+ Add Room</li>
+    <Link to='/add-room' className='flex items-center  text-[#6b7280] text-xs font-bold  cursor-pointer hover:underline'>+ Add Room</Link>
 </NavLink>
 </div>
     </main>

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { FaUsers } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { BiUserCircle } from 'react-icons/bi';
-import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown, MdFastfood } from 'react-icons/md';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { GiCook } from 'react-icons/gi';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from 'react-router-dom';
+
 const NavbarManagmentPanel = () => {
   let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
-  const [buttonActive, setButtonActive] = useState(false); // Stan określający, czy przycisk jest aktywny
+  const [buttonActive, setButtonActive] = useState(false); 
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -55,7 +56,7 @@ const NavbarManagmentPanel = () => {
           // onClick={() => {handleButtonClick(1); navigate("/menu")}}
           // onBlur={handleButtonBlur}
         >
-          <MdMenuBook />
+          <MdFastfood/>
           <span className='text-xs'>Products</span>
         </NavLink>
         
@@ -63,8 +64,8 @@ const NavbarManagmentPanel = () => {
           className={({isActive}) => (isActive ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color' : 'py-2 px-4 flex flex-col items-center') }
         
         >
-          <FaUsers />
-          <span className='text-xs'>Labors</span>
+          <GiCook />
+          <span className='text-xs'>Employess</span>
         </NavLink>
    
         <NavLink to='/tablesList'
