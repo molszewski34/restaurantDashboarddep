@@ -10,18 +10,20 @@ import Orders from './screens/orders/index';
 import Admin from './screens/admin';
 import TablesMap from './screens/tablesMap';
 import Staff from './screens/staff';
-import Login from './screens/login';
+import SignIn from './screens/login';
 import Services from './screens/services';
 import StartingPanel from './screens/startingPanel';
 import Invite from './screens/invite';
 import TablesPanel from './screens/tablesPanel';
 import OrdersPanel from './screens/ordersPanel';
-import Labor from './screens/manager_activities/labor';
+import LaborList from './screens/manager_activities/labor/laborsList';
 import CategoriesList from './screens/manager_activities/dishes/categoriesList';
 import EditRoom from './screens/manager_activities/tables/editRoom';
 import TablesList from './screens/manager_activities/tables/tablesList';
 import NewCategory from './screens/manager_activities/dishes/newCategory';
 import NewRoom from './screens/manager_activities/tables/addRoom';
+import NewLabor from './screens/manager_activities/labor/newLabor';
+import EditLabor from './screens/manager_activities/labor/editLabor';
 
 function App() {
   return (
@@ -41,14 +43,16 @@ function App() {
               <Route path="/invite" element={<Invite />} />
               <Route path="/start" element={<StartingPanel />} />
               <Route path="/admin-panel" element={<Admin />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<SignIn />} />
               <Route path="/services" element={<Services />} />
               <Route path="/tablesPanel" element={<TablesPanel />} />
-              <Route path="/labor" element={<Labor />} />
-              <Route path="/menu" element={<CategoriesList />} />
               <Route path="/tablesList" element={<TablesList />} />
-              <Route path="/add-category" element={<NewCategory />} />
               <Route path="/tablesList/:roomId" element={<EditRoom />} />
+              <Route path="/employess/" element={<LaborList />} />
+              <Route path="/employess/:laborId" element={<EditLabor />} />
+              <Route path="/employess/new-employee" element={<NewLabor />} />
+              <Route path="/menu" element={<CategoriesList />} />
+              <Route path="/add-category" element={<NewCategory />} />
               <Route path="/add-room" element={<NewRoom />} />
             </Routes>
           </main>

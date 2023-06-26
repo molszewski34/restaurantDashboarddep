@@ -60,7 +60,7 @@ const NavbarManagmentPanel = () => {
           <span className='text-xs'>Products</span>
         </NavLink>
         
-        <NavLink to='/labor'
+        <NavLink to='/employess'
           className={({isActive}) => (isActive ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color' : 'py-2 px-4 flex flex-col items-center') }
         
         >

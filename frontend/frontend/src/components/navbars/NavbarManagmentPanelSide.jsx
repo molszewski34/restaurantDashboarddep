@@ -19,9 +19,9 @@ const NavbarManagmentPanelSide = () => {
     <Link to='/add-category'className='flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline'>+ Add Category</Link>
   
 </NavLink>
-<NavLink to='/labor' className={({isActive}) => (isActive ? 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer bg-secondary-bg-color': 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer')}>
+<NavLink to='/employess' className={({isActive}) => (isActive ? 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer bg-secondary-bg-color': 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer')}>
     <li  className='flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer'><GiCook className='text-xl'/>Employess</li>
-    <li className='flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline'>+ Add Employee</li>
+    <Link to='/employess/new-employee' className='flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline'>+ Add Employee</Link>
 </NavLink>
 <NavLink to='/tablesList' className={({isActive}) => (isActive ? 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer bg-secondary-bg-color': 'flex flex-wrap gap-2 flex-col justify-around w-full overflow-hidden hover:bg-secondary-bg-color p-2 cursor-pointer')}>
     <li  className='flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer'><MdTableBar className='text-xl'/>Tables</li>
