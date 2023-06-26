@@ -1,220 +1,116 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-
 import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
 import { FiMoreHorizontal } from 'react-icons/fi';
-
 import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 import { listCategories } from '../../../../actions/categoriesActions';
-
-import { listTables, listRooms } from '../../../../actions/tablesActions';
-import { listOrders } from '../../../../actions/ordersActions';
-
-import ModalAddEmployee from '../../../../components/modals/ModalAddEmployee';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
+import data from '../laborsList/laborsData.json';
 const NewLabor = () => {
-  const roomsList = useSelector((state) => state.roomsList);
-  const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
-  const tableList = useSelector((state) => state.tableList);
-  // let navigate = useNavigate();
-  const userLogin = useSelector((state) => state.userLogin);
-  const { error, loading, userInfo } = userLogin;
+  const map = new Map();
+  data.employees.forEach((item) => map.set(item.job_position, item));
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [overlay, setOverlay] = useState(false);
-
-  const [isDisabled, setIsDisabled] = useState(true);
-
-  const [showConfirm, setShowConfirm] = useState(false);
-  const {
-    error: tableListError,
-    loading: tableListLoading,
-    tables,
-  } = tableList;
-  console.log(tables);
-  console.log(rooms);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(listTables());
-    dispatch(listRooms());
-    dispatch(listOrders());
-  }, []);
+  const jobPosition = Array.from(map.values());
   return (
-    // <div className="flex flex-col md:flex-row">
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
       <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
-        <header className="font-bold py-1 border-b border-[#cbd5e1]">
-          New Employee
-        </header>
-        <div className=" max-w-[400px] w-full">
-          <section className="flex flex-col gap-2 my-2">
-            <form className="flex flex-col gap-2 p-4 shadow bg-white rounded-sm">
-              <div className="flex justify-between ">
-                <div className="">
-                  <b>Full Name: </b>
-                  <label className="" htmlFor="">
-                    <input
-                      className={`pl-1  border ${
-                        isDisabled ? ' ' : '  bg-[#e0f2fe]'
-                      }`}
-                      type="text"
-                      placeholder={'Provide a Full Name'}
-                      //   disabled={isDisabled}
-                    />
-                  </label>
-                </div>
-              </div>
+        <section className="flex flex-col gap-3 my-4">
+          <header className="font-bold py-1 border-b text-2xl border-[#cbd5e1]">
+            Add employee
+          </header>
 
-              <div className="flex justify-between ">
-                <div className="">
-                  <b>Position: </b>
-                  <select
-                    className="py-1 pl-1"
-                    // className={` bg-white
-                    // ${isDisabled ? 'appearance-none ' : 'border pl-1'}`}
-
-                    name=""
-                    id=""
-                    // disabled={isDisabled}
-                  >
-                    <option value="cook">Cook</option>
-                    <option value="waiter">Waiter</option>
-                    <option value="chef">Chef</option>
-                    <option value="manager">Manager</option>
-                    <option value="cashier">Cashier</option>
-                    <option value="driver">Driver</option>
-                  </select>
-                </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
-              </div>
-              <div className="flex justify-between ">
-                <div className="">
-                  <b>Type of payment: </b>
-                  <label className="" htmlFor="">
-                    <select
-                      className="py-1 pl-1"
-                      //   className={` bg-white
-                      // ${isDisabled ? 'appearance-none' : 'border pl-1'}`}
-                      name=""
-                      id=""
-                      required
-                      //   disabled={isDisabled}
-                    >
-                      <option value="hour">Hour</option>
-                      <option value="day">Day</option>
-                      <option value="month">Month</option>
-                    </select>
-                  </label>
-                </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
-              </div>
-              <div className="flex justify-between ">
-                <div className="">
-                  <b>Cashier: </b>
-                  <label className="" htmlFor="">
-                    <select
-                      className="py-1 pl-1"
-                      //   className={` bg-white
-                      // ${isDisabled ? 'appearance-none' : 'border pl-1'}`}
-                      name=""
-                      id=""
-                      required
-                      //   disabled={isDisabled}
-                    >
-                      <option value="no">No</option>
-                      <option value="yes">Yes</option>
-                    </select>
-                  </label>
-                </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
-              </div>
-              <div className="flex justify-between ">
-                <div className="">
-                  <b>Driver: </b>
-                  <label className="" htmlFor="">
-                    <select
-                      className="py-1 pl-1"
-                      //   className={` bg-white
-                      // ${isDisabled ? 'appearance-none' : 'border pl-1'}`}
-                      name=""
-                      id=""
-                      required
-                      //   disabled={isDisabled}
-                    >
-                      <option value="no">No</option>
-                      <option value="yes">Yes</option>
-                    </select>
-                  </label>
-                </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
-              </div>
-              <div className="flex justify-between ">
-                <div className="">
-                  <b>Phone: </b>
-                  <label className="" htmlFor="">
-                    <input
-                      className={`pl-1  border ${
-                        isDisabled ? ' ' : '  bg-[#e0f2fe]'
-                      }`}
-                      type="text"
-                      placeholder={'Provide a Full Name'}
-                      //   placeholder={'+1 555-123-4567'}
-                      //   disabled={isDisabled}
-                    />
-                  </label>
-                </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
-              </div>
-              <div className="flex justify-between ">
-                <div className="flex w-full">
-                  <b>Email: </b>
-                  <label className="w-full flex" htmlFor="">
-                    <input
-                      className={`pl-1  border ${
-                        isDisabled ? ' ' : '  bg-[#e0f2fe]'
-                      }`}
-                      type="text"
-                      placeholder={'Provide a Full Name'}
-                      //   placeholder={'alicewestwood@example.com'}
-                      //   disabled={isDisabled}
-                    />
-                  </label>
-                </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
-              </div>
-              <div className="flex justify-between border-t-2 pt-2">
-                <button className="flex items-center bg-[#059669] text-white font-bold py-2 px-3 rounded-md">
-                  Confirm
-                </button>
-              </div>
-            </form>
-          </section>
-          {modalOpen && (
-            <div className="fixed z-20 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-              <ModalAddEmployee
-                closeModal={() => setModalOpen(false)}
-                closeOverlay={() => setOverlay(false)}
+          <form className="flex flex-col gap-2">
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Full name
+              <input
+                required
+                className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                type="text "
+                placeholder="ex: John Doe"
               />
-            </div>
-          )}
-          {overlay && (
-            <div className="absolute z-10 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
-          )}
-        </div>
+            </label>
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Position
+              <select className="font-normal p-1" name="" id="">
+                <option value="">Chosse from list</option>
+                {jobPosition.map((employee, index) => (
+                  <option key={index} value="">
+                    {employee.job_position}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Type of payment
+              <select className="font-normal p-1" name="" id="">
+                <option value="">Salary</option>
+                <option value="">Hourly</option>
+                <option value="">Monthly</option>
+              </select>
+            </label>
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Cashier
+              <select className="font-normal p-1" name="" id="">
+                <option value="">No</option>
+                <option value="">Yes</option>
+              </select>
+            </label>
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Driver
+              <select className="font-normal p-1" name="" id="">
+                <option value="">No</option>
+                <option value="">Yes</option>
+              </select>
+            </label>
+
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Phone
+              <input
+                required
+                className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                type="text "
+                placeholder="ex. 0-500-000"
+              />
+            </label>
+            <label
+              className="flex items-center gap-2 font-bold text-sm"
+              htmlFor=""
+            >
+              Email
+              <input
+                required
+                className="flex border border-[#cbd5e1] py-1 pl-1 font-normal"
+                type="text "
+                placeholder="ex: john.doe@example.com"
+              />
+            </label>
+            <button
+              type="submit"
+              className="flex justify-center w-20 border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+            >
+              Confirm
+            </button>
+          </form>
+        </section>
       </main>
     </div>
   );
