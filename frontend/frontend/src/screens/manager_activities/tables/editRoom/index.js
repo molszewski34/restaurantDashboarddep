@@ -21,7 +21,8 @@ const EditRoom = () => {
   const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
 
   const { roomId } = useParams();
-  console.log(rooms);
+  console.log(roomId);
+  console.log(roomsList);
   const filteredRoom = rooms.filter((room) => room.id == roomId);
   console.log(filteredRoom);
 
