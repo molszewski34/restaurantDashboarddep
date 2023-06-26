@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
-import { FaUsers } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 import { BiUserCircle } from 'react-icons/bi';
-import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown } from 'react-icons/md';
+import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown, MdFastfood } from 'react-icons/md';
 import { RiArrowGoBackFill } from 'react-icons/ri';
 import { GiCook } from 'react-icons/gi';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { NavLink } from 'react-router-dom';
+
 const NavbarManagmentPanel = () => {
   let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
-  const [buttonActive, setButtonActive] = useState(false); // Stan określający, czy przycisk jest aktywny
+  const [buttonActive, setButtonActive] = useState(false); 
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -49,31 +51,29 @@ const NavbarManagmentPanel = () => {
         </div>
       </section>
       <section className='flex md:hidden w-screen justify-around text-xl  shadow-md text-[#6b7280]'>
-        <button
-          className={`py-2 px-4 flex flex-col items-center ${activeTab === 0 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
-          onClick={() =>{ handleButtonClick(0); navigate("/laborList")}}
-          
+             <NavLink to='/menu'
+          className={({isActive}) => (isActive ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color' : 'py-2 px-4 flex flex-col items-center') }
+          // onClick={() => {handleButtonClick(1); navigate("/menu")}}
           // onBlur={handleButtonBlur}
         >
-          <FaUsers />
-          <span className='text-xs'>Labors</span>
-        </button>
-        <button
-          className={`py-2 px-4 flex flex-col items-center ${activeTab === 1 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
-          onClick={() => {handleButtonClick(1); navigate("/menu")}}
-          // onBlur={handleButtonBlur}
-        >
-          <MdMenuBook />
+          <MdFastfood/>
           <span className='text-xs'>Products</span>
-        </button>
-        <button
-          className={`py-2 px-4 flex flex-col items-center ${activeTab === 2 && buttonActive ? 'bg-secondary-bg-color' : ''}`}
-          onClick={() => {handleButtonClick(2); navigate("/tablesList")}}
-          // onBlur={handleButtonBlur}
+        </NavLink>
+        
+        <NavLink to='/employess'
+          className={({isActive}) => (isActive ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color' : 'py-2 px-4 flex flex-col items-center') }
+        
+        >
+          <GiCook />
+          <span className='text-xs'>Employess</span>
+        </NavLink>
+   
+        <NavLink to='/tablesList'
+         className={({isActive}) => (isActive ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color' : 'py-2 px-4 flex flex-col items-center') }
         >
           <MdTableBar />
           <span className='text-xs'>Tables</span>
-        </button>
+        </NavLink>
       </section>
     </main>
   );
