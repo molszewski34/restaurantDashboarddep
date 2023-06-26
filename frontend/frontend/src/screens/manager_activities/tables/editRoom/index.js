@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import { FiMoreHorizontal } from "react-icons/fi";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import { listCategories } from "../../../../actions/categoriesActions";
-import { listTables, listRooms } from "../../../../actions/tablesActions";
-import { listOrders } from "../../../../actions/ordersActions";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import { listCategories } from '../../../../actions/categoriesActions';
+import { listTables, listRooms } from '../../../../actions/tablesActions';
+import { listOrders } from '../../../../actions/ordersActions';
 const EditRoom = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { categoriesError, categoriesLoading, categories } = categoriesList;
@@ -21,9 +21,9 @@ const EditRoom = () => {
   const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
 
   const { roomId } = useParams();
-  console.log(rooms);
+  // console.log(rooms);
   const filteredRoom = rooms.filter((room) => room.id == roomId);
-  console.log(filteredRoom);
+  // console.log(filteredRoom);
 
   const tableList = useSelector((state) => state.tableList);
   const {
@@ -33,7 +33,7 @@ const EditRoom = () => {
   } = tableList;
 
   const [openColorPicker, setOpenColorPicker] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [selectedColor, setSelectedColor] = useState('');
 
   const handleColorClick = (color) => {
     setSelectedColor(color);

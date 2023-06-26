@@ -11,6 +11,7 @@ const ModalAddCategory = ({
     // console.log(categoriesList)
     const categoriesList = useSelector((state) => state.categoriesList);
     const { categoriesError, categoriesLoading, categories } = categoriesList;
+    console.log(categories)
     return(
         <main className='bg-white p-4 max-w-[400px] w-full'> 
    
@@ -25,16 +26,25 @@ const ModalAddCategory = ({
     className="text-3xl font-bold  hover:text-[#dc2626]"><CgClose/></button>
     </div>
   
-    <section className='flex flex-col gap-1'>
-    <label className='py-2 flex gap-2' htmlFor="">
-        Category Name: 
+    <section className='flex flex-col  gap-1 '>
+        <div className="flex justify-between py-2">
+        <label className=' flex gap-2' htmlFor="">
+        Name: 
         <input className='border' type="text" />
     </label>
+    <select name="" id="">
+{categories.map((category)=>(
+    <option key={category.id}style={{backgroundColor: category.colour}} value={category.colour}>{category.colour}</option>
+))}
+      
+    </select>
+        </div>
+
     
 
 
 
-    <button className='bg-primary-bg-color text-white font-bold'>Confirm</button>
+    <button className='bg-primary-bg-color text-white font-bold w-[100px] place-self-center py-1 px-2 rounded'>Add</button>
 </section>
   
 
