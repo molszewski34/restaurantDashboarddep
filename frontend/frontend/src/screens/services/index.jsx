@@ -82,7 +82,6 @@ const Services = () => {
                 Tables
               </button>
               {/* <div className="p-8 bg-white">Pending Orders</div>
-<<<<<<< HEAD
 =======
         </div>
         <div className=" mx-6 my-8 grid max-w-[800px]">
@@ -98,7 +97,6 @@ const Services = () => {
             >
               Menu
             </button>
-            {/*  */}
             {/* <button
               onClick={() => {
                 navigate("/labor");
@@ -110,10 +108,8 @@ const Services = () => {
             <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
               Tables
             </button> */}
-            {/* <div className="p-8 bg-white">Pending Orders</div>
+              {/* <div className="p-8 bg-white">Pending Orders</div>
 >>>>>>> a18e014503215b5032894e777e4de31b2550447f
-=======
->>>>>>> 43d8ee9 (update)
         <div className="p-8 bg-white">Quick Orders</div>
         <div className="p-8 bg-white">Delivery</div> */}
             </div>
