@@ -88,9 +88,7 @@ const CategoriesList = () => {
                 >
                   {/* <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white"> */}
 
-                  <div
-                    className={`grid grid-cols-4 items-center  bg-[#e5e7eb]  border-white px-2`}
-                  >
+                  <div className="grid grid-cols-4 items-center justify-self-start bg-[#e5e7eb]  border-white px-2">
                     <p className="uppercase text-sm text-[#0369a1] font-bold">
                       {categoryItem.title}
                     </p>
@@ -111,64 +109,62 @@ const CategoriesList = () => {
                         setModalOpen(true);
                         setOverlay(true);
                       }}
-                      className="flex justify-self-end items-center   text-[#ef4444] text-xs  shadowed hover:font-bold"
+                      className="flex justify-self-end items-center   text-[#ef4444] text-xs  shadowed hover:underline"
                     >
                       {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
                       Remove
                     </button>
                   </div>
                   <div
-                    className={` overflow-hidden transition-max-height duration-[2500ms] ease-in-out ${
+                    className={` overflow-hidden transition-max-height duration-[1500ms] ease-in-out ${
                       categoryEditing ? 'max-h-40' : 'max-h-0'
                     }`}
                   >
-                    {categoryEditing && (
-                      <div
-                        className={`grid grid-cols-3  p-2 border border-[#e5e7eb] rounded bg-white w-full
+                    <div
+                      className={`grid grid-cols-3  p-2 border border-[#e5e7eb] rounded bg-white w-full
             
                     `}
-                      >
-                        <input
-                          className="border uppercase border-[#cbd5e1] text-sm pl-1 justify-self-start"
-                          type="text"
-                          placeholder={categoryItem.title}
-                        />
-                        <div className="relative place-self-center">
-                          <button
-                            className=" cursor-pointer w-6 h-6 grow flex place-self-center"
-                            key={categoryItem.id}
-                            style={{
-                              backgroundColor:
-                                selectedColor === ''
-                                  ? categoryItem.colour
-                                  : selectedColor,
-                            }}
-                            onClick={() => {
-                              handleColorClick(categoryItem.colour);
-                              setOpenColorPicker(!openColorPicker);
-                            }}
-                          ></button>
-                          {openColorPicker && (
-                            <div className=" grid grid-cols-3 grid-flow-row gap-1 absolute top-0 left-10 border bg-white border-[#cbd5e1] p-1 w-24">
-                              {categories.map((category) => (
-                                <button
-                                  className=" cursor-pointer w-6 h-6 grow flex"
-                                  key={category.id}
-                                  style={{ backgroundColor: category.colour }}
-                                  onClick={() => {
-                                    handleColorClick(category.colour);
-                                    setOpenColorPicker(false);
-                                  }}
-                                ></button>
-                              ))}
-                            </div>
-                          )}
-                        </div>
-                        <button className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] font-bold place-self-end self-center">
-                          Confirm
-                        </button>
+                    >
+                      <input
+                        className="border uppercase border-[#cbd5e1] text-sm pl-1 justify-self-start"
+                        type="text"
+                        placeholder={categoryItem.title}
+                      />
+                      <div className="relative place-self-center">
+                        <button
+                          className=" cursor-pointer w-6 h-6 grow flex place-self-center"
+                          key={categoryItem.id}
+                          style={{
+                            backgroundColor:
+                              selectedColor === ''
+                                ? categoryItem.colour
+                                : selectedColor,
+                          }}
+                          onClick={() => {
+                            handleColorClick(categoryItem.colour);
+                            setOpenColorPicker(!openColorPicker);
+                          }}
+                        ></button>
+                        {openColorPicker && (
+                          <div className=" grid grid-cols-3 grid-flow-row gap-1 absolute top-0 left-10 border bg-white border-[#cbd5e1] p-1 w-24">
+                            {categories.map((category) => (
+                              <button
+                                className=" cursor-pointer w-6 h-6 grow flex"
+                                key={category.id}
+                                style={{ backgroundColor: category.colour }}
+                                onClick={() => {
+                                  handleColorClick(category.colour);
+                                  setOpenColorPicker(false);
+                                }}
+                              ></button>
+                            ))}
+                          </div>
+                        )}
                       </div>
-                    )}
+                      <button className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] font-bold place-self-end self-center">
+                        Confirm
+                      </button>
+                    </div>
                   </div>
                   <div className="grid grid-cols-1">
                     <div className="grid grid-cols-4 bg-white border border-[#e5e7eb] border-t-0 py-1">
@@ -211,7 +207,7 @@ const CategoriesList = () => {
                               //   setModalOpen(true);
                               //   setOverlay(true);
                               // }}
-                              className="flex items-center justify-center place-self-end self-center text-[#ef4444] text-xs    shadowed px-2 py-1 hover:font-bold"
+                              className="flex items-center justify-center place-self-end self-center text-[#ef4444] text-xs    shadowed px-2 py-1 hover:underline"
                             >
                               {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
                               Remove
@@ -309,7 +305,7 @@ const CategoriesList = () => {
                     <input
                       className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                       type="text"
-                      placeholder="Provide Name"
+                      placeholder="ex: Scrambled eggs"
                     />
                   </label>
                   <label
@@ -320,7 +316,7 @@ const CategoriesList = () => {
                     <input
                       className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                       type="text"
-                      placeholder="Provide price"
+                      placeholder="ex: 5"
                     />
                   </label>
                   <div className="flex justify-between items-center w-full">
