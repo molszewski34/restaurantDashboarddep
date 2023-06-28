@@ -20,6 +20,13 @@ const TablesList = () => {
 
   const [newRoomName, setNewRoomName] = useState("");
   const [addRoomIsActive, setAddRoomIsActive] = useState(false);
+  const [activeRoom, setActiveRoom] = useState("");
+  const [numberOfGusets, setnumberOfGusets] = useState(null);
+
+  const handleTableSubmit = (e) => {
+    e.preventDefault();
+    console.log("add table");
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -41,7 +48,7 @@ const TablesList = () => {
 
         <div className="flex">
           {addRoomIsActive ? (
-            <label for="">
+            <label>
               <input
                 className="h-8 m-2 border rounded-md border-[#cbd5e1]"
                 type="text "
@@ -60,13 +67,17 @@ const TablesList = () => {
             onClick={() => {
               setAddRoomIsActive(!addRoomIsActive);
               if (addRoomIsActive) {
-                dispatch(createRoom(newRoomName, rooms));
-                setTimeout(() => {
-                  window.scrollTo({
-                    top: window.innerHeight,
-                    behavior: "smooth",
-                  });
-                }, 300);
+                if (newRoomName != "") {
+                  dispatch(createRoom(newRoomName, rooms));
+                  setTimeout(() => {
+                    window.scrollTo({
+                      top: document.body.scrollHeight,
+                      behavior: "smooth",
+                    });
+                  }, 500);
+                } else {
+                  setAddRoomIsActive(!addRoomIsActive);
+                }
               }
             }}
           >
@@ -85,12 +96,12 @@ const TablesList = () => {
               {rooms.map((room) => (
                 <div key={room.id} className="flex flex-col ">
                   <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
-                    <Link
-                      to={`/tablesList/${room.id}`}
+                    <div
+                      key={room.id}
                       className="uppercase text-sm font-bold text-[#0369a1]"
                     >
                       {room.name}
-                    </Link>
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] text-sm ">
                     <p>Table Number</p>
@@ -99,17 +110,68 @@ const TablesList = () => {
                   {tables
                     .filter((table) => table.room === room.id)
                     .map((filteredTable) => (
-                      <div className="grid grid-cols-2 px-2  py-2  border-b border-r border-l border-[#e5e7eb] text-sm ">
+                      <div
+                        key={filteredTable.id}
+                        className="grid grid-cols-2 px-2  py-2  border-b border-r border-l border-[#e5e7eb] text-sm "
+                      >
                         <p>{filteredTable.tableNumber}</p>
                         <p>{filteredTable.numberOfPersons}</p>
                       </div>
                     ))}
-                  <Link
-                    to={`/tablesList/${room.id}`}
-                    className="border flex place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
-                  >
-                    + Add tables
-                  </Link>
+
+                  <div className="flex">
+                    {activeRoom == `${room.name}` ? (
+                      <>
+                        <form
+                          onSubmit={(e) => {
+                            handleTableSubmit(e);
+                          }}
+                        >
+                          <label>Number of guests</label>
+                          <select name="languages" id="lang">
+                            {Array.apply(0, Array(10)).map(function (x, i) {
+                              return (
+                                <option key={i} value={i}>
+                                  {i}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          <button
+                            type="submit"
+                            className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                          >
+                            Add
+                          </button>
+                        </form>
+
+                        <button
+                          className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                          onClick={() => {
+                            setActiveRoom("");
+
+                            if (newRoomName != "") {
+                              console.log("add table");
+                            }
+                          }}
+                        >
+                          cancel
+                        </button>
+                      </>
+                    ) : (
+                      <button
+                        data-key={room.name}
+                        className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                        onClick={(e) => {
+                          console.log(e.target.getAttribute("data-key"));
+
+                          setActiveRoom(e.target.getAttribute("data-key"));
+                        }}
+                      >
+                        + Add table
+                      </button>
+                    )}
+                  </div>
                 </div>
               ))}
             </>
