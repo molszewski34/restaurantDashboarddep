@@ -78,7 +78,7 @@ const NavbarManagmentPanelSide = () => {
         >
           <li className="flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer">
             <MdTableBar className="text-xl" />
-            Tables
+            Rooms Management
           </li>
         </NavLink>
       </div>
