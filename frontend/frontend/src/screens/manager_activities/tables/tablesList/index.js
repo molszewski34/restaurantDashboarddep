@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
@@ -7,6 +6,7 @@ import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManag
 import CircularProgress from "@mui/material/CircularProgress";
 import { listTables, listRooms } from "../../../../actions/tablesActions";
 import { createRoom } from "../../../../actions/roomsActions";
+import { createNewTable, removeTable } from "../../../../actions/tablesActions";
 
 const TablesList = () => {
   const roomsList = useSelector((state) => state.roomsList);
@@ -24,8 +24,10 @@ const TablesList = () => {
   const [numberOfGusets, setnumberOfGusets] = useState(null);
 
   const handleTableSubmit = (e) => {
+    // room, numberOfPersons, tables, rooms
     e.preventDefault();
-    console.log("add table");
+
+    dispatch(createNewTable(activeRoom, numberOfGusets, tables, rooms));
   };
 
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ const TablesList = () => {
         <header className="font-bold py-1 border-b text-2xl border-[#cbd5e1]">
           Rooms
         </header>
-
+        {/* SECTION : ADD ROOM */}
         <div className="flex">
           {addRoomIsActive ? (
             <label>
@@ -85,6 +87,8 @@ const TablesList = () => {
           </button>
         </div>
 
+        {/* SECTION : ADD ROOM ++ END */}
+
         <section className="mt-4 flex flex-col gap-4">
           <header className=" font-bold border-b border-[#cbd5e1] pl-2">
             Name
@@ -94,6 +98,7 @@ const TablesList = () => {
             <>
               {" "}
               {rooms.map((room) => (
+                //  DISPLAY ROOM NAMES
                 <div key={room.id} className="flex flex-col ">
                   <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
                     <div
@@ -103,6 +108,7 @@ const TablesList = () => {
                       {room.name}
                     </div>
                   </div>
+                  {/* // DISPLAY TABLES */}
                   <div className="grid grid-cols-2 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] text-sm ">
                     <p>Table Number</p>
                     <p>Max Guests</p>
@@ -118,17 +124,26 @@ const TablesList = () => {
                         <p>{filteredTable.numberOfPersons}</p>
                       </div>
                     ))}
-
+                  {/* SECTION : ADD TABLE */}
                   <div className="flex">
+                    {/* SHOW INPUT IF 'ADD TABLE' BUTOON WAS CLICKED */}
                     {activeRoom == `${room.name}` ? (
                       <>
                         <form
                           onSubmit={(e) => {
-                            handleTableSubmit(e);
+                            handleTableSubmit(e, rooms, tables);
                           }}
                         >
                           <label>Number of guests</label>
-                          <select name="languages" id="lang">
+                          <select
+                            name="languages"
+                            id="lang"
+                            onChange={(e) => {
+                              // set number of guests
+                              setnumberOfGusets(e.target.value);
+                            }}
+                          >
+                            {/* CHOOSE NUMBER OF GUESTS */}
                             {Array.apply(0, Array(10)).map(function (x, i) {
                               return (
                                 <option key={i} value={i}>
@@ -137,6 +152,7 @@ const TablesList = () => {
                               );
                             })}
                           </select>
+                          {/* SUBMIT BUTTON */}
                           <button
                             type="submit"
                             className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
@@ -144,7 +160,7 @@ const TablesList = () => {
                             Add
                           </button>
                         </form>
-
+                        {/* CANCEL BUTTON - SET ACTIVE ROOM TO '' */}
                         <button
                           className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
                           onClick={() => {
@@ -159,6 +175,7 @@ const TablesList = () => {
                         </button>
                       </>
                     ) : (
+                      // SET ACTIVE ROOM TO ROOM NAME
                       <button
                         data-key={room.name}
                         className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
