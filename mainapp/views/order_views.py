@@ -228,12 +228,14 @@ def getAllTables(request):
 @permission_classes([IsAdminUser])
 def createTable(request):
     user=request.user
-    print(user)
     data = request.data 
-    requestedRoom = Room.objects.filter(id=data['body']['tableData']['room']['id'])
-    tableNumber = data['body']['tableData']['tableNumber']
-    numberOfPersons = data['body']['tableData']['numberOfPersons']
-    isOccupied = data['body']['tableData']['isOccupied']
+   
+    requestedRoom = Room.objects.filter(id=data['tableData']['room']['id'])
+    
+    tableNumber = data['tableData']['tableNumber'] + 1 
+    print(tableNumber)
+    numberOfPersons = data['tableData']['numberOfPersons']
+    isOccupied = data['tableData']['isOccupied']
     newTable = Table.objects.create(
         room=requestedRoom[0],
         tableNumber=tableNumber,

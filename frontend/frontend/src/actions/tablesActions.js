@@ -104,7 +104,7 @@ export const createNewTable =
 
     const tableData = {
       room: tableRoomToSend,
-      tableNumber: tableArray.length + 1,
+      tableNumber: tableArray.length,
       numberOfPersons: numberOfPersons,
       isOccupied: false,
     };
@@ -117,16 +117,23 @@ export const createNewTable =
         },
       });
 
+      const body = {
+        tableData: tableData,
+      };
+
+      let userInfo = JSON.parse(localStorage.userInfo);
       const config = {
         headers: {
           "Content-type": "application/json",
-        },
-        body: {
-          tableData,
+          Authorization: "Bearer " + String(userInfo.access),
         },
       };
 
-      const { data } = await axios.post("orders/create-new-table", config);
+      const { data } = await axios.post(
+        "orders/create-new-table",
+        body,
+        config
+      );
     } catch (error) {
       dispatch({
         type: REMOVE_TABLE_FAIL,

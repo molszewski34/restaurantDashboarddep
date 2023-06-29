@@ -4,7 +4,6 @@ frontend/frontend/node_modules
 node_modules
 /env
 restaurant/_pycatch
-mainapp
 _pycatch
 /node_modules
 *__pycache__*

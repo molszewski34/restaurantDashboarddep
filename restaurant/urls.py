@@ -3,6 +3,7 @@ from django.urls import path, include
 from mainapp.urls import user_urls
 from mainapp.urls import dishes_urls
 from mainapp.urls import order_urls
+from mainapp.urls import rooms_urls
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.generic import TemplateView
@@ -15,6 +16,7 @@ urlpatterns = [
     path('user/', include(user_urls)),
     path('dishes/', include(dishes_urls)),
     path('orders/', include(order_urls)),
+    path('rooms/', include(rooms_urls))
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
