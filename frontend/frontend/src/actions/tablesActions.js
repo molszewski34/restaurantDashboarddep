@@ -104,7 +104,7 @@ export const createNewTable =
 
     const tableData = {
       room: tableRoomToSend,
-      tableNumber: tableArray.length + 1,
+      tableNumber: tableArray.length,
       numberOfPersons: numberOfPersons,
       isOccupied: false,
     };

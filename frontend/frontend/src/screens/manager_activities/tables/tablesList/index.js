@@ -28,6 +28,9 @@ const TablesList = () => {
     e.preventDefault();
 
     dispatch(createNewTable(activeRoom, numberOfGusets, tables, rooms));
+    setTimeout(() => {
+      dispatch(listRooms());
+    }, 500);
   };
 
   const dispatch = useDispatch();

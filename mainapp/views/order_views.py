@@ -232,7 +232,7 @@ def createTable(request):
    
     requestedRoom = Room.objects.filter(id=data['tableData']['room']['id'])
     
-    tableNumber = data['tableData']['tableNumber']
+    tableNumber = data['tableData']['tableNumber'] + 1 
     print(tableNumber)
     numberOfPersons = data['tableData']['numberOfPersons']
     isOccupied = data['tableData']['isOccupied']
