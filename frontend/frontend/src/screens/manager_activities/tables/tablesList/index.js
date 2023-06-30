@@ -8,6 +8,8 @@ import { listTables, listRooms } from "../../../../actions/tablesActions";
 import { createRoom } from "../../../../actions/roomsActions";
 import { createNewTable, removeTable } from "../../../../actions/tablesActions";
 
+import ClearIcon from "@mui/icons-material/Clear";
+
 const TablesList = () => {
   const roomsList = useSelector((state) => state.roomsList);
   const { error, loading, rooms } = roomsList;
@@ -21,7 +23,7 @@ const TablesList = () => {
   const [newRoomName, setNewRoomName] = useState("");
   const [addRoomIsActive, setAddRoomIsActive] = useState(false);
   const [activeRoom, setActiveRoom] = useState("");
-  const [numberOfGusets, setnumberOfGusets] = useState(null);
+  const [numberOfGusets, setnumberOfGusets] = useState(1);
 
   const handleTableSubmit = (e) => {
     // room, numberOfPersons, tables, rooms
@@ -112,19 +114,29 @@ const TablesList = () => {
                     </div>
                   </div>
                   {/* // DISPLAY TABLES */}
-                  <div className="grid grid-cols-2 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] text-sm ">
+                  <div className="grid grid-cols-3 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] text-sm ">
                     <p>Table Number</p>
                     <p>Max Guests</p>
+                    <p>Remove</p>
                   </div>
                   {tables
                     .filter((table) => table.room === room.id)
                     .map((filteredTable) => (
                       <div
                         key={filteredTable.id}
-                        className="grid grid-cols-2 px-2  py-2  border-b border-r border-l border-[#e5e7eb] text-sm "
+                        className="grid grid-cols-3 px-2  py-2  border-b border-r border-l border-[#e5e7eb] text-sm "
                       >
                         <p>{filteredTable.tableNumber}</p>
                         <p>{filteredTable.numberOfPersons}</p>
+                        <p
+                          className="text-[#dc2626] cursor-pointer"
+                          onClick={() => {
+                            console.log("remove table");
+                            dispatch(removeTable(filteredTable, tables));
+                          }}
+                        >
+                          <ClearIcon />
+                        </p>
                       </div>
                     ))}
                   {/* SECTION : ADD TABLE */}
@@ -147,10 +159,10 @@ const TablesList = () => {
                             }}
                           >
                             {/* CHOOSE NUMBER OF GUESTS */}
-                            {Array.apply(0, Array(10)).map(function (x, i) {
+                            {Array.apply(0, Array(9)).map(function (x, i) {
                               return (
-                                <option key={i} value={i}>
-                                  {i}
+                                <option key={i + 1} value={i + 1}>
+                                  {i + 1}
                                 </option>
                               );
                             })}

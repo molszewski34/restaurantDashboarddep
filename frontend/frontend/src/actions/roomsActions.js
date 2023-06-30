@@ -24,11 +24,19 @@ export const createRoom = (roomName, rooms) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `/rooms/create-room`,
-      body, // if POST request, axios send headers as third parameter
-      config
-    );
+    const { data } = await axios
+      .post(
+        `/rooms/create-room`,
+        body, // if POST request, axios send headers as third parameter
+        config
+      )
+      .then(function (response) {
+        if (response.status == 200) {
+          alert(response.data);
+        } else {
+          alert("Something went wrong, response status: ", response.status);
+        }
+      });
 
     dispatch({
       type: CREATE_ROOM_SUCCESS,

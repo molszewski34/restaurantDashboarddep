@@ -8,17 +8,12 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAdminUser])
 def createRoom(request):
     data = request.data
-    user = request.user
-    print("data: ", data['roomName'])
-
-  
+     
     newRoom = Room.objects.create(
         name = data['roomName']
     )
-    serializer = RoomSerializer(newRoom, many=False)
-
-    print("USER: ",user)
-    return Response(serializer.data)
+    
+    return Response("New room was added")

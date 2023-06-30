@@ -129,11 +129,15 @@ export const createNewTable =
         },
       };
 
-      const { data } = await axios.post(
-        "orders/create-new-table",
-        body,
-        config
-      );
+      const { data } = await axios
+        .post("orders/create-new-table", body, config)
+        .then(function (response) {
+          if (response.status == 200) {
+            console.log(response.data);
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: REMOVE_TABLE_FAIL,
@@ -156,7 +160,16 @@ export const removeTable = (table, tables) => async (dispatch) => {
       },
     });
 
-    const { data } = await axios.delete(`orders/remove-table/${table.id}`);
+    const { data } = await axios
+      .delete(`orders/remove-table/${table.id}`)
+      .then(function (response) {
+        if (response.status == 200) {
+          alert(response.status);
+          console.log(response);
+        } else {
+          alert("Something went wrong, status code: ", response.status);
+        }
+      });
   } catch (error) {
     dispatch({
       type: CREATE_NEW_TABLE_FAIL,

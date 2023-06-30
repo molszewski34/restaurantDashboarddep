@@ -242,8 +242,11 @@ def createTable(request):
         numberOfPersons=numberOfPersons,
         isOccupied=isOccupied
     )
+    tables = Table.objects.all()
+    serializer = TableSerializer(tables, many=True)
 
-    return Response("Table created")
+
+    return Response(serializer.data)
 
 
 

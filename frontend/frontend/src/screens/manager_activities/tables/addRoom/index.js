@@ -88,6 +88,7 @@ const NewRoom = () => {
               >
                 <span className="text-sm pl-2">{table.input1}</span>
                 <span className="text-sm pl-2">{table.input2}</span>
+
                 <button
                   className="place-self-end self-center mr-2 font-bold text-sm text-[#ef4444]"
                   onClick={() => handleRemoveTable(index)}
