@@ -102,6 +102,7 @@ export const createNewTable =
 
     const tableRoomToSend = rooms.find(findTableRoom);
 
+    // Data to be sent to the backend
     const tableData = {
       room: tableRoomToSend,
       tableNumber: tableArray.length,
@@ -120,7 +121,7 @@ export const createNewTable =
       const body = {
         tableData: tableData,
       };
-
+      // ================= JWT Authorization data ===========
       let userInfo = JSON.parse(localStorage.userInfo);
       const config = {
         headers: {
@@ -129,11 +130,14 @@ export const createNewTable =
         },
       };
 
+      // Sending data to backend
       const { data } = await axios
         .post("orders/create-new-table", body, config)
         .then(function (response) {
           if (response.status == 200) {
-            console.log(response.data);
+            //if response is 200, list tables again. It`s nesesary to get the correct table ID
+            alert("Create Table status: OK");
+            dispatch(listTables());
           } else {
             alert("Something went wrong, status code: ", response.status);
           }
@@ -160,12 +164,14 @@ export const removeTable = (table, tables) => async (dispatch) => {
       },
     });
 
+    // delete table - request
     const { data } = await axios
       .delete(`orders/remove-table/${table.id}`)
       .then(function (response) {
         if (response.status == 200) {
-          alert(response.status);
-          console.log(response);
+          alert("Table removed");
+          // Get all tables again after remove
+          dispatch(listTables());
         } else {
           alert("Something went wrong, status code: ", response.status);
         }
