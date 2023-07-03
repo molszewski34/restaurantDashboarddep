@@ -7,6 +7,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { listTables, listRooms } from "../../../../actions/tablesActions";
 import { createRoom } from "../../../../actions/roomsActions";
 import { createNewTable, removeTable } from "../../../../actions/tablesActions";
+import { removeRoom } from "../../../../actions/roomsActions";
 
 import ClearIcon from "@mui/icons-material/Clear";
 
@@ -30,9 +31,6 @@ const TablesList = () => {
     e.preventDefault();
 
     dispatch(createNewTable(activeRoom, numberOfGusets, tables, rooms));
-    setTimeout(() => {
-      dispatch(listRooms());
-    }, 500);
   };
 
   const dispatch = useDispatch();
@@ -112,6 +110,15 @@ const TablesList = () => {
                     >
                       {room.name}
                     </div>
+                    <button
+                      className="text-[#dc2626] cursor-pointer"
+                      type=""
+                      onClick={() => {
+                        dispatch(removeRoom(room, rooms));
+                      }}
+                    >
+                      Remove
+                    </button>
                   </div>
                   {/* // DISPLAY TABLES */}
                   <div className="grid grid-cols-3 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] text-sm ">

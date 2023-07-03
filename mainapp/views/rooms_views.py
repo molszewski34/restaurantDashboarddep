@@ -17,3 +17,17 @@ def createRoom(request):
     )
     
     return Response("New room was added")
+
+@api_view(["DELETE"])
+@permission_classes([IsAdminUser])
+def removeRoom(request, pk):
+    try:
+        roomToRemove= Room.objects.get(id=pk)
+        print(roomToRemove)
+        roomToRemove.delete()
+    except Exception as err:
+        print(err)
+
+    return Response("Room has been removed")
+
+
