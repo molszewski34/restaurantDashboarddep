@@ -23,7 +23,7 @@ import EditRoom from "./screens/manager_activities/tables/editRoom";
 import TablesList from "./screens/manager_activities/tables/tablesList";
 import NewCategory from "./screens/manager_activities/dishes/newCategory";
 import NewRoom from "./screens/manager_activities/tables/addRoom";
-import NewLabor from "./screens/manager_activities/labor/newLabor";
+import NewEmployee from "./screens/manager_activities/labor/newEmployee";
 import EditLabor from "./screens/manager_activities/labor/editLabor";
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
               <Route path="/tablesList/:roomId" element={<EditRoom />} />
               <Route path="/employess/" element={<LaborList />} />
               <Route path="/employess/:laborId" element={<EditLabor />} />
-              <Route path="/employess/new-employee" element={<NewLabor />} />
+              <Route path="/employess/new-employee" element={<NewEmployee />} />
               <Route path="/menu" element={<CategoriesList />} />
               <Route path="/add-category" element={<NewCategory />} />
               <Route path="/add-room" element={<NewRoom />} />

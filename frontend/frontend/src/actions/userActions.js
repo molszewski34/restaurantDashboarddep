@@ -78,7 +78,6 @@ export const createNewUser =
       };
 
       const { data } = await axios.post("/user/create/", config);
-      window.location.reload();
     } catch (error) {
       dispatch({
         type: USER_CREATE_FAIL,

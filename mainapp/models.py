@@ -4,10 +4,26 @@ from django.contrib.auth.models import User
 
 
 class Employee(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
-    isActive = models.BooleanField(null=False, blank=False, default=False)
+    BARTENDER = "BARTENDER"
+    WAITER = "WAITER"
+    WAITRESS = "WAITRESS"
+    RESTAURANT_MANAGER = "RESTAURANT_MANAGER"
+    COOK = "COOK"
+   
+    POSITION_CHOICES = [
+        (BARTENDER, "Bartender"),
+        (WAITER, "Waiter"),
+        (WAITRESS, "Waitress"),
+        (RESTAURANT_MANAGER, "Restaurant Manager"),
+        (COOK, "Cook")
+    ]
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True, blank=True)
     position = models.CharField(max_length=20, blank=True,null=True)
     name = models.CharField(max_length=50, blank=True, null=True)
+    email = models.CharField(max_length=200, blank=True, null=True)
+    phone = models.IntegerField(null=True, blank=True)
+    position = models.CharField(max_length=20, choices=POSITION_CHOICES, default="BARTENDER")
+
 
     def __str__(self):
         return str(self.position)
