@@ -6,6 +6,13 @@ import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManag
 import { listCategories } from "../../../../actions/categoriesActions";
 import data from "../laborsList/laborsData.json";
 const NewEmployee = () => {
+  // first states of Name, email and phone number
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+
+  const confirmEmployeeHandler = () => {};
+
   return (
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
@@ -24,75 +31,73 @@ const NewEmployee = () => {
                     <div className="lg:col-span-2">
                       <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div className="md:col-span-5">
-                          <label for="full_name">Full Name</label>
+                          <label>Full Name</label>
                           <input
                             type="text"
                             name="full_name"
                             id="full_name"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value=""
+                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            onChange={(e) => {
+                              setFullName(e.target.value);
+                            }}
                           />
                         </div>
 
                         <div className="md:col-span-3">
-                          <label for="email">Email Address</label>
+                          <label>Email Address</label>
                           <input
                             type="text"
                             name="email"
                             id="email"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value=""
+                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            onChange={(e) => {
+                              setEmail(e.target.value);
+                            }}
                             placeholder="email@domain.com"
                           />
                         </div>
 
                         <div className="md:col-span-2">
-                          <label for="address">Phone</label>
+                          <label>Phone</label>
                           <input
                             type="text"
                             name="address"
                             id="address"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value=""
+                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            onChange={() => {}}
                             placeholder=""
                           />
                         </div>
 
                         <div className="md:col-span-3">
-                          <label for="state">Position</label>
+                          <label>Position</label>
                           <select className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                            <option value="">Salary</option>
-                            <option value="">Hourly</option>
-                            <option value="">Monthly</option>
+                            <option>Salary</option>
+                            <option>Hourly</option>
+                            <option>Monthly</option>
                           </select>
                         </div>
                         <div className="md:col-span-2">
-                          <label for="state">Cashier</label>
+                          <label>Cashier</label>
                           <select className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                            <option className="md:col-span-2" value="">
-                              Yes
-                            </option>
-                            <option className="md:col-span-2" value="">
-                              No
-                            </option>
+                            <option className="md:col-span-2">Yes</option>
+                            <option className="md:col-span-2">No</option>
                           </select>
                         </div>
                         <div className="md:col-span-2">
-                          <label for="state">Driver</label>
+                          <label>Driver</label>
                           <select className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
-                            <option className="md:col-span-2" value="">
-                              Yes
-                            </option>
-                            <option className="md:col-span-2" value="">
-                              No
-                            </option>
+                            <option className="md:col-span-2">Yes</option>
+                            <option className="md:col-span-2">No</option>
                           </select>
                         </div>
 
                         <div className="md:col-span-5 text-right bg-blue-500">
                           <div className="inline-flex items-end">
                             <button
-                              type="submit"
+                              onClick={() => {
+                                confirmEmployeeHandler();
+                              }}
                               className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
                             >
                               Confirm

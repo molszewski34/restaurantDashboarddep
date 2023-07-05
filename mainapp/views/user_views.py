@@ -1,6 +1,6 @@
 from rest_framework import permissions
-from mainapp.models import Room, Table, DishCategory, Dish, Order, OrderDish,Employee
-from mainapp.serializers import User,UserSerializer, UserSerializerWithToken,EmployeeSerializer
+from mainapp.models import Room, Table, DishCategory, Dish, Order, OrderDish,Employee, Position
+from mainapp.serializers import User,UserSerializer,PositionSerializer, UserSerializerWithToken,EmployeeSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view,permission_classes
 from django.contrib.auth.hashers import make_password
@@ -35,7 +35,6 @@ class MyTokenObtainPairView(TokenObtainPairView):
 @api_view(['GET'])
 def getUserProfile(request):
     user= request.user
-    print(user)
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
 
@@ -44,11 +43,9 @@ def getUserProfile(request):
 #@permission_classes([IsAuthenticated])
 def getUsers(request):
     user = request.user
-    print("USER:", user)
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
-    print("Lópa")
-   
+ 
     return Response(serializer.data)
 
 
@@ -57,8 +54,23 @@ def get_employees(request):
 
     employees = Employee.objects.all()
     serializer = EmployeeSerializer(employees, many=True)
-
+    print(serializer.data)
     return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getPositions(request):
+    
+
+    titles = Position.objects.all()
+    print(titles)
+    serializer = PositionSerializer(titles, many=True)
+    print(serializer.data)
+    print('tuaj')
+    return Response(serializer.data)
+
+
+
 
 
 @api_view(['POST'])
@@ -104,6 +116,5 @@ def deleteUser(request,pk):
     userToDelete = User.objects.get(id=pk)
     if userToDelete.is_superuser:
         return Response("Cannot remove Admin user")
-    print(userToDelete.is_superuser)
     userToDelete.delete()
     return Response('User removed from system')
