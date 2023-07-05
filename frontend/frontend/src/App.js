@@ -26,6 +26,7 @@ import NewRoom from './screens/manager_activities/tables/addRoom';
 import NewLabor from './screens/manager_activities/labor/newLabor';
 import EditLabor from './screens/manager_activities/labor/editLabor';
 import LoginPin from './screens/loginPIN';
+import PendingOrders from './screens/manager_activities/pending-orders';
 function App() {
   return (
     <>
@@ -56,6 +57,7 @@ function App() {
               <Route path="/add-category" element={<NewCategory />} />
               <Route path="/add-room" element={<NewRoom />} />
               <Route path="/login-pin" element={<LoginPin />} />
+              <Route path="/pending-orders" element={<PendingOrders />} />
             </Routes>
           </main>
         </div>
