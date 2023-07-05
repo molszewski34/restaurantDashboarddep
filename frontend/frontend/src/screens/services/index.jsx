@@ -26,7 +26,7 @@ const Services = () => {
             <div className="text-xl text-center text-white bg-[#629D93] p-1">
               <h1>Mode</h1>
             </div>
-            <div className="grid grid-cols-2 grid-rows-2 gap-1">
+            <div className="grid grid-cols-2  gap-1">
               <button
                 onClick={() => {
                   navigate("/tablesPanel");
@@ -35,15 +35,17 @@ const Services = () => {
               >
                 Table Service
               </button>
-              <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+              <button   onClick={() => {
+                  navigate("/pending-orders");
+                }} className="flex justify-center items-center  bg-white text-center font-bold text-xl">
                 Pending orders
               </button>
-              <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+              {/* <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
                 Quick Order
               </button>
               <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
                 Delivery
-              </button>
+              </button> */}
               {/* <div className="p-8 bg-white">Pending Orders</div>
         <div className="p-8 bg-white">Quick Orders</div>
         <div className="p-8 bg-white">Delivery</div> */}

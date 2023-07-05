@@ -1,0 +1,504 @@
+{
+  "orders": [
+    {
+      "id": 1,
+      "order_number": 1,
+      "waiter_id": 1,
+      "waiter_name": "John",
+      "room_name": "Main Dining Room",
+      "table_number": 5,
+      "order_time": "2023-06-28 10:00",
+      "items": [
+        {
+          "id": "65db1a2c",
+          "dish_name": "Pork Schnitzel",
+          "quantity": 2,
+          "price": 25.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "b18a6e7f",
+          "dish_name": "Mashed Potatoes",
+          "quantity": 1,
+          "price": 8.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "94e73c5b",
+          "dish_name": "Soup",
+          "quantity": 1,
+          "price": 6.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "order_number": 2,
+      "waiter_id": 2,
+      "waiter_name": "Emily",
+      "room_name": "Private Room",
+      "table_number": 8,
+      "order_time": "2023-06-28 11:00",
+      "items": [
+        {
+          "id": "e0b3f41a",
+          "dish_name": "Pierogi",
+          "quantity": 3,
+          "price": 15.99,
+          "isNew": true,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "f8901e2d",
+          "dish_name": "Salad",
+          "quantity": 1,
+          "price": 9.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "c59482e6",
+          "dish_name": "Burger",
+          "quantity": 2,
+          "price": 12.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "34d37a8f",
+          "dish_name": "Fries",
+          "quantity": 1,
+          "price": 5.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "order_number": 3,
+      "waiter_id": 3,
+      "waiter_name": "Michael",
+      "room_name": "Outdoor Terrace",
+      "table_number": 3,
+      "order_time": "2023-06-28 10:30",
+      "items": [
+        {
+          "id": "3c9d2060",
+          "dish_name": "Steak",
+          "quantity": 1,
+          "price": 35.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "order_number": 4,
+      "waiter_id": 4,
+      "waiter_name": "Sarah",
+      "room_name": "Main Dining Room",
+      "table_number": 10,
+      "order_time": "2023-06-28 12:00",
+      "items": [
+        {
+          "id": "2180916d",
+          "dish_name": "Greek Salad",
+          "quantity": 2,
+          "price": 12.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "5f932a27",
+          "dish_name": "Garlic Bread",
+          "quantity": 1,
+          "price": 6.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "ce97822b",
+          "dish_name": "Pizza",
+          "quantity": 1,
+          "price": 14.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "8171a63e",
+          "dish_name": "Tiramisu",
+          "quantity": 2,
+          "price": 9.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "95f5cb4d",
+          "dish_name": "Cappuccino",
+          "quantity": 3,
+          "price": 3.99,
+          "isNew": true,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "48a527ad",
+          "dish_name": "Cheesecake",
+          "quantity": 1,
+          "price": 7.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "2bf6dc9a",
+          "dish_name": "Sushi",
+          "quantity": 2,
+          "price": 18.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "order_number": 5,
+      "waiter_id": 2,
+      "waiter_name": "Emily",
+      "room_name": "Private Room",
+      "table_number": 8,
+      "order_time": "2023-06-28 13:00",
+      "items": [
+        {
+          "id": "a73c8ef9",
+          "dish_name": "Spaghetti",
+          "quantity": 2,
+          "price": 11.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "b46d9be3",
+          "dish_name": "Caesar Salad",
+          "quantity": 1,
+          "price": 8.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "73b5488a",
+          "dish_name": "Grilled Chicken",
+          "quantity": 1,
+          "price": 16.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "5696cd41",
+          "dish_name": "Chocolate Cake",
+          "quantity": 2,
+          "price": 7.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "order_number": 6,
+      "waiter_id": 3,
+      "waiter_name": "Michael",
+      "room_name": "Outdoor Terrace",
+      "table_number": 6,
+      "order_time": "2023-06-28 11:30",
+      "items": [
+        {
+          "id": "d51b9fb0",
+          "dish_name": "Ravioli",
+          "quantity": 2,
+          "price": 14.99,
+          "isNew": true,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "c34ea1a2",
+          "dish_name": "Bruschetta",
+          "quantity": 1,
+          "price": 7.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "6dce957e",
+          "dish_name": "Lobster",
+          "quantity": 1,
+          "price": 29.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "e15e6528",
+          "dish_name": "Tiramisu",
+          "quantity": 2,
+          "price": 9.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "728e6ed6",
+          "dish_name": "Espresso",
+          "quantity": 2,
+          "price": 2.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "1a938db5",
+          "dish_name": "Cheesecake",
+          "quantity": 1,
+          "price": 7.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "order_number": 7,
+      "waiter_id": 1,
+      "waiter_name": "John",
+      "room_name": "Main Dining Room",
+      "table_number": 2,
+      "order_time": "2023-06-28 12:30",
+      "items": [
+        {
+          "id": "3d0c828b",
+          "dish_name": "Chicken Parmesan",
+          "quantity": 2,
+          "price": 18.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "b20700a7",
+          "dish_name": "Caesar Salad",
+          "quantity": 1,
+          "price": 8.99,
+          "isNew": true,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "8eb34362",
+          "dish_name": "Garlic Bread",
+          "quantity": 1,
+          "price": 6.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "0158e42c",
+          "dish_name": "Cannoli",
+          "quantity": 2,
+          "price": 7.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "order_number": 8,
+      "waiter_id": 2,
+      "waiter_name": "Emily",
+      "room_name": "Private Room",
+      "table_number": 8,
+      "order_time": "2023-06-28 14:00",
+      "items": [
+        {
+          "id": "bca7d2a9",
+          "dish_name": "Fish and Chips",
+          "quantity": 1,
+          "price": 14.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "9f9cc203",
+          "dish_name": "Salad",
+          "quantity": 1,
+          "price": 9.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "a80b0a0e",
+          "dish_name": "Burger",
+          "quantity": 2,
+          "price": 12.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "order_number": 9,
+      "waiter_id": 3,
+      "waiter_name": "Michael",
+      "room_name": "Outdoor Terrace",
+      "table_number": 3,
+      "order_time": "2023-06-28 13:30",
+      "items": [
+        {
+          "id": "5a33d993",
+          "dish_name": "Steak",
+          "quantity": 1,
+          "price": 35.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "2a7826c6",
+          "dish_name": "Soup",
+          "quantity": 1,
+          "price": 6.99,
+          "isNew": true,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": false
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "order_number": 10,
+      "waiter_id": 4,
+      "waiter_name": "Sarah",
+      "room_name": "Main Dining Room",
+      "table_number": 10,
+      "order_time": "2023-06-28 15:00",
+      "items": [
+        {
+          "id": "ecc34467",
+          "dish_name": "Greek Salad",
+          "quantity": 2,
+          "price": 12.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        },
+        {
+          "id": "e3c3f240",
+          "dish_name": "Garlic Bread",
+          "quantity": 1,
+          "price": 6.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": false,
+          "isComplete": true
+        },
+        {
+          "id": "e7b7f2af",
+          "dish_name": "Pizza",
+          "quantity": 1,
+          "price": 14.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "c0eaa82d",
+          "dish_name": "Tiramisu",
+          "quantity": 2,
+          "price": 9.99,
+          "isNew": false,
+          "isAccepted": false,
+          "isReady": true,
+          "isComplete": false
+        },
+        {
+          "id": "f03c4ea0",
+          "dish_name": "Cappuccino",
+          "quantity": 3,
+          "price": 3.99,
+          "isNew": false,
+          "isAccepted": true,
+          "isReady": false,
+          "isComplete": false
+        }
+      ]
+    }
+  ]
+}
