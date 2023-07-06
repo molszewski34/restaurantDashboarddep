@@ -21,8 +21,7 @@ const Labor = () => {
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
-    // WADOMOŚĆ  GDY HASŁO NIE PASUJE (LUB LOGIN)
-    <div>Ups! Password and login doesn`t match!</div>
+    <div>Ups! Something went wrong</div>
   ) : (
     <main className=" flex flex-col items-center bg-secondary-bg-color relative h-screen">
       <NavbarTop />

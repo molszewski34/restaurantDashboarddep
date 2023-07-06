@@ -4,8 +4,34 @@ import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagment
 import { FiMoreHorizontal } from 'react-icons/fi';
 import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 import { listCategories } from '../../../../actions/categoriesActions';
-import data from '../laborsList/laborsData.json';
+// import data from '../laborsList/laborsData.json';
 const NewEmployee = () => {
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  console.log(email);
+
+  const handleInputChange = (e, setInputText) => {
+    const inputValue = e.target.value;
+    const numbersRegex = /^[0-9]*$/;
+    if (inputValue === '' || numbersRegex.test(inputValue)) {
+      setInputText(inputValue);
+    }
+  };
+
+  const validateEmail = (e, setInputChange) => {
+    const inputValue = e.target.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (inputValue === '' || emailRegex.test(inputValue)) {
+      setInputChange(inputValue);
+      setEmailError('');
+    } else {
+      setInputChange(inputValue);
+      setEmailError('Incorect email format');
+    }
+  };
+
   return (
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
@@ -32,22 +58,31 @@ const NewEmployee = () => {
                             name="full_name"
                             id="full_name"
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value=""
+                            // value=""
                             placeholder="ex: John Doe"
+                            required
                           />
                         </div>
 
                         <div className="md:col-span-3">
-                          <label className="font-bold" for="email">
-                            Email Address
-                          </label>
+                          <div className="flex justify-between items-center">
+                            <label className="font-bold " for="email">
+                              Email Address
+                            </label>
+                            <span className="text-xs text-[#dc2626]">
+                              {emailError}
+                            </span>
+                          </div>
+
                           <input
                             type="text"
                             name="email"
                             id="email"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value=""
+                            className={`h-10 border mt-1 rounded px-4 w-full bg-gray-50`}
+                            onChange={(e) => validateEmail(e, setEmail)}
+                            value={email}
                             placeholder="ex: email@example.com"
+                            required
                           />
                         </div>
 
@@ -59,9 +94,13 @@ const NewEmployee = () => {
                             type="text"
                             name="address"
                             id="address"
+                            onChange={(e) =>
+                              handleInputChange(e, setPhoneNumber)
+                            }
                             class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            value=""
+                            value={phoneNumber}
                             placeholder="ex: 1234567"
+                            required
                           />
                         </div>
 
