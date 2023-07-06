@@ -41,7 +41,7 @@ class Table(models.Model):
 
 class DishCategory(models.Model):
     title = models.CharField(max_length=200, blank=False, null=False)
-    color = models.CharField(max_length=200, blank=False, null=False, default = "white")
+    colour = models.CharField(max_length=200, blank=False, null=False, default = "white")
     def __str__(self):
         return str(self.title)
 

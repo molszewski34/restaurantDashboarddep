@@ -14,17 +14,16 @@ import SignIn from "./screens/login";
 import Services from "./screens/services";
 import StartingPanel from "./screens/startingPanel";
 import Invite from "./screens/invite";
-import { red, purple } from "@mui/material/colors";
 import TablesPanel from "./screens/tablesPanel";
 import OrdersPanel from "./screens/ordersPanel";
-import LaborList from "./screens/manager_activities/labor/laborsList";
+import EmployeesList from "./screens/manager_activities/employees/employeesList";
 import CategoriesList from "./screens/manager_activities/dishes/categoriesList";
 import EditRoom from "./screens/manager_activities/tables/editRoom";
 import TablesList from "./screens/manager_activities/tables/tablesList";
 import NewCategory from "./screens/manager_activities/dishes/newCategory";
 import NewRoom from "./screens/manager_activities/tables/addRoom";
-import NewEmployee from "./screens/manager_activities/labor/newEmployee";
-import EditLabor from "./screens/manager_activities/labor/editLabor";
+import NewEmployee from "./screens/manager_activities/employees/newEmployee";
+import EditEmployee from "./screens/manager_activities/employees/editEmployee";
 
 function App() {
   return (
@@ -49,8 +48,8 @@ function App() {
               <Route path="/tablesPanel" element={<TablesPanel />} />
               <Route path="/tablesList" element={<TablesList />} />
               <Route path="/tablesList/:roomId" element={<EditRoom />} />
-              <Route path="/employess/" element={<LaborList />} />
-              <Route path="/employess/:laborId" element={<EditLabor />} />
+              <Route path="/employess/" element={<EmployeesList />} />
+              <Route path="/employess/:laborId" element={<EditEmployee />} />
               <Route path="/employess/new-employee" element={<NewEmployee />} />
               <Route path="/menu" element={<CategoriesList />} />
               <Route path="/add-category" element={<NewCategory />} />

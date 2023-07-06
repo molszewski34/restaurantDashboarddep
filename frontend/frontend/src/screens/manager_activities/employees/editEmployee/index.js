@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import data from '../laborsList/laborsData.json';
-import { useParams } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import { FiMoreHorizontal } from "react-icons/fi";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import data from "../employeesList/laborsData.json";
+import { useParams } from "react-router-dom";
 
-const EditLabor = () => {
+const EditEmployee = () => {
   const map = new Map();
   data.employees.forEach((item) => map.set(item.job_position, item));
 
@@ -53,12 +53,6 @@ const EditLabor = () => {
                 <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
                   <option value="">{employee.job_position}</option>
                   {jobPosition.map((employee, index) => {
-                    // const filtereJobPosition = jobPosition.filter(
-                    //   (position) =>
-                    //     position.job_position !== employee.job_position
-                    // );
-                    // .map((job) => job.job_position);
-                    // console.log(filtereJobPosition);
                     return (
                       <option key={index} value="">
                         {employee.job_position}
@@ -86,7 +80,7 @@ const EditLabor = () => {
               >
                 Cashier
                 <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
-                  <option value="">{employee.isCashier ? 'Yes' : 'No'}</option>
+                  <option value="">{employee.isCashier ? "Yes" : "No"}</option>
                   {employee.isCashier && <option value="">No</option>}
                   {!employee.isCashier && <option value="">Yes</option>}
                 </select>
@@ -97,7 +91,7 @@ const EditLabor = () => {
               >
                 Driver
                 <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
-                  <option value="">{employee.isDriver ? 'Yes' : 'No'}</option>
+                  <option value="">{employee.isDriver ? "Yes" : "No"}</option>
                   {employee.isDriver && <option value="">No</option>}
                   {!employee.isDriver && <option value="">Yes</option>}
                 </select>
@@ -162,14 +156,10 @@ const EditLabor = () => {
         </section>
         {modalOpen && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            {/* <ModalAddEmployee
-                closeModal={() => setModalOpen(false)}
-                closeOverlay={() => setOverlay(false)}
-              /> */}
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">Do you want to remove emeployee from the list?</b>
               <div className="flex justify-between gap-2">
-                {' '}
+                {" "}
                 <button
                   onClick={() => {
                     setModalOpen(false);
@@ -191,7 +181,7 @@ const EditLabor = () => {
               </div>
             </main>
           </div>
-        )}{' '}
+        )}{" "}
       </main>
       {overlay && (
         <div className="fixed z-40 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
@@ -200,4 +190,4 @@ const EditLabor = () => {
   );
 };
 
-export default EditLabor;
+export default EditEmployee;
