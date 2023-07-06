@@ -11,6 +11,9 @@ import {
   EMPLOYEE_LIST_FAIL,
   USER_CREATE_FAIL,
   USER_CREATE,
+  POSITIONS_LIST_FAIL,
+  POSITIONS_LIST_SUCCESS,
+  POSITIONS_LIST_REQUEST,
 } from "../constants/userConstants";
 import axios from "axios";
 
@@ -135,6 +138,28 @@ export const getEmployees = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: EMPLOYEE_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const getEmployeePositions = () => async (dispatch) => {
+  try {
+    dispatch({
+      type: POSITIONS_LIST_REQUEST,
+    });
+
+    const { data } = await axios.get("user/positions/");
+    dispatch({
+      type: POSITIONS_LIST_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: POSITIONS_LIST_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
