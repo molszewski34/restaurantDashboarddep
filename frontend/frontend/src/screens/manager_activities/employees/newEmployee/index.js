@@ -4,7 +4,8 @@ import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagment
 import { FiMoreHorizontal } from "react-icons/fi";
 import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
 import { listCategories } from "../../../../actions/categoriesActions";
-import data from "../laborsList/laborsData.json";
+
+import EmployeesList from "./../employeesList/index";
 const NewEmployee = () => {
   // first states of Name, email and phone number
   const [fullName, setFullName] = useState("");

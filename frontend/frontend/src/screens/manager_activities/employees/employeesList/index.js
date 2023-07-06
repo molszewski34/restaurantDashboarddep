@@ -10,7 +10,7 @@ import { listTables, listRooms } from "../../../../actions/tablesActions";
 import { listOrders } from "../../../../actions/ordersActions";
 import employees from "./laborsData";
 
-const LaborList = () => {
+const EmployeesList = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const {
@@ -71,4 +71,4 @@ const LaborList = () => {
   );
 };
 
-export default LaborList;
+export default EmployeesList;
