@@ -3,5 +3,12 @@ backend/restaurant/frontend/node_modules
 frontend/frontend/node_modules
 node_modules
 /env
+<<<<<<< HEAD
 /node_modules
 *__pycache__*
+=======
+restaurant/_pycatch
+_pycatch
+/node_modules
+*__pycache__*
+>>>>>>> 6cf969d55920e9df55bbe55a57e84aada5f7fa9c

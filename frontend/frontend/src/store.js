@@ -13,6 +13,7 @@ import {
   userLoginReducer,
   userListReducer,
   employeeListReducer,
+  employeePositionsListReducer,
 } from "./reducers/userReducers";
 
 const reducer = combineReducers({
@@ -27,6 +28,7 @@ const reducer = combineReducers({
   userList: userListReducer,
   employeeList: employeeListReducer,
   pastOrdersList: pastOrdersListReducer,
+  positionsList: employeePositionsListReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")
