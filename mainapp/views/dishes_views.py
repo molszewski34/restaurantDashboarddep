@@ -44,8 +44,11 @@ def createDishCategory(request):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])
 def getDishCategories(request):
+    print("działam")
     dishCategories = DishCategory.objects.all()
+    print(dishCategories)
     serializer = DishCategorySerializer(dishCategories, many=True)
+    print("po sera")
     return Response(serializer.data)
 
 # Delete dish category (only admin) 
