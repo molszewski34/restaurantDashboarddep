@@ -61,10 +61,10 @@ const CategoriesList = () => {
         </div>
         <section className="mt-4 flex flex-col gap-3">
           <div className="grid grid-cols-4 ">
-            <span className="text-sm font-bold border-b border-[#cbd5e1] pl-2">
+            <span className="text-sm font-bold  pl-2 place-self-start">
               Name
             </span>
-            <span className="text-sm font-bold border-b border-[#cbd5e1] pl-2">
+            <span className="text-sm font-bold  pl-2 place-self-start">
               Color
             </span>
           </div>
@@ -79,17 +79,17 @@ const CategoriesList = () => {
             return (
               <div key={categoryItem.id} className="flex flex-col w-full gap-2">
                 {/* <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white"> */}
-                <div className="grid grid-cols-4 items-center  px-2 bg-[#e5e7eb] py-2 border-b border-white">
-                  <p className="uppercase text-sm text-[#0369a1] font-bold">
+                <div className="grid grid-cols-4 items-center  px-2 bg-[#f1f5f9] py-2 border-b border-white rounded">
+                  <p className="uppercase text-sm text-[#6b7280] font-bold">
                     {categoryItem.title}
                   </p>
                   <span
-                    className=" w-6 h-6 grow flex"
+                    className=" w-6 h-6 grow flex border-2 border-white"
                     style={{ backgroundColor: categoryItem.colour }}
                   ></span>
                   <button
                     onClick={() => handleCategoryEditClick(categoryItem.id)}
-                    className="flex justify-center items-center w-8 h-8 text-[#0369a1] text-sm"
+                    className="flex justify-center items-center w-8 h-8 text-[#0369a1] text-xs font-bold hover:underline"
                   >
                     Edit
                   </button>
@@ -98,22 +98,22 @@ const CategoriesList = () => {
                       setModalOpen(true);
                       setOverlay(true);
                     }}
-                    className="flex justify-center items-center  place-self-end text-[#ef4444] text-xs  shadowed px-2 py-1 hover:font-bold"
+                    className="flex place-self-end self-center text-[#0369a1] text-xs  shadowed px-2 py-1 font-bold hover:underline"
                   >
                     {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
-                    Remove
+                    Delete
                   </button>
                 </div>
                 {categoryEditing && (
-                  <div className="grid grid-cols-3  p-2 border border-[#e5e7eb] rounded">
+                  <div className="flex items-center gap-4 p-2 border border-[#e5e7eb] rounded">
                     <input
-                      className="border uppercase border-[#cbd5e1] text-sm pl-1"
+                      className="border uppercase border-[#cbd5e1] text-sm pl-1 place-self-start self-center py-1"
                       type="text"
                       placeholder={categoryItem.title}
                     />
-                    <div className="relative place-self-center">
+                    <div className="relative ">
                       <button
-                        className=" cursor-pointer w-6 h-6 grow flex place-self-center"
+                        className=" cursor-pointer w-6 h-6 grow flex "
                         key={categoryItem.id}
                         style={{
                           backgroundColor:
@@ -142,13 +142,13 @@ const CategoriesList = () => {
                         </div>
                       )}
                     </div>
-                    <button className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] font-bold place-self-end self-center">
+                    <button className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] font-bold place-self-start self-center">
                       Confirm
                     </button>
                   </div>
                 )}
                 <div className="grid grid-cols-1">
-                  <div className="grid grid-cols-4 border  bg-[#e5e7eb] py-1">
+                  <div className="grid grid-cols-4 border-b border-[#cbd5e1]   py-1">
                     <span className="font-bold pl-2 text-sm">Name</span>
                     <span className="font-bold text-sm">Price</span>
                   </div>
@@ -163,7 +163,7 @@ const CategoriesList = () => {
                           className="grid grid-cols-4 items-center  text-sm "
                           style={{
                             backgroundColor:
-                              index % 2 === 1 ? '#e5e7eb' : 'white',
+                              index % 2 === 1 ? 'white' : '#f1f5f9',
                           }}
                         >
                           <span className="pl-2 text-[#0369a1] cursor-pointer">
@@ -174,7 +174,7 @@ const CategoriesList = () => {
                           </span>
                           <button
                             onClick={() => handleDishEditClick(filteredDish.id)}
-                            className="flex justify-center items-center w-8 h-8 text-[#0369a1]"
+                            className="flex justify-center items-center w-8 h-8 text-[#0369a1] text-xs font-bold hover:underline "
                           >
                             Edit
                           </button>
@@ -183,7 +183,7 @@ const CategoriesList = () => {
                             //   setModalOpen(true);
                             //   setOverlay(true);
                             // }}
-                            className="flex items-center justify-center place-self-end self-center text-[#ef4444] text-xs    shadowed px-2 py-1 hover:font-bold"
+                            className="flex items-center justify-center place-self-end self-center text-[#0369a1] text-xs shadowed px-2 py-1 font-bold hover:underline"
                           >
                             {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
                             Remove
@@ -220,7 +220,7 @@ const CategoriesList = () => {
                     setOverlay(true);
                     setCategoryName(categoryItem.title);
                   }}
-                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9]"
+                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] place-self-start"
                 >
                   + Add
                 </button>
@@ -289,7 +289,7 @@ const CategoriesList = () => {
                   >
                     Product Price:
                     <input
-                      className="border border-[#cbd5e1] py-1 pl-1 font-normal"
+                      className="border border-[#cbd5e1] py-1 pl-1 font-normal place-self"
                       type="text"
                       placeholder="Provide price"
                     />
