@@ -70,6 +70,21 @@ def updateOrder(request,pk):
     return Response("Order updated")
 
 
+@api_view(["POST"])
+def setPaymentMenthod(request, pk):
+    data= request.data['paymentMethod']
+    order =Order.objects.get(id=pk)
+    order.paymentMethod = data
+    print(order.paymentMethod)
+    order.save()
+
+
+  
+
+    return Response("Payment method updated")
+
+
+
 
 # add dish to order
 
@@ -78,18 +93,13 @@ def updateOrder(request,pk):
 def addDishToOrder(request):
     data=request.data 
     user = request.user  
-    print(data)
-
-  
     
-    order = Order.objects.get(id=data['body']['order'])      
-    dish = Dish.objects.get(id=data['body']['dish'])
-    qty = int(data['body']['qty'])
-
-    print
+    order = Order.objects.get(id=data['order'])      
+    dish = Dish.objects.get(id=data['dish'])
+    qty = int(data['qty'])
 
     orderedDishes = OrderDish.objects.filter(order=order)
-    print(orderedDishes)
+  
 
     
     existOrderDish = orderedDishes.filter(dish=dish)
@@ -105,7 +115,7 @@ def addDishToOrder(request):
 
         )
 
-    order.totalPrice = float(order.totalPrice) + float(data['body']['price'])
+    order.totalPrice = float(order.totalPrice) + float(data['price'] * float(data['qty']))
     order.save()
       
     serializer = OrderDishSerializer(dishToOrder, many=False)
@@ -115,36 +125,48 @@ def addDishToOrder(request):
 
 
 
-@api_view(['POST',"GET"])
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def changeDishQty(request,pk):
     
     data = request.data
-    user= request.user
-    print(request.headers)
-    print("USER: ", user)
-    
+
     if request.method == "POST":
        
-        user = request.user
+       #Get chenged dish qty
         dishToChange = OrderDish.objects.get(id=pk)
   
         orderedDishQtyBeforeChange = dishToChange.qty
-        
-        dishToChange.qty = data["body"]['qty']
-        
-        print("orderedDishQtyBeforeChange: ", orderedDishQtyBeforeChange)
-        print("dishToChange.qty: ",dishToChange.qty)
-        
+       
+        #new value of qty
+        dishToChange.qty = data['qty']
+       
+       #get order contains dish to change
         order = Order.objects.get(id=dishToChange.order.id)
-        if orderedDishQtyBeforeChange < dishToChange.qty:
-            order.totalPrice = round((float(order.totalPrice) + float(dishToChange.dish.price)),2)
-        else:
-            order.totalPrice = round((float(order.totalPrice) - float(dishToChange.dish.price)),2)
+
+        #Change total proce of order afte qty was changed
+
+        #Check if new aty value is different from zero
+        if dishToChange.qty != 0:
+              
+            # if new qty value is greater than old 
+            if orderedDishQtyBeforeChange < dishToChange.qty:
+                #set difference in dish qty 
+                qtyDifference =  data['qty']-orderedDishQtyBeforeChange 
+                order.totalPrice = round((float(order.totalPrice) + float(dishToChange.dish.price *qtyDifference)),2)
+        
+             # if new qty value is less than old 
+            if orderedDishQtyBeforeChange > dishToChange.qty:
+                #set difference in dish qty 
+                qtyDifference = orderedDishQtyBeforeChange - data['qty']
+                order.totalPrice = round((float(order.totalPrice) - float(dishToChange.dish.price * qtyDifference)),2)
+  
+        #if new qty is equal to zero
         if dishToChange.qty == 0:
-           
+            order.totalPrice = round((float(order.totalPrice) - float(dishToChange.dish.price * orderedDishQtyBeforeChange)),2)
             dishToChange.delete()
-            
-         
+            order.save()
+                 
             return Response("Element deleted")
         
         dishToChange.save()
@@ -206,20 +228,25 @@ def getAllTables(request):
 @permission_classes([IsAdminUser])
 def createTable(request):
     user=request.user
-    print(user)
     data = request.data 
-    requestedRoom = Room.objects.filter(id=data['body']['tableData']['room']['id'])
-    tableNumber = data['body']['tableData']['tableNumber']
-    numberOfPersons = data['body']['tableData']['numberOfPersons']
-    isOccupied = data['body']['tableData']['isOccupied']
+   
+    requestedRoom = Room.objects.filter(id=data['tableData']['room']['id'])
+    
+    tableNumber = data['tableData']['tableNumber'] + 1 
+    print(tableNumber)
+    numberOfPersons = data['tableData']['numberOfPersons']
+    isOccupied = data['tableData']['isOccupied']
     newTable = Table.objects.create(
         room=requestedRoom[0],
         tableNumber=tableNumber,
         numberOfPersons=numberOfPersons,
         isOccupied=isOccupied
     )
+    tables = Table.objects.all()
+    serializer = TableSerializer(tables, many=True)
 
-    return Response("Table created")
+
+    return Response(serializer.data)
 
 
 

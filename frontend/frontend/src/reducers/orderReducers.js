@@ -9,7 +9,12 @@ import {
   PAST_ORDERS_LIST_REQUEST,
   PAST_ORDERS_LIST_SUCCESS,
   PAST_ORDERS_LIST_FAIL,
+  CHANGE_DISH_QTY,
+  ORDER_ADD_NEW_ITEM,
+  ORDER_DELETE_ITEM,
 } from "../constants/orderConstants";
+
+let newTotalPrice;
 
 export const orderListReducer = (state = { orders: [] }, action) => {
   switch (action.type) {
@@ -30,7 +35,6 @@ export const orderListReducer = (state = { orders: [] }, action) => {
       };
 
     case ORDER_CREATE_SUCCESS:
-      console.log(action.payload);
       return {
         loading: false,
         orders: action.payload,
@@ -79,10 +83,34 @@ export const orderDetailReducer = (
         loading: false,
         order: action.payload,
       };
+
+    case CHANGE_DISH_QTY:
+      newTotalPrice =
+        parseFloat(state.order.totalPrice) +
+        parseFloat(action.payload.priceValueToChange);
+
+      state.order.totalPrice = newTotalPrice.toFixed(2);
+
+      return {
+        loading: false,
+        order: state.order,
+      };
+
+    case ORDER_ADD_NEW_ITEM:
+      let priceToAdd = action.payload.qty * action.payload.filteredDish.price;
+      newTotalPrice =
+        parseFloat(state.order.totalPrice) + parseFloat(priceToAdd);
+
+      state.order.totalPrice = newTotalPrice.toFixed(2);
+      return {
+        loading: false,
+        order: state.order,
+      };
+
     case ORDER_DETAILS_FAIL:
       return {
         loading: false,
-        order: action.payload,
+        order: state.order,
       };
 
     default:
