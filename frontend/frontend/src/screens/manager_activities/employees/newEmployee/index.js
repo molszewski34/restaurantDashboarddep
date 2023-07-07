@@ -1,24 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import { getEmployeePositions } from "../../../../actions/userActions";
+
+
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 import CircularProgress from "@mui/material/CircularProgress";
 
 const NewEmployee = () => {
-  let dispatch = useDispatch();
-
-  // get employees positions
-  const positionsList = useSelector((state) => state.positionsList);
-  const { error, loading, positions } = positionsList;
-
-  // first states of Name, email and phone number
+    let dispatch = useDispatch();
+  
+    // first states of Name, email and phone number
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+
   const [position, setPosition] = useState("Bartender");
   const [isCashier, setIsCashier] = useState("Yes");
   const [isDriver, setIsDriver] = useState("Yes");
+
+
+    // get employees positions
+    const positionsList = useSelector((state) => state.positionsList);
+  const { error, loading, positions } = positionsList;
+  
+  
+  const handleInputChange = (e, setInputText) => {
+    const inputValue = e.target.value;
+    const numbersRegex = /^[0-9]*$/;
+    if (inputValue === '' || numbersRegex.test(inputValue)) {
+      setInputText(inputValue);
+    }
+  };
+
+  const validateEmail = (e, setInputChange) => {
+    const inputValue = e.target.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (inputValue === '' || emailRegex.test(inputValue)) {
+      setInputChange(inputValue);
+      setEmailError('');
+    } else {
+      setInputChange(inputValue);
+      setEmailError('Incorect email format');
+    }
+  };
+  
 
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();
@@ -33,6 +61,8 @@ const NewEmployee = () => {
   useEffect(() => {
     dispatch(getEmployeePositions());
   }, []);
+
+
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -49,41 +79,53 @@ const NewEmployee = () => {
           </header>
 
           <form className="flex flex-col gap-2">
-            <div className="p-6 md:p-0 bg-gray-100 flex items-center justify-center">
-              <div className="container max-w-screen-lg mx-auto">
+            <div className="p-6 md:p-0 bg-gray-100 flex items-center ">
+              <div className="w-full md:max-w-[800px] ">
                 <div>
                   <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
                     <div className="lg:col-span-2">
                       <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div className="md:col-span-5">
-                          <label>Full Name</label>
+                          <label className="font-bold" for="full_name">
+                            Full Name
+                          </label>
                           <input
                             type="text"
                             name="full_name"
                             id="full_name"
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            onChange={(e) => {
-                              setFullName(e.target.value);
-                            }}
+                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            // value=""
+                            placeholder="ex: John Doe"
+                            required
                           />
                         </div>
 
                         <div className="md:col-span-3">
-                          <label>Email Address</label>
+                          <div className="flex justify-between items-center">
+                            <label className="font-bold " for="email">
+                              Email Address
+                            </label>
+                            <span className="text-xs text-[#dc2626]">
+                              {emailError}
+                            </span>
+                          </div>
+
                           <input
                             type="text"
                             name="email"
                             id="email"
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            onChange={(e) => {
-                              setEmail(e.target.value);
-                            }}
-                            placeholder="email@domain.com"
+                            className={`h-10 border mt-1 rounded px-4 w-full bg-gray-50`}
+                            onChange={(e) => validateEmail(e, setEmail)}
+                            value={email}
+                            placeholder="ex: email@example.com"
+                            required
                           />
                         </div>
 
                         <div className="md:col-span-2">
-                          <label>Phone</label>
+                          <label className="font-bold" for="address">
+                            Phone
+                          </label>
                           <input
                             type="text"
                             name="address"
@@ -91,12 +133,19 @@ const NewEmployee = () => {
                             className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             onChange={(e) => {
                               setPhone(e.target.value);
+
+                              handleInputChange(e, setPhoneNumber)
                             }}
-                            placeholder=""
+                            value={phoneNumber}
+                            placeholder="ex: 1234567"
+                            required
+
+
                           />
                         </div>
 
                         <div className="md:col-span-3">
+
                           <label>Position</label>
                           {positions ? (
                             <select
@@ -137,15 +186,18 @@ const NewEmployee = () => {
                           >
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
+
                           </select>
                         </div>
 
                         <div className="md:col-span-5 text-right bg-blue-500">
                           <div className="inline-flex items-end">
                             <button
+
                               onClick={(e) => {
                                 confirmEmployeeHandler(e);
                               }}
+
                               className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
                             >
                               Confirm

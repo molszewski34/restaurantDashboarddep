@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { getUsers } from "../../../../actions/userActions";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import { FiMoreHorizontal } from "react-icons/fi";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import { listCategories } from "../../../../actions/categoriesActions";
-import { listTables, listRooms } from "../../../../actions/tablesActions";
-import { listOrders } from "../../../../actions/ordersActions";
-import employees from "./laborsData";
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { getUsers } from '../../../../actions/userActions';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import { FiMoreHorizontal } from 'react-icons/fi';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import { listCategories } from '../../../../actions/categoriesActions';
+import { listTables, listRooms } from '../../../../actions/tablesActions';
+import { listOrders } from '../../../../actions/ordersActions';
+import employees from './laborsData';
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
@@ -38,31 +38,35 @@ const EmployeesList = () => {
           + Add employee
         </Link>
         <section className="flex flex-col">
-          <div className="grid grid-cols-8 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs break-all">
+          <div className="grid grid-cols-3 md:grid-cols-8 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs ">
             <span>Full name</span>
             <span>Position</span>
-            <span>Type of payment</span>
-            <span>Payment</span>
-            <span>Cashier</span>
-            <span>Driver</span>
+            <span className="hidden md:flex">Type of payment</span>
+            <span className="hidden md:flex">Payment</span>
+            <span className="hidden md:flex">Cashier</span>
+            <span className="hidden md:flex">Driver</span>
             <span>Phone</span>
-            <span>Email</span>
+            <span className="hidden md:flex">Email</span>
           </div>
           {employees.employees.map((employee) => (
             <Link
               to={`/employess/${employee.id}`}
               key={employee.id}
-              className="grid grid-cols-8 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs break-all hover:bg-secondary-bg-color"
+              className="grid grid-cols-3 md:grid-cols-8 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
             >
-              <span className="flex break-all">{employee.full_name}</span>
+              <span className="flex ">{employee.full_name}</span>
               <span>{employee.job_position}</span>
-              <span>{employee.payment_type}</span>
-              <span>{employee.payment}</span>
-              <span>{employee.isCashier ? "Yes" : ""}</span>
-              <span>{employee.isDriver ? "Yes" : ""}</span>
+              <span className="hidden md:flex">{employee.payment_type}</span>
+              <span className="hidden md:flex">{employee.payment}</span>
+              <span className="hidden md:flex">
+                {employee.isCashier ? 'Yes' : ''}
+              </span>
+              <span className="hidden md:flex">
+                {employee.isDriver ? 'Yes' : ''}
+              </span>
 
               <span className="flex break-all">{employee.phone_number}</span>
-              <span className="flex break-all">{employee.email}</span>
+              <span className="  hidden md:flex">{employee.email}</span>
             </Link>
           ))}
         </section>
