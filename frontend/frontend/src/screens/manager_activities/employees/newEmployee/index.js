@@ -1,35 +1,32 @@
-
-
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import { FiMoreHorizontal } from "react-icons/fi";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
 import CircularProgress from "@mui/material/CircularProgress";
+import { getEmployeePositions } from "../../../../actions/userActions";
 
 const NewEmployee = () => {
-    let dispatch = useDispatch();
-  
-    // first states of Name, email and phone number
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
+  let dispatch = useDispatch();
+
+  // first states of Name, email and phone number
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [fullName, setFullName] = useState("");
 
   const [position, setPosition] = useState("Bartender");
   const [isCashier, setIsCashier] = useState("Yes");
   const [isDriver, setIsDriver] = useState("Yes");
 
-
-    // get employees positions
-    const positionsList = useSelector((state) => state.positionsList);
+  // get employees positions
+  const positionsList = useSelector((state) => state.positionsList);
   const { error, loading, positions } = positionsList;
-  
-  
+
   const handleInputChange = (e, setInputText) => {
     const inputValue = e.target.value;
     const numbersRegex = /^[0-9]*$/;
-    if (inputValue === '' || numbersRegex.test(inputValue)) {
+    if (inputValue === "" || numbersRegex.test(inputValue)) {
       setInputText(inputValue);
     }
   };
@@ -38,22 +35,21 @@ const NewEmployee = () => {
     const inputValue = e.target.value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (inputValue === '' || emailRegex.test(inputValue)) {
+    if (inputValue === "" || emailRegex.test(inputValue)) {
       setInputChange(inputValue);
-      setEmailError('');
+      setEmailError("");
     } else {
       setInputChange(inputValue);
-      setEmailError('Incorect email format');
+      setEmailError("Incorect email format");
     }
   };
-  
 
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();
     console.log(position);
     console.log(fullName);
     console.log(email);
-    console.log(phone);
+    console.log(phoneNumber);
     console.log(isCashier);
     console.log(isDriver);
   };
@@ -61,8 +57,6 @@ const NewEmployee = () => {
   useEffect(() => {
     dispatch(getEmployeePositions());
   }, []);
-
-
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -132,20 +126,17 @@ const NewEmployee = () => {
                             id="address"
                             className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             onChange={(e) => {
-                              setPhone(e.target.value);
+                              setPhoneNumber(e.target.value);
 
-                              handleInputChange(e, setPhoneNumber)
+                              handleInputChange(e, setPhoneNumber);
                             }}
                             value={phoneNumber}
                             placeholder="ex: 1234567"
                             required
-
-
                           />
                         </div>
 
                         <div className="md:col-span-3">
-
                           <label>Position</label>
                           {positions ? (
                             <select
@@ -186,18 +177,15 @@ const NewEmployee = () => {
                           >
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
-
                           </select>
                         </div>
 
                         <div className="md:col-span-5 text-right bg-blue-500">
                           <div className="inline-flex items-end">
                             <button
-
                               onClick={(e) => {
                                 confirmEmployeeHandler(e);
                               }}
-
                               className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
                             >
                               Confirm
