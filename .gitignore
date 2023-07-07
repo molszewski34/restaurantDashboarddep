@@ -1,5 +1,7 @@
 /venv/
 backend/restaurant/frontend/node_modules
 frontend/frontend/node_modules
+node_modules
+/env
+/node_modules
 *__pycache__*
-*node_modules*
