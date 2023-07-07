@@ -9,6 +9,8 @@ import {
   REMOVE_TABLE,
 } from "../constants/tablesConstants";
 
+import { CREATE_ROOM_SUCCESS } from "../constants/roomsConstants";
+
 export const listTablesReducer = (state = { tables: [] }, action) => {
   switch (action.type) {
     case TABLES_LIST_REQUEST:
@@ -32,7 +34,7 @@ export const listTablesReducer = (state = { tables: [] }, action) => {
         room: action.payload.tableData.room.id,
         tableNumber: action.payload.tableData.tableNumber + 1,
       };
-      console.log(tableToAdd);
+
       return {
         loading: false,
         tables: [...tablesFromAction, tableToAdd],
@@ -68,6 +70,22 @@ export const listRoomsReducer = (state = { rooms: [] }, action) => {
         loading: false,
         rooms: action.payload,
       };
+
+    case CREATE_ROOM_SUCCESS: {
+      // getting old array of rooms
+      const roomsFromAction = action.payload.rooms;
+
+      //create table object
+      const roomToAdd = {
+        id: action.payload.rooms.length + 1,
+        name: action.payload.data.name,
+      };
+
+      return {
+        loading: false,
+        rooms: [...roomsFromAction, roomToAdd],
+      };
+    }
 
     case ROOMS_LIST_FAIL:
       return {

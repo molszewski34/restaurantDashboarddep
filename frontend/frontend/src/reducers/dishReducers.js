@@ -14,6 +14,7 @@ import {
   ORDER_REMOVE_ITEM,
   ORDER_DELETE_ITEM,
   ORDER_ADD_NEW_ITEM,
+  CHANGE_DISH_QTY,
 } from "../constants/orderConstants";
 
 export const dishListReducer = (state = { dishes: [] }, action) => {
@@ -57,6 +58,7 @@ export const dishListReducer = (state = { dishes: [] }, action) => {
   }
 };
 
+// This func will be moved to orderReducers
 export const orderDishReducer = (state = { orderDishes: [] }, action) => {
   switch (action.type) {
     case ORDER_ADD_NEW_ITEM:
@@ -65,7 +67,7 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
       const itemToAddToOrder = {
         order: data.id,
         dish: data.filteredDish.id,
-        qty: 1,
+        qty: data.qty,
       };
 
       return {
@@ -73,6 +75,14 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
         orderDishes: [...state.orderDishes, itemToAddToOrder],
       };
 
+    // Change qty of selected dish
+    case CHANGE_DISH_QTY:
+      return {
+        ...state,
+        orderDishes: [...state.orderDishes],
+      };
+
+    // This case will be removed
     case ORDER_ADD_ITEM:
       const item = action.payload;
 
