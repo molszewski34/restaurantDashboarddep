@@ -1,4 +1,5 @@
 
+
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
@@ -14,9 +15,11 @@ const NewEmployee = () => {
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [fullName, setFullName] = useState("");
+
   const [position, setPosition] = useState("Bartender");
   const [isCashier, setIsCashier] = useState("Yes");
   const [isDriver, setIsDriver] = useState("Yes");
+
 
     // get employees positions
     const positionsList = useSelector((state) => state.positionsList);
@@ -58,6 +61,7 @@ const NewEmployee = () => {
   useEffect(() => {
     dispatch(getEmployeePositions());
   }, []);
+
 
 
   return loading ? (
@@ -129,11 +133,13 @@ const NewEmployee = () => {
                             className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             onChange={(e) => {
                               setPhone(e.target.value);
+
                               handleInputChange(e, setPhoneNumber)
                             }}
                             value={phoneNumber}
                             placeholder="ex: 1234567"
                             required
+
 
                           />
                         </div>
