@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import CircularProgress from "@mui/material/CircularProgress";
-import { listTables, listRooms } from "../../../../actions/tablesActions";
-import { createRoom } from "../../../../actions/roomsActions";
-import { createNewTable, removeTable } from "../../../../actions/tablesActions";
-import { removeRoom } from "../../../../actions/roomsActions";
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import CircularProgress from '@mui/material/CircularProgress';
+import { listTables, listRooms } from '../../../../actions/tablesActions';
+import { createRoom } from '../../../../actions/roomsActions';
+import { createNewTable, removeTable } from '../../../../actions/tablesActions';
+import { removeRoom } from '../../../../actions/roomsActions';
 
-import ClearIcon from "@mui/icons-material/Clear";
+import ClearIcon from '@mui/icons-material/Clear';
 
 const TablesList = () => {
   const roomsList = useSelector((state) => state.roomsList);
@@ -21,10 +21,13 @@ const TablesList = () => {
     tables,
   } = tableList;
 
-  const [newRoomName, setNewRoomName] = useState("");
+  const [newRoomName, setNewRoomName] = useState('');
   const [addRoomIsActive, setAddRoomIsActive] = useState(false);
-  const [activeRoom, setActiveRoom] = useState("");
+  const [activeRoom, setActiveRoom] = useState('');
   const [numberOfGusets, setnumberOfGusets] = useState(1);
+  const [roomRemoval, setRoomRemoval] = useState(false);
+  const [tableRemoval, setTableRemoval] = useState(false);
+  const [overlay, setOverlay] = useState(false);
 
   const handleTableSubmit = (e) => {
     // room, numberOfPersons, tables, rooms
@@ -55,7 +58,7 @@ const TablesList = () => {
           {addRoomIsActive ? (
             <label>
               <input
-                className="h-8 m-2 border rounded-md border-[#cbd5e1]"
+                className="h-8 m-2 border rounded-md border-[#cbd5e1] pl-2"
                 type="text "
                 placeholder="Name of Room"
                 onChange={(e) => {
@@ -72,12 +75,12 @@ const TablesList = () => {
             onClick={() => {
               setAddRoomIsActive(!addRoomIsActive);
               if (addRoomIsActive) {
-                if (newRoomName != "") {
+                if (newRoomName != '') {
                   dispatch(createRoom(newRoomName, rooms));
                   setTimeout(() => {
                     window.scrollTo({
                       top: document.body.scrollHeight,
-                      behavior: "smooth",
+                      behavior: 'smooth',
                     });
                   }, 500);
                 } else {
@@ -86,7 +89,7 @@ const TablesList = () => {
               }
             }}
           >
-            {addRoomIsActive ? "+ Add" : "+ Add room"}
+            {addRoomIsActive ? '+ Add' : '+ Add room'}
           </button>
         </div>
 
@@ -99,7 +102,7 @@ const TablesList = () => {
           {/*  */}
           {roomsList ? (
             <>
-              {" "}
+              {' '}
               {rooms.map((room) => (
                 //  DISPLAY ROOM NAMES
                 <div key={room.id} className="flex flex-col ">
@@ -111,13 +114,17 @@ const TablesList = () => {
                       {room.name}
                     </div>
                     <button
-                      className="text-[#dc2626] cursor-pointer"
+                      className="text-[#0369a1] cursor-pointer text-sm font-bold hover:underline"
                       type=""
                       onClick={() => {
-                        dispatch(removeRoom(room, rooms));
+                        setRoomRemoval(true);
+                        setOverlay(true);
                       }}
+                      // onClick={() => {
+                      //   dispatch(removeRoom(room, rooms));
+                      // }}
                     >
-                      Remove
+                      Delete
                     </button>
                   </div>
                   {/* // DISPLAY TABLES */}
@@ -138,8 +145,10 @@ const TablesList = () => {
                         <p
                           className="text-[#dc2626] cursor-pointer"
                           onClick={() => {
-                            console.log("remove table");
-                            dispatch(removeTable(filteredTable, tables));
+                            console.log('remove table');
+                            setTableRemoval(true);
+                            setOverlay(true);
+                            // dispatch(removeTable(filteredTable, tables));
                           }}
                         >
                           <ClearIcon />
@@ -147,7 +156,7 @@ const TablesList = () => {
                       </div>
                     ))}
                   {/* SECTION : ADD TABLE */}
-                  <div className="flex">
+                  <div className="flex items-center gap-2">
                     {/* SHOW INPUT IF 'ADD TABLE' BUTOON WAS CLICKED */}
                     {activeRoom == `${room.name}` ? (
                       <>
@@ -155,6 +164,7 @@ const TablesList = () => {
                           onSubmit={(e) => {
                             handleTableSubmit(e, rooms, tables);
                           }}
+                          className="flex gap-2 items-center"
                         >
                           <label>Number of guests</label>
                           <select
@@ -164,6 +174,7 @@ const TablesList = () => {
                               // set number of guests
                               setnumberOfGusets(e.target.value);
                             }}
+                            className="p-2"
                           >
                             {/* CHOOSE NUMBER OF GUESTS */}
                             {Array.apply(0, Array(9)).map(function (x, i) {
@@ -186,14 +197,14 @@ const TablesList = () => {
                         <button
                           className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
                           onClick={() => {
-                            setActiveRoom("");
+                            setActiveRoom('');
 
-                            if (newRoomName != "") {
-                              console.log("add table");
+                            if (newRoomName != '') {
+                              console.log('add table');
                             }
                           }}
                         >
-                          cancel
+                          Cancel
                         </button>
                       </>
                     ) : (
@@ -202,9 +213,9 @@ const TablesList = () => {
                         data-key={room.name}
                         className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
                         onClick={(e) => {
-                          console.log(e.target.getAttribute("data-key"));
+                          console.log(e.target.getAttribute('data-key'));
 
-                          setActiveRoom(e.target.getAttribute("data-key"));
+                          setActiveRoom(e.target.getAttribute('data-key'));
                         }}
                       >
                         + Add table
@@ -218,7 +229,84 @@ const TablesList = () => {
             <CircularProgress color="secondary" />
           )}
         </section>
+        {roomRemoval && (
+          <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+            {/* <ModalAddEmployee
+                closeModal={() => setModalOpen(false)}
+                closeOverlay={() => setOverlay(false)}
+              /> */}
+            <main className="bg-white p-4 max-w-[400px] w-full">
+              <b className="">
+                Do you want to remove room and all tables inside?
+              </b>
+              <div className="flex justify-between gap-2">
+                {' '}
+                <button
+                  onClick={() => {
+                    // dispatch(removeRoom(room, rooms));
+                    setRoomRemoval(false);
+                    setOverlay(false);
+                  }}
+                  className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={() => {
+                    setRoomRemoval(false);
+                    setOverlay(false);
+                  }}
+                  // onClick={() => {
+                  //
+                  // }}
+                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                >
+                  Cancel
+                </button>
+              </div>
+            </main>
+          </div>
+        )}
+        {tableRemoval && (
+          <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
+            {/* <ModalAddEmployee
+                closeModal={() => setModalOpen(false)}
+                closeOverlay={() => setOverlay(false)}
+              /> */}
+            <main className="bg-white p-4 max-w-[400px] w-full">
+              <b className="">Do you want to remove this table?</b>
+              <div className="flex justify-between gap-2">
+                {' '}
+                <button
+                  onClick={() => {
+                    // dispatch(removeRoom(room, rooms));
+                    setRoomRemoval(false);
+                    setOverlay(false);
+                  }}
+                  className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={() => {
+                    setRoomRemoval(false);
+                    setOverlay(false);
+                  }}
+                  // onClick={() => {
+                  //
+                  // }}
+                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                >
+                  Cancel
+                </button>
+              </div>
+            </main>
+          </div>
+        )}
       </main>
+      {overlay && (
+        <div className="fixed z-40 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
+      )}
     </div>
   );
 };
