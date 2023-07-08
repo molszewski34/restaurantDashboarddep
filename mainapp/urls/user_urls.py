@@ -14,6 +14,7 @@ urlpatterns=[
     path('profile/', views.getUserProfile, name='profile'),
     path('employees/', views.get_employees, name="employees"),
     path('positions/', views.getPositions, name="positions"),
+    path('create-employee/', views.createEmployee, name="create-employee"),
     
 
     path('users/<str:pk>/', views.getUserById, name='user'),

@@ -42,11 +42,38 @@ def getUserProfile(request):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])
 def getUsers(request):
-    user = request.user
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
  
     return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+def createEmployee(request):
+    data = request.data 
+
+
+    if data['isCashier'] == "Yes" : data['isCashier'] = True
+    if data['isCashier'] == "No" : data['isCashier'] = False
+    if data['isDriver'] == "Yes" : data['isDriver'] = True
+    if data['isDriver'] == "No" : data['isDriver'] = False
+
+    newEmployee = Employee.objects.create(
+
+        
+            name = data['fullName'],
+            email = data['email'],
+            phone=data['phoneNumber'],
+            position = data['position'],
+            isCashier = data['isCashier'],
+            isDriver = data['isDriver'],
+
+        )
+
+    return Response("New Employee added")
+
+
 
 
 @api_view(['GET'])
@@ -54,8 +81,12 @@ def get_employees(request):
 
     employees = Employee.objects.all()
     serializer = EmployeeSerializer(employees, many=True)
-    print(serializer.data)
+ 
     return Response(serializer.data)
+
+
+
+
 
 
 @api_view(['GET'])
@@ -63,10 +94,9 @@ def getPositions(request):
     
 
     titles = Position.objects.all()
-    print(titles)
+
     serializer = PositionSerializer(titles, many=True)
-    print(serializer.data)
-    print('tuaj')
+
     return Response(serializer.data)
 
 
@@ -79,7 +109,7 @@ def createUser(request):
 
     try:
         data = request.data 
-        print(data)
+   
         user = User.objects.create(
             first_name = data['body']['name'],
             username = data['body']['email'],
@@ -87,13 +117,6 @@ def createUser(request):
             password = make_password(data['body']['password']),
         )
 
-        employee = Employee.objects.create(
-            user = user,
-            isActive=False,
-            position = data['body']['position'],
-            name = data['body']['name']
-
-        )
 
         serializer = UserSerializer(user, many=False)
         return Response(serializer.data)

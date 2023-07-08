@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import { FiMoreHorizontal } from "react-icons/fi";
 import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
 import CircularProgress from "@mui/material/CircularProgress";
 import { getEmployeePositions } from "../../../../actions/userActions";
+import { createNewEmployee } from "../../../../actions/userActions";
 
 const NewEmployee = () => {
   let dispatch = useDispatch();
@@ -46,12 +46,16 @@ const NewEmployee = () => {
 
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();
-    console.log(position);
-    console.log(fullName);
-    console.log(email);
-    console.log(phoneNumber);
-    console.log(isCashier);
-    console.log(isDriver);
+    dispatch(
+      createNewEmployee(
+        fullName,
+        email,
+        phoneNumber,
+        position,
+        isCashier,
+        isDriver
+      )
+    );
   };
 
   useEffect(() => {
@@ -80,25 +84,23 @@ const NewEmployee = () => {
                     <div className="lg:col-span-2">
                       <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
                         <div className="md:col-span-5">
-                          <label className="font-bold" for="full_name">
-                            Full Name
-                          </label>
+                          <label className="font-bold">Full Name</label>
                           <input
                             type="text"
                             name="full_name"
                             id="full_name"
-                            class="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
-                            // value=""
+                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                             placeholder="ex: John Doe"
                             required
+                            onChange={(e) => {
+                              setFullName(e.target.value);
+                            }}
                           />
                         </div>
 
                         <div className="md:col-span-3">
                           <div className="flex justify-between items-center">
-                            <label className="font-bold " for="email">
-                              Email Address
-                            </label>
+                            <label className="font-bold ">Email Address</label>
                             <span className="text-xs text-[#dc2626]">
                               {emailError}
                             </span>
@@ -117,9 +119,7 @@ const NewEmployee = () => {
                         </div>
 
                         <div className="md:col-span-2">
-                          <label className="font-bold" for="address">
-                            Phone
-                          </label>
+                          <label className="font-bold">Phone</label>
                           <input
                             type="text"
                             name="address"
