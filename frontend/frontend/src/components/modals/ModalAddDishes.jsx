@@ -45,7 +45,7 @@ const ModalAddDishes = ({
         Price: 
         <input type="text" placeholder='Price'/>
     </label>
-    <button>Confirm</button>
+    <button>Add</button>
 </section>
   
 

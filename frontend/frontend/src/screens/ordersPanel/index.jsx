@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
@@ -9,9 +9,7 @@ import {
   getOrderDetails,
   changeDishQty,
   addToOrder,
-  removeFromOrder,
   deleteFromOrder,
-  increaseDishQty,
   listOrders,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
@@ -19,23 +17,19 @@ import { listOrderDishes } from "../../actions/dishActions";
 import { updatePaymentMethod } from "../../actions/ordersActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
-import { BsCheckLg } from "react-icons/bs";
 
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
   let navigate = useNavigate();
-
-
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -49,11 +43,11 @@ const OrdersPanel = () => {
 
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-  console.log(dishes)
+  console.log(dishes);
   const categoriesList = useSelector((state) => state.categoriesList);
-  
+
   const { categoriesError, categoriesLoading, categories } = categoriesList;
-  console.log(categories)
+  console.log(categories);
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -80,7 +74,6 @@ const OrdersPanel = () => {
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
       );
       const dishToDisplay = dishToDisplayArr[0];
-     
 
       setDishNameToDisplay(dishToDisplay);
       setdishToChange(filteredDish);
@@ -144,8 +137,6 @@ const OrdersPanel = () => {
     //list orders after close old order
     dispatch(listOrders());
   };
-
-
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -372,10 +363,9 @@ const OrdersPanel = () => {
             {dishList.dishes
               .filter(
                 (filteredDishes) => filteredDishes.category == activeCategory
-               
-                )
-                .map((dishToDisplay) => (
-                  <button
+              )
+              .map((dishToDisplay) => (
+                <button
                   style={{
                     backgroundColor: `${activeCategoryColour}`,
                     borderColor: "white",
@@ -389,11 +379,11 @@ const OrdersPanel = () => {
                   className={`${
                     activeDish == dishToDisplay ? "border-b-4" : ""
                   } uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[60px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
-                  >
+                >
                   {dishToDisplay.title}
                 </button>
               ))}
-         
+
             {/* // ============= END SECTION: Display Dish From active Category ================ */}
           </section>
         </div>
