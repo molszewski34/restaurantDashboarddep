@@ -15,7 +15,8 @@ const CategoriesList = () => {
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
 
-  console.log(categoriesList);
+  // console.log(categoriesList);
+  // console.log(dishList);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -37,9 +38,11 @@ const CategoriesList = () => {
   const handleDishEditClick = (dishId) => {
     setSelectedDishId(dishId);
   };
-  const handleCategoryEditClick = (dishId) => {
-    setSelectedDishId(dishId);
+  const handleCategoryEditClick = (categoryId) => {
+    setCategoryName(categoryId);
   };
+
+  console.log(categoryName);
 
   return (
     // <div className="flex flex-col md:flex-row">
@@ -47,17 +50,17 @@ const CategoriesList = () => {
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
       <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
-        <h1 className="font-bold text-3xl py-1 border-b border-[#cbd5e1] mt-4">
-          Menu
-        </h1>
-        <div className="flex justify-between px-1 items-center border-b border-[#cbd5e1] my-2">
-          <header className="font-bold py-1  mt-4">Categories</header>
+        <div className="flex flex-col px-1 border-b border-[#cbd5e1] my-2">
+          <h1 className="font-bold py-1 border-b border-[#cbd5e1] mt-4">
+            Menu
+          </h1>
           <Link
-            className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9]"
+            className="border border-[#cbd5e1] place-self-start  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] rounded"
             to="/add-category"
           >
             + Add Category
           </Link>
+          <header className="font-bold py-1  mt-4">Categories</header>
         </div>
         <section className="mt-4 flex flex-col gap-3">
           <div className="grid grid-cols-4 ">
@@ -67,7 +70,7 @@ const CategoriesList = () => {
             <span className="text-sm font-bold  pl-2 place-self-start">
               Color
             </span>
-          </div>
+          </div>{' '}
           {/* <button className="flex flex-col w-full">
             <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
               <p className="uppercase text-sm text-[#0369a1]">Coffee</p>
@@ -75,7 +78,8 @@ const CategoriesList = () => {
             </div>
           </button> */}
           {categoriesList.categories.map((categoryItem) => {
-            const categoryEditing = categoryItem.id === selectedDishId;
+            // const categoryEditing = categoryItem.id === selectedDishId;
+            const categoryEditing = categoryItem.id === categoryName;
             return (
               <div key={categoryItem.id} className="flex flex-col w-full gap-2">
                 {/* <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white"> */}
@@ -280,7 +284,7 @@ const CategoriesList = () => {
                     <input
                       className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                       type="text"
-                      placeholder="Provide Name"
+                      placeholder="ex: Scrambled eggs"
                     />
                   </label>
                   <label
@@ -291,7 +295,7 @@ const CategoriesList = () => {
                     <input
                       className="border border-[#cbd5e1] py-1 pl-1 font-normal place-self"
                       type="text"
-                      placeholder="Provide price"
+                      placeholder="ex: 5"
                     />
                   </label>
                   <div className="flex justify-between items-center w-full">
