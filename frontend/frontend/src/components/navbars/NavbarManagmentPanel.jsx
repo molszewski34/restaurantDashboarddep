@@ -12,6 +12,7 @@ const NavbarManagmentPanel = () => {
   let navigate = useNavigate();
   const [activeTab, setActiveTab] = useState(0);
   const [buttonActive, setButtonActive] = useState(false); 
+  const [logoutPanel, setLogoutPanel] = useState(false)
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -32,8 +33,8 @@ const NavbarManagmentPanel = () => {
   // };
 
   return (
-    <main className='flex flex-col'>
-      <section className='flex justify-between shadow-md text-[#6b7280]'>
+    <main className='flex flex-col '>
+      <section className='flex justify-between shadow-md text-[#6b7280] relative'>
         {/* <div className="flex items-center gap-2">
         <RiArrowGoBackFill/>
             <span className='font-bold'>Back</span>
@@ -41,14 +42,18 @@ const NavbarManagmentPanel = () => {
         <button className="flex items-center justify-center text-center bg-primary-bg-color w-[40px]">
           <GiCook className='text-white text-2xl' />
         </button>
-        <div className="flex p-2 gap-1 items-center">
+        <div onClick={()=>{setLogoutPanel(!logoutPanel)}} className="flex p-2 gap-1 items-center cursor-pointer">
           <span className='flex gap-1 items-center text-sm'>
             <BiUserCircle className='text-2xl' /> {userInfo.first_name}
           </span>
           <span className='p-1'>
-            <MdOutlineKeyboardArrowDown className='font-bold' />
+            <MdOutlineKeyboardArrowDown  className='font-bold' />
           </span>
         </div>
+        {logoutPanel && (
+
+        <button className='text-sm bg-white py-1 px-3 absolute top-8 right-3 border rounded hover:font-bold w-20 hover:bg-primary-bg-color hover:text-white'>Logout</button>
+        )}
       </section>
       <section className='flex md:hidden w-screen justify-around text-xl  shadow-md text-[#6b7280]'>
              <NavLink to='/menu'

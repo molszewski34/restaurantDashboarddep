@@ -21,8 +21,7 @@ const Labor = () => {
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
-    // WADOMOŚĆ  GDY HASŁO NIE PASUJE (LUB LOGIN)
-    <div>Ups! Password and login doesn`t match!</div>
+    <div>Ups! Something went wrong</div>
   ) : (
     <main className=" flex flex-col items-center bg-secondary-bg-color relative h-screen">
       <NavbarTop />
@@ -54,14 +53,6 @@ const Labor = () => {
                     />
                   </label>
                 </div>
-                {/* <button>
-                  <AiFillEdit
-                    onClick={() => {
-                      setIsDisabled(!isDisabled);
-                    }}
-                    className="text-[#1e40af]"
-                  />
-                </button> */}
               </div>
 
               <div className="flex justify-between ">
@@ -82,9 +73,6 @@ const Labor = () => {
                     <option value="driver">Driver</option>
                   </select>
                 </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
               </div>
               <div className="flex justify-between ">
                 <div className="">
@@ -104,9 +92,6 @@ const Labor = () => {
                     </select>
                   </label>
                 </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
               </div>
               <div className="flex justify-between ">
                 <div className="">
@@ -125,9 +110,6 @@ const Labor = () => {
                     </select>
                   </label>
                 </div>
-                {/* <button>
-                  <AiFillEdit className="text-[#1e40af]" />{' '}
-                </button> */}
               </div>
               <div className="flex justify-between ">
                 <div className="">

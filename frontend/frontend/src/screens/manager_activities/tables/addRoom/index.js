@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import { listCategories } from '../../../../actions/categoriesActions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import { listCategories } from "../../../../actions/categoriesActions";
 const NewRoom = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { categoriesError, categoriesLoading, categories } = categoriesList;
@@ -13,9 +13,10 @@ const NewRoom = () => {
   useEffect(() => {
     dispatch(listCategories());
   }, []);
-  const [numOfTable, setNumOfTable] = useState('');
-  const [maxNumOfSits, setMaxNumOfSits] = useState('');
+  const [numOfTable, setNumOfTable] = useState("");
+  const [maxNumOfSits, setMaxNumOfSits] = useState("");
   const [tablesArray, setTablesArray] = useState([]);
+  const [newRoomName, setNewRoomName] = useState("");
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -23,14 +24,14 @@ const NewRoom = () => {
     setOverlay(false);
     const newTables = { input1: numOfTable, input2: maxNumOfSits };
     setTablesArray((prevTables) => [...prevTables, newTables]);
-    setNumOfTable('');
-    setMaxNumOfSits('');
+    setNumOfTable("");
+    setMaxNumOfSits("");
   };
 
   const handleInputChange = (e, setInputText) => {
     const inputValue = e.target.value;
     const numbersRegex = /^[0-9]*$/;
-    if (inputValue === '' || numbersRegex.test(inputValue)) {
+    if (inputValue === "" || numbersRegex.test(inputValue)) {
       setInputText(inputValue);
     }
   };
@@ -50,7 +51,7 @@ const NewRoom = () => {
       <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
         <section className="flex flex-col gap-3 my-4">
           <header className="font-bold py-1 border-b border-[#cbd5e1]">
-            Basics
+            Create new room
           </header>
           <div className="flex flex-col gap-2">
             <label
@@ -62,6 +63,9 @@ const NewRoom = () => {
                 className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                 type="text "
                 placeholder="Name of Room"
+                onChange={(e) => {
+                  setNewRoomName(e.target.value);
+                }}
               />
             </label>
           </div>
@@ -84,6 +88,7 @@ const NewRoom = () => {
               >
                 <span className="text-sm pl-2">{table.input1}</span>
                 <span className="text-sm pl-2">{table.input2}</span>
+
                 <button
                   className="place-self-end self-center mr-2 font-bold text-sm text-[#ef4444]"
                   onClick={() => handleRemoveTable(index)}

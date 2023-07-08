@@ -173,17 +173,7 @@ const PendingOrders = () => {
                             </span>
                           </div>
                           <div className="flex justify-between">
-                            <div className="font-bold text-right">
-                              {/* {item.isNew
-                                ? 'New'
-                                : item.isAccepted
-                                ? 'Accepted'
-                                : item.isReady
-                                ? 'Ready'
-                                : item.isComplete
-                                ? 'Complete'
-                                : ''} */}
-                            </div>
+                            <div className="font-bold text-right"></div>
                             <div className="font-bold text-right">{`${item.price} $`}</div>
                           </div>
                           {cancelIndex === item.id && item.isReady && (

@@ -13,6 +13,7 @@ urlpatterns=[
     path('create/', views.createUser, name='create'),
     path('profile/', views.getUserProfile, name='profile'),
     path('employees/', views.get_employees, name="employees"),
+    path('positions/', views.getPositions, name="positions"),
     
 
     path('users/<str:pk>/', views.getUserById, name='user'),
