@@ -52,28 +52,20 @@ def getUsers(request):
 @api_view(['POST'])
 def createEmployee(request):
     data = request.data 
-
-
     if data['isCashier'] == "Yes" : data['isCashier'] = True
     if data['isCashier'] == "No" : data['isCashier'] = False
     if data['isDriver'] == "Yes" : data['isDriver'] = True
     if data['isDriver'] == "No" : data['isDriver'] = False
-
     newEmployee = Employee.objects.create(
-
-        
+       
             name = data['fullName'],
             email = data['email'],
             phone=data['phoneNumber'],
             position = data['position'],
             isCashier = data['isCashier'],
             isDriver = data['isDriver'],
-
         )
-
     return Response("New Employee added")
-
-
 
 
 @api_view(['GET'])
@@ -85,6 +77,9 @@ def get_employees(request):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+def getEmployeeById(request,pk):
+    return
 
 
 
