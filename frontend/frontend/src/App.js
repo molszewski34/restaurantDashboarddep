@@ -51,7 +51,7 @@ function App() {
               <Route path="/tablesList" element={<TablesList />} />
               <Route path="/tablesList/:roomId" element={<EditRoom />} />
               <Route path="/employess/" element={<EmployeesList />} />
-              <Route path="/employess/:laborId" element={<EditEmployee />} />
+              <Route path="/employess/:id" element={<EditEmployee />} />
               <Route path="/employess/new-employee" element={<NewEmployee />} />
               <Route path="/menu" element={<CategoriesList />} />
               <Route path="/add-category" element={<NewCategory />} />

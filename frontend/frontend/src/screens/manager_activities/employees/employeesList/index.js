@@ -1,29 +1,32 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { getUsers } from '../../../../actions/userActions';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import { listCategories } from '../../../../actions/categoriesActions';
-import { listTables, listRooms } from '../../../../actions/tablesActions';
-import { listOrders } from '../../../../actions/ordersActions';
-import employees from './laborsData';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+
+import CircularProgress from "@mui/material/CircularProgress";
+import { getEmployees } from "../../../../actions/userActions";
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
+  const { error, loading, userInfo } = userLogin;
+  const listEmployees = useSelector((state) => state.employeeList);
   const {
-    error: userLoginError,
-    loading: userLoginLoading,
-    userInfo,
-  } = userLogin;
+    error: listEmployeesError,
+    loading: listEmployeesLoading,
+    employees,
+  } = listEmployees;
 
   useEffect(() => {
-    dispatch(getUsers());
+    dispatch(getEmployees());
   }, []);
 
-  return (
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
@@ -41,34 +44,38 @@ const EmployeesList = () => {
           <div className="grid grid-cols-3 md:grid-cols-8 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs ">
             <span>Full name</span>
             <span>Position</span>
-            <span className="hidden md:flex">Type of payment</span>
-            <span className="hidden md:flex">Payment</span>
+
             <span className="hidden md:flex">Cashier</span>
             <span className="hidden md:flex">Driver</span>
             <span>Phone</span>
             <span className="hidden md:flex">Email</span>
           </div>
-          {employees.employees.map((employee) => (
-            <Link
-              to={`/employess/${employee.id}`}
-              key={employee.id}
-              className="grid grid-cols-3 md:grid-cols-8 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
-            >
-              <span className="flex ">{employee.full_name}</span>
-              <span>{employee.job_position}</span>
-              <span className="hidden md:flex">{employee.payment_type}</span>
-              <span className="hidden md:flex">{employee.payment}</span>
-              <span className="hidden md:flex">
-                {employee.isCashier ? 'Yes' : ''}
-              </span>
-              <span className="hidden md:flex">
-                {employee.isDriver ? 'Yes' : ''}
-              </span>
+          {employees ? (
+            <div>
+              {employees.map((employee) => (
+                <Link
+                  to={`/employess/${employee.id}`}
+                  key={employee.id}
+                  className="grid grid-cols-3 md:grid-cols-8 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
+                >
+                  <span className="flex ">{employee.name}</span>
+                  <span>{employee.position}</span>
 
-              <span className="flex break-all">{employee.phone_number}</span>
-              <span className="  hidden md:flex">{employee.email}</span>
-            </Link>
-          ))}
+                  <span className="hidden md:flex">
+                    {employee.isCashier ? "Yes" : "No"}
+                  </span>
+                  <span className="hidden md:flex">
+                    {employee.isDriver ? "Yes" : "No"}
+                  </span>
+
+                  <span className="flex break-all">{employee.phone}</span>
+                  <span className="  hidden md:flex">{employee.email}</span>
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <CircularProgress color="secondary" />
+          )}
         </section>
       </main>
     </div>

@@ -155,9 +155,7 @@ const OrdersPanel = () => {
             <p>{userInfo.first_name}</p>
           </section>
           <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-[#e2e8f0] ">
-            {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
             <span className="col-start-1 col-end-3 font-bold pl-2">Name</span>
-            {/* <span className="w-half col-start-1 col-end-3 ">Name</span> */}
 
             <span className="text-center font-bold">QTY</span>
             <span className="text-center font-bold">EACH</span>
@@ -170,7 +168,6 @@ const OrdersPanel = () => {
                 <div
                   key={filteredDish.id}
                   className=" grid grid-cols-5 border-b-2 border-gray-light pb-1"
-                  // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
                     setDishToDisplay(filteredDish);
                   }}
@@ -331,8 +328,6 @@ const OrdersPanel = () => {
             </span>
           </section>
 
-          {/* <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2  "> */}
-          {/* <section className="grid auto-cols-[calc(30%_-_4rem)]  grid-flow-col gap-4 overflow-x-auto  "> */}
           <section className="relative flex items-center ">
             {/* // ============= SECTION: Display Categories ================ */}
             <div className="w-screen h-full  overflow-auto whitespace-nowrap scroll-smooth py-4 md:grid md:grid-cols-4 gap-y-2 bg-white">

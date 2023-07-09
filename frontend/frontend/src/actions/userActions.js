@@ -130,7 +130,6 @@ export const getEmployees = () => async (dispatch) => {
     });
 
     const { data } = await axios.get("/user/employees/");
-
     dispatch({
       type: EMPLOYEE_LIST_SUCCESS,
       payload: data,
