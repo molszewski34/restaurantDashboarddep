@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FaUser } from 'react-icons/fa';
+
 import { BiUserCircle } from 'react-icons/bi';
-import { MdTableBar, MdMenuBook, MdOutlineKeyboardArrowDown, MdFastfood } from 'react-icons/md';
-import { RiArrowGoBackFill } from 'react-icons/ri';
+import { MdTableBar, MdOutlineKeyboardArrowDown, MdFastfood } from 'react-icons/md';
+
 import { GiCook } from 'react-icons/gi';
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,8 +43,11 @@ const NavbarManagmentPanel = () => {
           <GiCook className='text-white text-2xl' />
         </button>
         <div onClick={()=>{setLogoutPanel(!logoutPanel)}} className="flex p-2 gap-1 items-center cursor-pointer">
+          {/* <span className='flex gap-1 items-center text-sm'>
+            <BiUserCircle className='text-2xl ' /> {userInfo.first_name}
+          </span> */}
           <span className='flex gap-1 items-center text-sm'>
-            <BiUserCircle className='text-2xl' /> {userInfo.first_name}
+            <BiUserCircle className='text-2xl ' /> {userInfo.first_name}
           </span>
           <span className='p-1'>
             <MdOutlineKeyboardArrowDown  className='font-bold' />
