@@ -24,6 +24,8 @@ import NewCategory from './screens/manager_activities/dishes/newCategory';
 import NewRoom from './screens/manager_activities/tables/addRoom';
 import NewEmployee from './screens/manager_activities/employees/newEmployee';
 import EditEmployee from './screens/manager_activities/employees/editEmployee';
+import PendingOrders from './screens/manager_activities/pending-orders';
+import LoginPin from './screens/loginPIN';
 
 function App() {
   return (
