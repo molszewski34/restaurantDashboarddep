@@ -1,3 +1,9 @@
 /venv/
 backend/restaurant/frontend/node_modules
 frontend/frontend/node_modules
+node_modules
+/env
+restaurant/_pycatch
+_pycatch
+/node_modules
+*__pycache__*
