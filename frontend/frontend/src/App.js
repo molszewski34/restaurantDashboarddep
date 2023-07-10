@@ -24,6 +24,8 @@ import NewCategory from "./screens/manager_activities/dishes/newCategory";
 import NewRoom from "./screens/manager_activities/tables/addRoom";
 import NewEmployee from "./screens/manager_activities/employees/newEmployee";
 import EditEmployee from "./screens/manager_activities/employees/editEmployee";
+import PendingOrders from "./screens/manager_activities/pending-orders";
+// import LoginPin from "./screens/loginPIN";
 
 function App() {
   return (
@@ -49,11 +51,13 @@ function App() {
               <Route path="/tablesList" element={<TablesList />} />
               <Route path="/tablesList/:roomId" element={<EditRoom />} />
               <Route path="/employess/" element={<EmployeesList />} />
-              <Route path="/employess/:laborId" element={<EditEmployee />} />
+              <Route path="/employess/:id" element={<EditEmployee />} />
               <Route path="/employess/new-employee" element={<NewEmployee />} />
               <Route path="/menu" element={<CategoriesList />} />
               <Route path="/add-category" element={<NewCategory />} />
               <Route path="/add-room" element={<NewRoom />} />
+              {/* <Route path="/login-pin" element={<LoginPin />} /> */}
+              <Route path="/pending-orders" element={<PendingOrders />} />
             </Routes>
           </main>
         </div>

@@ -1,27 +1,65 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import { FiMoreHorizontal } from "react-icons/fi";
 import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import data from "../employeesList/laborsData.json";
+import CircularProgress from "@mui/material/CircularProgress";
+import { getEmployeePositions } from "../../../../actions/userActions";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EditEmployee = () => {
-  const map = new Map();
-  data.employees.forEach((item) => map.set(item.job_position, item));
+  let dispatch = useDispatch();
+  let { id } = useParams();
+  let navigate = useNavigate();
 
-  const jobPosition = Array.from(map.values());
+  // first states of Name, email and phone number
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [fullName, setFullName] = useState("");
 
-  const { laborId } = useParams();
+  const [position, setPosition] = useState("Bartender");
+  const [isCashier, setIsCashier] = useState("Yes");
+  const [isDriver, setIsDriver] = useState("Yes");
 
-  const filteredEmployee = data.employees.filter(
-    (employee) => employee.id == laborId
-  );
+  // get employees positions
+  const positionsList = useSelector((state) => state.positionsList);
+  const { error, loading, positions } = positionsList;
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [overlay, setOverlay] = useState(false);
+  const handleInputChange = (e, setInputText) => {
+    const inputValue = e.target.value;
+    const numbersRegex = /^[0-9]*$/;
+    if (inputValue === "" || numbersRegex.test(inputValue)) {
+      setInputText(inputValue);
+    }
+  };
 
-  return (
+  const validateEmail = (e, setInputChange) => {
+    const inputValue = e.target.value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (inputValue === "" || emailRegex.test(inputValue)) {
+      setInputChange(inputValue);
+      setEmailError("");
+    } else {
+      setInputChange(inputValue);
+      setEmailError("Incorect email format");
+    }
+  };
+
+  const confirmEmployeeHandler = (e) => {
+    e.preventDefault();
+  };
+
+  useEffect(() => {
+    dispatch(getEmployeePositions());
+  }, []);
+
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
@@ -31,161 +69,131 @@ const EditEmployee = () => {
             Edit employee
           </header>
 
-          {filteredEmployee.map((employee) => (
-            <form className="flex flex-col gap-2">
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Full name
-                <input
-                  required
-                  className="border border-[#cbd5e1] py-1 pl-1 font-normal placeholder:bg-[#e0f2fe]"
-                  type="text "
-                  placeholder={employee.full_name}
-                />
-              </label>
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Position
-                <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
-                  <option value="">{employee.job_position}</option>
-                  {jobPosition.map((employee, index) => {
-                    return (
-                      <option key={index} value="">
-                        {employee.job_position}
-                        {/* {filtereJobPosition} */}
-                      </option>
-                    );
-                  })}
-                </select>
-              </label>
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Type of payment
-                <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
-                  <option value="">{employee.payment_type}</option>
-                  <option value="">Salary</option>
-                  <option value="">Hourly</option>
-                  <option value="">Monthly</option>
-                </select>
-              </label>
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Cashier
-                <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
-                  <option value="">{employee.isCashier ? "Yes" : "No"}</option>
-                  {employee.isCashier && <option value="">No</option>}
-                  {!employee.isCashier && <option value="">Yes</option>}
-                </select>
-              </label>
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Driver
-                <select className="font-normal p-1 bg-[#e0f2fe]" name="" id="">
-                  <option value="">{employee.isDriver ? "Yes" : "No"}</option>
-                  {employee.isDriver && <option value="">No</option>}
-                  {!employee.isDriver && <option value="">Yes</option>}
-                </select>
-              </label>
+          <form className="flex flex-col gap-2">
+            <div className="p-6 md:p-0 bg-gray-100 flex items-center ">
+              <div className="w-full md:max-w-[800px] ">
+                <div>
+                  <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                    <div className="lg:col-span-2">
+                      <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                        <div className="md:col-span-5">
+                          <label className="font-bold">Full Name</label>
+                          <input
+                            type="text"
+                            name="full_name"
+                            id="full_name"
+                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            placeholder="ex: John Doe"
+                            required
+                            onChange={(e) => {
+                              setFullName(e.target.value);
+                            }}
+                          />
+                        </div>
 
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Phone
-                <input
-                  required
-                  className="border border-[#cbd5e1] py-1 pl-1 font-normal bg-[#e0f2fe]"
-                  type="text "
-                  placeholder={employee.phone_number}
-                />
-              </label>
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                Email
-                <input
-                  required
-                  className="flex border border-[#cbd5e1] py-1 pl-1 font-normal bg-[#e0f2fe]"
-                  type="text "
-                  placeholder={employee.email}
-                />
-              </label>
-              <label
-                className="flex items-center gap-2 font-bold text-sm"
-                htmlFor=""
-              >
-                PIN
-                <input
-                  required
-                  className="flex border border-[#cbd5e1] py-1 pl-1 font-normal bg-[#e0f2fe]"
-                  type="text "
-                  placeholder={employee.pin}
-                />
-              </label>
-              <div className="flex gap-8">
-                <button
-                  type="submit"
-                  className="flex justify-center w-20 border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setModalOpen(true);
-                    setOverlay(true);
-                  }}
-                  className="flex  border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#ef4444] font-bold"
-                >
-                  Delete
-                </button>
+                        <div className="md:col-span-3">
+                          <div className="flex justify-between items-center">
+                            <label className="font-bold ">Email Address</label>
+                            <span className="text-xs text-[#dc2626]">
+                              {emailError}
+                            </span>
+                          </div>
+
+                          <input
+                            type="text"
+                            name="email"
+                            id="email"
+                            className={`h-10 border mt-1 rounded px-4 w-full bg-gray-50`}
+                            onChange={(e) => validateEmail(e, setEmail)}
+                            value={email}
+                            placeholder="ex: email@example.com"
+                            required
+                          />
+                        </div>
+
+                        <div className="md:col-span-2">
+                          <label className="font-bold">Phone</label>
+                          <input
+                            type="text"
+                            name="address"
+                            id="address"
+                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            onChange={(e) => {
+                              setPhoneNumber(e.target.value);
+
+                              handleInputChange(e, setPhoneNumber);
+                            }}
+                            value={phoneNumber}
+                            placeholder="ex: 1234567"
+                            required
+                          />
+                        </div>
+
+                        <div className="md:col-span-3">
+                          <label>Position</label>
+                          {positions ? (
+                            <select
+                              onChange={(e) => {
+                                setPosition(e.target.value);
+                              }}
+                              className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                            >
+                              {positions.map((position, i) => (
+                                <option key={i} value={position.title}>
+                                  {position.title}
+                                </option>
+                              ))}
+                            </select>
+                          ) : (
+                            <CircularProgress color="secondary" />
+                          )}
+                        </div>
+                        <div className="md:col-span-2">
+                          <label>Cashier</label>
+                          <select
+                            onChange={(e) => {
+                              setIsCashier(e.target.value);
+                            }}
+                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                          >
+                            <option className="md:col-span-2">Yes</option>
+                            <option className="md:col-span-2">No</option>
+                          </select>
+                        </div>
+                        <div className="md:col-span-2">
+                          <label>Driver</label>
+                          <select
+                            onChange={(e) => {
+                              setIsDriver(e.target.value);
+                            }}
+                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                          >
+                            <option className="md:col-span-2">Yes</option>
+                            <option className="md:col-span-2">No</option>
+                          </select>
+                        </div>
+
+                        <div className="md:col-span-5 text-right bg-blue-500">
+                          <div className="inline-flex items-end">
+                            <button
+                              onClick={(e) => {
+                                confirmEmployeeHandler(e);
+                              }}
+                              className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                            >
+                              Confirm
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </form>
-          ))}
+            </div>
+          </form>
         </section>
-        {modalOpen && (
-          <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            <main className="bg-white p-4 max-w-[400px] w-full">
-              <b className="">Do you want to remove emeployee from the list?</b>
-              <div className="flex justify-between gap-2">
-                {" "}
-                <button
-                  onClick={() => {
-                    setModalOpen(false);
-                    setOverlay(false);
-                  }}
-                  className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
-                >
-                  Confirm
-                </button>
-                <button
-                  onClick={() => {
-                    setModalOpen(false);
-                    setOverlay(false);
-                  }}
-                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
-                >
-                  Cancel
-                </button>
-              </div>
-            </main>
-          </div>
-        )}{" "}
       </main>
-      {overlay && (
-        <div className="fixed z-40 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>
-      )}
     </div>
   );
 };
