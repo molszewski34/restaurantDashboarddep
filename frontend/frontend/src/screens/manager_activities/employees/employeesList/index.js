@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 
-import CircularProgress from "@mui/material/CircularProgress";
-import { getEmployees } from "../../../../actions/userActions";
+import CircularProgress from '@mui/material/CircularProgress';
+import { getEmployees } from '../../../../actions/userActions';
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
@@ -40,8 +40,8 @@ const EmployeesList = () => {
         >
           + Add employee
         </Link>
-        <section className="flex flex-col">
-          <div className="grid grid-cols-3 md:grid-cols-8 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs ">
+        <section className="flex flex-col mt-4">
+          <div className="grid grid-cols-3 md:grid-cols-6 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs ">
             <span>Full name</span>
             <span>Position</span>
 
@@ -56,16 +56,16 @@ const EmployeesList = () => {
                 <Link
                   to={`/employess/${employee.id}`}
                   key={employee.id}
-                  className="grid grid-cols-3 md:grid-cols-8 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
+                  className="grid grid-cols-3 md:grid-cols-6 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
                 >
                   <span className="flex ">{employee.name}</span>
                   <span>{employee.position}</span>
 
                   <span className="hidden md:flex">
-                    {employee.isCashier ? "Yes" : "No"}
+                    {employee.isCashier ? 'Yes' : 'No'}
                   </span>
                   <span className="hidden md:flex">
-                    {employee.isDriver ? "Yes" : "No"}
+                    {employee.isDriver ? 'Yes' : 'No'}
                   </span>
 
                   <span className="flex break-all">{employee.phone}</span>

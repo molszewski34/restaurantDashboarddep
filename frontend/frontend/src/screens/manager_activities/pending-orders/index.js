@@ -1,11 +1,11 @@
-import React, { useRef, useState } from "react";
-import NavbarTop from "../../../components/navbars/NavbarTop";
-import data from "./data.json";
+import React, { useRef, useState } from 'react';
+import NavbarTop from '../../../components/navbars/NavbarTop';
+import data from './data.json';
 
 const PendingOrders = () => {
   const [cancelIndex, setCancelIndex] = useState(null);
 
-  const [selectedButton, setSelectedButton] = useState("all");
+  const [selectedButton, setSelectedButton] = useState('all');
 
   const timerRef = useRef();
 
@@ -43,56 +43,56 @@ const PendingOrders = () => {
         <div className="flex flex-col items-center gap-3 my-4 text-sm font-bold fixed top-10 right-0 mr-1 ">
           <button
             className={`rounded shadow p-2 bg-white border uppercase  ${
-              selectedButton === "all"
-                ? " border-[#64748b] border-2"
-                : "border-[#e2e8f0]"
+              selectedButton === 'all'
+                ? ' border-[#64748b] border-2'
+                : 'border-[#e2e8f0]'
             }`}
-            onClick={() => setSelectedButton("all")}
-            style={{ writingMode: "vertical-lr" }}
+            onClick={() => setSelectedButton('all')}
+            style={{ writingMode: 'vertical-lr' }}
           >
             All
           </button>
           <button
             className={`rounded shadow border p-2 bg-[#fca5a5] uppercase ${
-              selectedButton === "new"
-                ? " border-[#ef4444]  border-2"
-                : "border-[#fca5a5]"
+              selectedButton === 'new'
+                ? ' border-[#ef4444]  border-2'
+                : 'border-[#fca5a5]'
             }`}
-            onClick={() => setSelectedButton("new")}
-            style={{ writingMode: "vertical-lr" }}
+            onClick={() => setSelectedButton('new')}
+            style={{ writingMode: 'vertical-lr' }}
           >
             New
           </button>
           <button
             className={`rounded shadow p-2 bg-[#a5f3fc] border uppercase align-middle ${
-              selectedButton === "accepted"
-                ? "border-[#06b6d4]  border-2"
-                : "border-[#a5f3fc]"
+              selectedButton === 'accepted'
+                ? 'border-[#06b6d4]  border-2'
+                : 'border-[#a5f3fc]'
             }`}
-            onClick={() => setSelectedButton("accepted")}
-            style={{ writingMode: "vertical-lr" }}
+            onClick={() => setSelectedButton('accepted')}
+            style={{ writingMode: 'vertical-lr' }}
           >
             Accepted
           </button>
           <button
             className={`rounded shadow p-2 border bg-[#fde68a] uppercase ${
-              selectedButton === "ready"
-                ? "border-[#f59e0b]  border-2"
-                : "border-[#fde68a]"
+              selectedButton === 'ready'
+                ? 'border-[#f59e0b]  border-2'
+                : 'border-[#fde68a]'
             }`}
-            onClick={() => setSelectedButton("ready")}
-            style={{ writingMode: "vertical-lr" }}
+            onClick={() => setSelectedButton('ready')}
+            style={{ writingMode: 'vertical-lr' }}
           >
             Ready
           </button>
           <button
             className={`rounded shadow p-2 bg-[#e2e8f0] border uppercase align-baseline ${
-              selectedButton === "complete"
-                ? "border-[#64748b] border-2"
-                : "border-[#e2e8f0]"
+              selectedButton === 'complete'
+                ? 'border-[#64748b] border-2'
+                : 'border-[#e2e8f0]'
             }`}
-            onClick={() => setSelectedButton("complete")}
-            style={{ writingMode: "vertical-lr" }}
+            onClick={() => setSelectedButton('complete')}
+            style={{ writingMode: 'vertical-lr' }}
           >
             Completed
           </button>
@@ -101,15 +101,15 @@ const PendingOrders = () => {
           {data.orders.map((order) => {
             if (order.items.length > 0) {
               const filteredItems = order.items.filter((item) => {
-                if (selectedButton === "all") {
+                if (selectedButton === 'all') {
                   return !item.isComplete;
-                } else if (selectedButton === "new" && item.isNew) {
+                } else if (selectedButton === 'new' && item.isNew) {
                   return true;
-                } else if (selectedButton === "accepted" && item.isAccepted) {
+                } else if (selectedButton === 'accepted' && item.isAccepted) {
                   return true;
-                } else if (selectedButton === "ready" && item.isReady) {
+                } else if (selectedButton === 'ready' && item.isReady) {
                   return true;
-                } else if (selectedButton === "complete" && item.isComplete) {
+                } else if (selectedButton === 'complete' && item.isComplete) {
                   return true;
                 } else {
                   return false;
@@ -127,18 +127,25 @@ const PendingOrders = () => {
                 >
                   {order.items.length > 0 && (
                     <div className="flex justify-between gap-8 font-bold border border-[#d1d5db] p-2">
-                      <div className="flex flex-col">
+                      <div className="flex flex-col w-full">
                         <span className="text-xs">
                           {new Date(order.order_time).toLocaleTimeString([], {
-                            hour: "2-digit",
-                            minute: "2-digit",
+                            hour: '2-digit',
+                            minute: '2-digit',
                             hour12: false,
                           })}
                         </span>
                         <span className="text-sm">{`${order.room_name} #${order.table_number}`}</span>
                       </div>
-                      <div className="flex flex-col">
-                        <span className="text-xs">{order.waiter_name}</span>
+                      <div className="flex flex-col ">
+                        <span
+                          className={`text-xs ${
+                            order.waiter_name.length < 6 ? '' : 'break-all'
+                          }`}
+                        >
+                          {order.waiter_name}
+                        </span>
+
                         <span className="">{`#${order.order_number}`}</span>
                       </div>
                     </div>
@@ -156,14 +163,14 @@ const PendingOrders = () => {
                           onMouseUp={handleOnMouseUp}
                           className={`flex flex-col p-2 border-b-2 border-[#d1d5db] rounded-b-lg last:border-b-0 last:rounded-b-lg last:shadow-lg text-[#4b5563] cursor-pointer ${
                             item.isNew
-                              ? "bg-[#fca5a5]"
+                              ? 'bg-[#fca5a5]'
                               : item.isAccepted
-                              ? "bg-[#a5f3fc]"
+                              ? 'bg-[#a5f3fc]'
                               : item.isReady
-                              ? "bg-[#fde68a]"
+                              ? 'bg-[#fde68a]'
                               : item.isComplete
-                              ? "bg-[#e2e8f0]"
-                              : ""
+                              ? 'bg-[#e2e8f0]'
+                              : ''
                           }`}
                         >
                           <div className="flex items-center gap-2">
@@ -191,7 +198,7 @@ const PendingOrders = () => {
                 </div>
               );
             } else {
-              return "";
+              return '';
             }
           })}
         </div>

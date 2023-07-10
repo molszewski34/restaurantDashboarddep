@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import CircularProgress from "@mui/material/CircularProgress";
-import { getEmployeePositions } from "../../../../actions/userActions";
-import { createNewEmployee } from "../../../../actions/userActions";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import CircularProgress from '@mui/material/CircularProgress';
+import { getEmployeePositions } from '../../../../actions/userActions';
+import { createNewEmployee } from '../../../../actions/userActions';
 
 const NewEmployee = () => {
   let dispatch = useDispatch();
 
   // first states of Name, email and phone number
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [fullName, setFullName] = useState('');
 
-  const [position, setPosition] = useState("Bartender");
-  const [isCashier, setIsCashier] = useState("Yes");
-  const [isDriver, setIsDriver] = useState("Yes");
+  const [position, setPosition] = useState('Bartender');
+  const [isCashier, setIsCashier] = useState('Yes');
+  const [isDriver, setIsDriver] = useState('Yes');
 
   // get employees positions
   const positionsList = useSelector((state) => state.positionsList);
@@ -26,7 +26,7 @@ const NewEmployee = () => {
   const handleInputChange = (e, setInputText) => {
     const inputValue = e.target.value;
     const numbersRegex = /^[0-9]*$/;
-    if (inputValue === "" || numbersRegex.test(inputValue)) {
+    if (inputValue === '' || numbersRegex.test(inputValue)) {
       setInputText(inputValue);
     }
   };
@@ -35,12 +35,12 @@ const NewEmployee = () => {
     const inputValue = e.target.value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (inputValue === "" || emailRegex.test(inputValue)) {
+    if (inputValue === '' || emailRegex.test(inputValue)) {
       setInputChange(inputValue);
-      setEmailError("");
+      setEmailError('');
     } else {
       setInputChange(inputValue);
-      setEmailError("Incorect email format");
+      setEmailError('Incorect email format');
     }
   };
 
@@ -89,7 +89,7 @@ const NewEmployee = () => {
                             type="text"
                             name="full_name"
                             id="full_name"
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
                             placeholder="ex: John Doe"
                             required
                             onChange={(e) => {
@@ -110,7 +110,7 @@ const NewEmployee = () => {
                             type="text"
                             name="email"
                             id="email"
-                            className={`h-10 border mt-1 rounded px-4 w-full bg-gray-50`}
+                            className={`h-10 border mt-1 rounded pl-2 w-full bg-gray-50`}
                             onChange={(e) => validateEmail(e, setEmail)}
                             value={email}
                             placeholder="ex: email@example.com"
@@ -124,7 +124,7 @@ const NewEmployee = () => {
                             type="text"
                             name="address"
                             id="address"
-                            className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
+                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
                             onChange={(e) => {
                               setPhoneNumber(e.target.value);
 
@@ -143,7 +143,7 @@ const NewEmployee = () => {
                               onChange={(e) => {
                                 setPosition(e.target.value);
                               }}
-                              className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                              className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                             >
                               {positions.map((position, i) => (
                                 <option key={i} value={position.title}>
@@ -161,7 +161,7 @@ const NewEmployee = () => {
                             onChange={(e) => {
                               setIsCashier(e.target.value);
                             }}
-                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                           >
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
@@ -173,7 +173,7 @@ const NewEmployee = () => {
                             onChange={(e) => {
                               setIsDriver(e.target.value);
                             }}
-                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1"
+                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                           >
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
