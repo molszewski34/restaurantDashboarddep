@@ -50,12 +50,15 @@ def getUsers(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAdminUser])
 def createEmployee(request):
     data = request.data 
-    if data['isCashier'] == "Yes" : data['isCashier'] = True
-    if data['isCashier'] == "No" : data['isCashier'] = False
-    if data['isDriver'] == "Yes" : data['isDriver'] = True
-    if data['isDriver'] == "No" : data['isDriver'] = False
+    data['isCashier'] = bool(data['isCashier'] == "Yes")
+    data['isDriver'] = bool(data['isDriver'] == "Yes")  
+    # if data['isCashier'] == "Yes" : data['isCashier'] = True
+    # if data['isCashier'] == "No" : data['isCashier'] = False
+    # if data['isDriver'] == "Yes" : data['isDriver'] = True
+    # if data['isDriver'] == "No" : data['isDriver'] = False
     newEmployee = Employee.objects.create(
        
             name = data['fullName'],
@@ -79,7 +82,22 @@ def get_employees(request):
 
 @api_view(['GET'])
 def getEmployeeById(request,pk):
-    return
+    employee = Employee.objects.get(id=pk)
+    serializer = EmployeeSerializer(employee, many=False)
+
+    return Response(serializer.data)
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def editEmployee(request,pk):
+    
+    data = request.data 
+    user = request.user
+    print("DATA: ",data)
+    print("USER: ",user)
+    return Response ("ok")
 
 
 

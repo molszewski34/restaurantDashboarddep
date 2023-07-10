@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import CircularProgress from '@mui/material/CircularProgress';
-import { getEmployeePositions } from '../../../../actions/userActions';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import CircularProgress from "@mui/material/CircularProgress";
+import { getEmployeePositions } from "../../../../actions/userActions";
+import { getEmployeeById } from "../../../../actions/userActions";
+import { editEmployee } from "../../../../actions/userActions";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const EditEmployee = () => {
   let dispatch = useDispatch();
@@ -13,23 +15,31 @@ const EditEmployee = () => {
   let navigate = useNavigate();
 
   // first states of Name, email and phone number
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [fullName, setFullName] = useState("");
 
-  const [position, setPosition] = useState('Bartender');
-  const [isCashier, setIsCashier] = useState('Yes');
-  const [isDriver, setIsDriver] = useState('Yes');
+  const [position, setPosition] = useState("Bartender");
+  const [isCashier, setIsCashier] = useState("Yes");
+  const [isDriver, setIsDriver] = useState("Yes");
 
   // get employees positions
   const positionsList = useSelector((state) => state.positionsList);
   const { error, loading, positions } = positionsList;
 
+  // get employee Details
+  const employeeDetails = useSelector((state) => state.employeeDetails);
+  const {
+    error: errorEmployeeDetails,
+    loading: loadingEmployeeDetails,
+    employee,
+  } = employeeDetails;
+
   const handleInputChange = (e, setInputText) => {
     const inputValue = e.target.value;
     const numbersRegex = /^[0-9]*$/;
-    if (inputValue === '' || numbersRegex.test(inputValue)) {
+    if (inputValue === "" || numbersRegex.test(inputValue)) {
       setInputText(inputValue);
     }
   };
@@ -38,21 +48,35 @@ const EditEmployee = () => {
     const inputValue = e.target.value;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (inputValue === '' || emailRegex.test(inputValue)) {
+    if (inputValue === "" || emailRegex.test(inputValue)) {
       setInputChange(inputValue);
-      setEmailError('');
+      setEmailError("");
     } else {
       setInputChange(inputValue);
-      setEmailError('Incorect email format');
+      setEmailError("Incorect email format");
     }
   };
 
+  console.log(employee);
+
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();
+    dispatch(
+      editEmployee(
+        id,
+        fullName,
+        email,
+        phoneNumber,
+        position,
+        isCashier,
+        isDriver
+      )
+    );
   };
 
   useEffect(() => {
     dispatch(getEmployeePositions());
+    dispatch(getEmployeeById(id));
   }, []);
 
   return loading ? (
@@ -83,7 +107,7 @@ const EditEmployee = () => {
                             name="full_name"
                             id="full_name"
                             className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
-                            placeholder="ex: John Doe"
+                            placeholder={employee.name}
                             required
                             onChange={(e) => {
                               setFullName(e.target.value);
@@ -106,7 +130,7 @@ const EditEmployee = () => {
                             className={`h-10 border mt-1 rounded pl-2 w-full bg-gray-50`}
                             onChange={(e) => validateEmail(e, setEmail)}
                             value={email}
-                            placeholder="ex: email@example.com"
+                            placeholder={employee.email}
                             required
                           />
                         </div>
@@ -124,13 +148,13 @@ const EditEmployee = () => {
                               handleInputChange(e, setPhoneNumber);
                             }}
                             value={phoneNumber}
-                            placeholder="ex: 1234567"
+                            placeholder={employee.phone}
                             required
                           />
                         </div>
 
                         <div className="md:col-span-3">
-                          <label>Position</label>
+                          <label>Actual position : {employee.position}</label>
                           {positions ? (
                             <select
                               onChange={(e) => {
@@ -149,13 +173,16 @@ const EditEmployee = () => {
                           )}
                         </div>
                         <div className="md:col-span-2">
-                          <label>Cashier</label>
+                          <label>Cashier </label>
                           <select
                             onChange={(e) => {
                               setIsCashier(e.target.value);
                             }}
                             className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                           >
+                            <option className="md:col-span-2">
+                              Don`t change
+                            </option>
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
                           </select>
@@ -168,6 +195,9 @@ const EditEmployee = () => {
                             }}
                             className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                           >
+                            <option className="md:col-span-2">
+                              Don`t change
+                            </option>
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
                           </select>
@@ -175,9 +205,6 @@ const EditEmployee = () => {
 
                         <div className="md:col-span-5 text-right bg-blue-500">
                           <div className="flex justify-between">
-                            <button className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#dd4f3cf3] font-bold">
-                              Delete
-                            </button>
                             <button
                               onClick={(e) => {
                                 confirmEmployeeHandler(e);
