@@ -181,8 +181,8 @@ export const getEmployeeById = (id) => async (dispatch) => {
 export const editEmployee =
   (id, fullName, email, phoneNumber, position, isCashier, isDriver) =>
   async (dispatch) => {
-    console.log(id);
     try {
+      //Get user info from local storage
       let userInfo = JSON.parse(localStorage.userInfo);
       const config = {
         headers: {
@@ -190,9 +190,8 @@ export const editEmployee =
           Authorization: "Bearer " + String(userInfo.access),
         },
       };
-
+      // data sent to the backend
       const body = {
-        id: id,
         name: fullName,
         email: email,
         phone: phoneNumber,

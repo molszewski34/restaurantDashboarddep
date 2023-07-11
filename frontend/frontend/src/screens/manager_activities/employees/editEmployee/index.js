@@ -20,9 +20,9 @@ const EditEmployee = () => {
   const [emailError, setEmailError] = useState("");
   const [fullName, setFullName] = useState("");
 
-  const [position, setPosition] = useState("Bartender");
-  const [isCashier, setIsCashier] = useState("Yes");
-  const [isDriver, setIsDriver] = useState("Yes");
+  const [position, setPosition] = useState("");
+  const [isCashier, setIsCashier] = useState("");
+  const [isDriver, setIsDriver] = useState("");
 
   // get employees positions
   const positionsList = useSelector((state) => state.positionsList);
@@ -162,6 +162,8 @@ const EditEmployee = () => {
                               }}
                               className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                             >
+                              {" "}
+                              <option value=""></option>
                               {positions.map((position, i) => (
                                 <option key={i} value={position.title}>
                                   {position.title}
@@ -180,9 +182,7 @@ const EditEmployee = () => {
                             }}
                             className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                           >
-                            <option className="md:col-span-2">
-                              Don`t change
-                            </option>
+                            <option className="md:col-span-2"></option>
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
                           </select>
@@ -195,9 +195,7 @@ const EditEmployee = () => {
                             }}
                             className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                           >
-                            <option className="md:col-span-2">
-                              Don`t change
-                            </option>
+                            <option className="md:col-span-2"></option>
                             <option className="md:col-span-2">Yes</option>
                             <option className="md:col-span-2">No</option>
                           </select>
