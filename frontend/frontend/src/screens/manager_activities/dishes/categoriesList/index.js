@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import { RiDeleteBin6Line } from 'react-icons/ri';
-import { AiFillEdit } from 'react-icons/ai';
-import { GiConfirmed } from 'react-icons/gi';
-import { listDishes } from '../../../../actions/dishActions';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import { listCategories } from '../../../../actions/categoriesActions';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import { listDishes } from "../../../../actions/dishActions";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import { listCategories } from "../../../../actions/categoriesActions";
+import { Link } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import { addDishToMenu } from "../../../../actions/dishActions";
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
-  const { categoriesError, categoriesLoading, categories } = categoriesList;
+  const { error, loading, categories } = categoriesList;
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-
-  // console.log(categoriesList);
-  // console.log(dishList);
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -27,9 +22,16 @@ const CategoriesList = () => {
   const [addProductModal, setAddProductModal] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [openColorPicker, setOpenColorPicker] = useState(false);
-  const [selectedColor, setSelectedColor] = useState('');
+  const [selectedColor, setSelectedColor] = useState("");
   const [selectedDishId, setSelectedDishId] = useState(null);
   const [categoryName, setCategoryName] = useState(null);
+
+  // INITIAL STATE OF CATEGORY ID
+  const [categoryId, setCategoryId] = useState(null);
+
+  // INITIAL NAME AND PRICE VALUES (ADD DISH)
+  const [newDishName, setNewDishName] = useState("");
+  const [dishPrice, setDishPrice] = useState("");
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -42,10 +44,16 @@ const CategoriesList = () => {
     setCategoryName(categoryId);
   };
 
-  console.log(categoryName);
+  // A FUNCTION THAT ADDS A NEW DISH TO MENU
+  const addNewDish = () => {
+    dispatch(addDishToMenu(categoryName, newDishName, dishPrice));
+  };
 
-  return (
-    // <div className="flex flex-col md:flex-row">
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
@@ -70,19 +78,11 @@ const CategoriesList = () => {
             <span className="text-sm font-bold  pl-2 place-self-start">
               Color
             </span>
-          </div>{' '}
-          {/* <button className="flex flex-col w-full">
-            <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
-              <p className="uppercase text-sm text-[#0369a1]">Coffee</p>
-              <FiMoreHorizontal />
-            </div>
-          </button> */}
+          </div>{" "}
           {categoriesList.categories.map((categoryItem) => {
-            // const categoryEditing = categoryItem.id === selectedDishId;
             const categoryEditing = categoryItem.id === categoryName;
             return (
               <div key={categoryItem.id} className="flex flex-col w-full gap-2">
-                {/* <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white"> */}
                 <div className="grid grid-cols-4 items-center  px-2 bg-[#f1f5f9] py-2 border-b border-white rounded">
                   <p className="uppercase text-sm text-[#6b7280] font-bold">
                     {categoryItem.title}
@@ -104,7 +104,6 @@ const CategoriesList = () => {
                     }}
                     className="flex place-self-end self-center text-[#0369a1] text-xs  shadowed px-2 py-1 font-bold hover:underline"
                   >
-                    {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
                     Delete
                   </button>
                 </div>
@@ -121,7 +120,7 @@ const CategoriesList = () => {
                         key={categoryItem.id}
                         style={{
                           backgroundColor:
-                            selectedColor === ''
+                            selectedColor === ""
                               ? categoryItem.colour
                               : selectedColor,
                         }}
@@ -167,7 +166,7 @@ const CategoriesList = () => {
                           className="grid grid-cols-4 items-center  text-sm "
                           style={{
                             backgroundColor:
-                              index % 2 === 1 ? 'white' : '#f1f5f9',
+                              index % 2 === 1 ? "white" : "#f1f5f9",
                           }}
                         >
                           <span className="pl-2 text-[#0369a1] cursor-pointer">
@@ -182,14 +181,7 @@ const CategoriesList = () => {
                           >
                             Edit
                           </button>
-                          <button
-                            // onClick={() => {
-                            //   setModalOpen(true);
-                            //   setOverlay(true);
-                            // }}
-                            className="flex items-center justify-center place-self-end self-center text-[#0369a1] text-xs shadowed px-2 py-1 font-bold hover:underline"
-                          >
-                            {/* <RiDeleteBin6Line className="text-[#ef4444] text-lg" /> */}
+                          <button className="flex items-center justify-center place-self-end self-center text-[#0369a1] text-xs shadowed px-2 py-1 font-bold hover:underline">
                             Remove
                           </button>
 
@@ -223,6 +215,7 @@ const CategoriesList = () => {
                     setAddProductModal(true);
                     setOverlay(true);
                     setCategoryName(categoryItem.title);
+                    setCategoryId(categoryItem.id);
                   }}
                   className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] place-self-start"
                 >
@@ -234,16 +227,12 @@ const CategoriesList = () => {
         </section>
         {modalOpen && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            {/* <ModalAddEmployee
-                closeModal={() => setModalOpen(false)}
-                closeOverlay={() => setOverlay(false)}
-              /> */}
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">
                 Do you want to delete room and all items inside?
               </b>
               <div className="flex justify-between gap-2">
-                {' '}
+                {" "}
                 <button
                   onClick={() => {
                     setModalOpen(false);
@@ -265,13 +254,10 @@ const CategoriesList = () => {
               </div>
             </main>
           </div>
-        )}{' '}
+        )}{" "}
+        {/* ================ ADD NEW DISH MODAL START ================ */}
         {addProductModal && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            {/* <ModalAddEmployee
-                closeModal={() => setModalOpen(false)}
-                closeOverlay={() => setOverlay(false)}
-              /> */}
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">Adding new product to {categoryName} </b>
               <div className="flex justify-between gap-2">
@@ -285,6 +271,9 @@ const CategoriesList = () => {
                       className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                       type="text"
                       placeholder="ex: Scrambled eggs"
+                      onChange={(e) => {
+                        setNewDishName(e.target.value);
+                      }}
                     />
                   </label>
                   <label
@@ -296,6 +285,9 @@ const CategoriesList = () => {
                       className="border border-[#cbd5e1] py-1 pl-1 font-normal place-self"
                       type="text"
                       placeholder="ex: 5"
+                      onChange={(e) => {
+                        setDishPrice(e.target.value);
+                      }}
                     />
                   </label>
                   <div className="flex justify-between items-center w-full">
@@ -305,6 +297,9 @@ const CategoriesList = () => {
                         setOverlay(false);
                       }}
                       className="border w-[110px] border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                      onClickCapture={() => {
+                        addNewDish();
+                      }}
                     >
                       + Add
                     </button>
@@ -323,6 +318,7 @@ const CategoriesList = () => {
             </main>
           </div>
         )}
+        {/* ================ ADD NEW DISH MODAL END ================ */}
       </main>
       {overlay && (
         <div className="fixed z-40 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>

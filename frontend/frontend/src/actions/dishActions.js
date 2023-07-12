@@ -55,35 +55,29 @@ export const listOrderDishes = (id) => async (dispatch) => {
 };
 
 export const addDishToMenu =
-  (category, categoryId, dishName, dishPrice, dishes) => async (dispatch) => {
-    const dishData = {
-      id: dishes.length,
-      category: categoryId,
-      title: dishName,
-      price: dishPrice,
-      countInStock: 100,
-    };
-
+  (category, dishName, dishPrice) => async (dispatch) => {
     try {
-      dispatch({
-        type: ADD_DISH_TO_MENU,
-        payload: {
-          dishData,
-          dishes,
-        },
-      });
-
       const config = {
         headers: {
           "Content-type": "application/json",
         },
         body: {
-          category: category,
-          title: dishName,
-          price: dishPrice,
+          category: category, //categoryName
+          title: dishName, //dishName
+          price: dishPrice, //dishPrice
         },
       };
-      const { data } = await axios.post("/dishes/add-dish", config);
+      const data = await axios
+        .post("/dishes/add-dish", config)
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, display OK alert
+            alert("Add new dish status: OK");
+            dispatch(listDishes());
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: ADD_DISH_TO_MENU_FAIL,
@@ -97,9 +91,6 @@ export const addDishToMenu =
 
 export const removeDishFromMenu =
   (dishes, filteredDish) => async (dispatch) => {
-    console.log("Dishes: ", dishes);
-    console.log("Filtered dish: ", filteredDish);
-
     const dishesAfterRemove = dishes.filter((el) => el.id != filteredDish.id);
 
     try {

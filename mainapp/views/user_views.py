@@ -94,13 +94,17 @@ def getEmployeeById(request,pk):
 def editEmployee(request,pk):
     
     data = request.data 
+
     employee = Employee.objects.get(id=pk)
     print(employee.id)
+    
+
     for key, value in data.items():
-        
+            
         if len(value) > 0:
+              
             setattr(employee, key, value)
-                 
+
     employee.save()
   
     return Response ("ok")

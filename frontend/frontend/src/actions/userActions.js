@@ -179,8 +179,7 @@ export const getEmployeeById = (id) => async (dispatch) => {
 };
 
 export const editEmployee =
-  (id, fullName, email, phoneNumber, position, isCashier, isDriver) =>
-  async (dispatch) => {
+  (id, fullName, email, phoneNumber, position) => async (dispatch) => {
     try {
       //Get user info from local storage
       let userInfo = JSON.parse(localStorage.userInfo);
@@ -196,15 +195,18 @@ export const editEmployee =
         email: email,
         phone: phoneNumber,
         position: position,
-        isCashier: isCashier,
-        isDriver: isDriver,
       };
 
-      const { data } = await axios.put(
-        `user/edit-employee/${id}`,
-        body,
-        config
-      );
+      const data = await axios
+        .put(`user/edit-employee/${id}`, body, config)
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, display OK alert
+            alert("Edit Employee status: OK");
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       alert(error);
     }

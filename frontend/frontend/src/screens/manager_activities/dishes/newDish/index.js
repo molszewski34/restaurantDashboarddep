@@ -1,19 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import { FiMoreHorizontal } from 'react-icons/fi';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import { listCategories } from '../../../../actions/categoriesActions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import { FiMoreHorizontal } from "react-icons/fi";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import { listCategories } from "../../../../actions/categoriesActions";
+import CircularProgress from "@mui/material/CircularProgress";
 const NewDish = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
-  const { categoriesError, categoriesLoading, categories } = categoriesList;
+  const { error, loading, categories } = categoriesList;
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(listCategories());
   }, []);
 
-  return (
-    // <div className="flex flex-col md:flex-row">
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
@@ -31,7 +35,6 @@ const NewDish = () => {
               <input
                 className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                 type="text "
-                // value={'Name of product'}
                 placeholder="Name of product"
               />
             </label>
@@ -45,7 +48,6 @@ const NewDish = () => {
               <input
                 className="border border-[#cbd5e1] py-1 pl-1 font-normal"
                 type="text "
-                // value={'Name of product'}
                 placeholder="0.00 $"
               />
             </label>

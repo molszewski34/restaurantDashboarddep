@@ -61,17 +61,7 @@ const EditEmployee = () => {
 
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();
-    dispatch(
-      editEmployee(
-        id,
-        fullName,
-        email,
-        phoneNumber,
-        position,
-        isCashier,
-        isDriver
-      )
-    );
+    dispatch(editEmployee(id, fullName, email, phoneNumber, position));
   };
 
   useEffect(() => {
@@ -174,33 +164,6 @@ const EditEmployee = () => {
                             <CircularProgress color="secondary" />
                           )}
                         </div>
-                        <div className="md:col-span-2">
-                          <label>Cashier </label>
-                          <select
-                            onChange={(e) => {
-                              setIsCashier(e.target.value);
-                            }}
-                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
-                          >
-                            <option className="md:col-span-2"></option>
-                            <option className="md:col-span-2">Yes</option>
-                            <option className="md:col-span-2">No</option>
-                          </select>
-                        </div>
-                        <div className="md:col-span-2">
-                          <label>Driver</label>
-                          <select
-                            onChange={(e) => {
-                              setIsDriver(e.target.value);
-                            }}
-                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
-                          >
-                            <option className="md:col-span-2"></option>
-                            <option className="md:col-span-2">Yes</option>
-                            <option className="md:col-span-2">No</option>
-                          </select>
-                        </div>
-
                         <div className="md:col-span-5 text-right bg-blue-500">
                           <div className="flex justify-between">
                             <button

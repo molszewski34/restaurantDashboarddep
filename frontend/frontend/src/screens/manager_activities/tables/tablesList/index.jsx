@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 
-import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import CircularProgress from '@mui/material/CircularProgress';
-import { listTables, listRooms } from '../../../../actions/tablesActions';
-import { createRoom } from '../../../../actions/roomsActions';
-import { createNewTable, removeTable } from '../../../../actions/tablesActions';
-import { removeRoom } from '../../../../actions/roomsActions';
+import { useDispatch, useSelector } from "react-redux";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import CircularProgress from "@mui/material/CircularProgress";
+import { listTables, listRooms } from "../../../../actions/tablesActions";
+import { createRoom } from "../../../../actions/roomsActions";
+import { createNewTable, removeTable } from "../../../../actions/tablesActions";
+import { removeRoom } from "../../../../actions/roomsActions";
 
-import ClearIcon from '@mui/icons-material/Clear';
+import ClearIcon from "@mui/icons-material/Clear";
 
 const TablesList = () => {
   const roomsList = useSelector((state) => state.roomsList);
@@ -21,9 +21,9 @@ const TablesList = () => {
     tables,
   } = tableList;
 
-  const [newRoomName, setNewRoomName] = useState('');
+  const [newRoomName, setNewRoomName] = useState("");
   const [addRoomIsActive, setAddRoomIsActive] = useState(false);
-  const [activeRoom, setActiveRoom] = useState('');
+  const [activeRoom, setActiveRoom] = useState("");
   const [numberOfGusets, setnumberOfGusets] = useState(1);
   const [roomRemoval, setRoomRemoval] = useState(false);
   const [tableRemoval, setTableRemoval] = useState(false);
@@ -75,12 +75,12 @@ const TablesList = () => {
             onClick={() => {
               setAddRoomIsActive(!addRoomIsActive);
               if (addRoomIsActive) {
-                if (newRoomName != '') {
+                if (newRoomName != "") {
                   dispatch(createRoom(newRoomName, rooms));
                   setTimeout(() => {
                     window.scrollTo({
                       top: document.body.scrollHeight,
-                      behavior: 'smooth',
+                      behavior: "smooth",
                     });
                   }, 500);
                 } else {
@@ -89,7 +89,7 @@ const TablesList = () => {
               }
             }}
           >
-            {addRoomIsActive ? '+ Add' : '+ Add room'}
+            {addRoomIsActive ? "+ Add" : "+ Add room"}
           </button>
         </div>
 
@@ -102,7 +102,7 @@ const TablesList = () => {
           {/*  */}
           {roomsList ? (
             <>
-              {' '}
+              {" "}
               {rooms.map((room) => (
                 //  DISPLAY ROOM NAMES
                 <div key={room.id} className="flex flex-col ">
@@ -145,7 +145,7 @@ const TablesList = () => {
                         <p
                           className="text-[#dc2626] cursor-pointer"
                           onClick={() => {
-                            console.log('remove table');
+                            console.log("remove table");
                             setTableRemoval(true);
                             setOverlay(true);
                             // dispatch(removeTable(filteredTable, tables));
@@ -197,10 +197,10 @@ const TablesList = () => {
                         <button
                           className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
                           onClick={() => {
-                            setActiveRoom('');
+                            setActiveRoom("");
 
-                            if (newRoomName != '') {
-                              console.log('add table');
+                            if (newRoomName != "") {
+                              console.log("add table");
                             }
                           }}
                         >
@@ -213,9 +213,9 @@ const TablesList = () => {
                         data-key={room.name}
                         className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
                         onClick={(e) => {
-                          console.log(e.target.getAttribute('data-key'));
+                          console.log(e.target.getAttribute("data-key"));
 
-                          setActiveRoom(e.target.getAttribute('data-key'));
+                          setActiveRoom(e.target.getAttribute("data-key"));
                         }}
                       >
                         + Add table
@@ -240,7 +240,7 @@ const TablesList = () => {
                 Do you want to remove room and all tables inside?
               </b>
               <div className="flex justify-between gap-2">
-                {' '}
+                {" "}
                 <button
                   onClick={() => {
                     // dispatch(removeRoom(room, rooms));
@@ -276,7 +276,7 @@ const TablesList = () => {
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">Do you want to remove this table?</b>
               <div className="flex justify-between gap-2">
-                {' '}
+                {" "}
                 <button
                   onClick={() => {
                     // dispatch(removeRoom(room, rooms));
