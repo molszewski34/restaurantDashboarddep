@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { batch, useDispatch, useSelector } from "react-redux";
 import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
 import { listDishes } from "../../../../actions/dishActions";
 import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
@@ -7,6 +7,8 @@ import { listCategories } from "../../../../actions/categoriesActions";
 import { Link } from "react-router-dom";
 import CircularProgress from "@mui/material/CircularProgress";
 import { addDishToMenu } from "../../../../actions/dishActions";
+import { removeDishFromMenu } from "../../../../actions/dishActions";
+import { createNewCategory } from "../../../../actions/categoriesActions";
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { error, loading, categories } = categoriesList;
@@ -21,10 +23,11 @@ const CategoriesList = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [addProductModal, setAddProductModal] = useState(false);
   const [overlay, setOverlay] = useState(false);
-  const [openColorPicker, setOpenColorPicker] = useState(false);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedDishId, setSelectedDishId] = useState(null);
-  const [categoryName, setCategoryName] = useState(null);
+
+  // ADD CATEGORY - INITIAL STATE OF VARIABLES
+  const [selectedColor, setSelectedColor] = useState("#0ca3ee");
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [openCategoryForm, setOpenCategoryForm] = useState(false);
 
   // INITIAL STATE OF CATEGORY ID
   const [categoryId, setCategoryId] = useState(null);
@@ -32,6 +35,8 @@ const CategoriesList = () => {
   // INITIAL NAME AND PRICE VALUES (ADD DISH)
   const [newDishName, setNewDishName] = useState("");
   const [dishPrice, setDishPrice] = useState("");
+  const [categoryName, setCategoryName] = useState(null);
+  const [selectedDishId, setSelectedDishId] = useState(null);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -49,6 +54,12 @@ const CategoriesList = () => {
     dispatch(addDishToMenu(categoryName, newDishName, dishPrice));
   };
 
+  // A FUNCTION THAT ADDS A NEW CATEGORY TO RESTAURANT
+  const addCategoryHandler = (e) => {
+    e.preventDefault();
+    dispatch(createNewCategory(newCategoryName, selectedColor));
+  };
+
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
@@ -64,10 +75,110 @@ const CategoriesList = () => {
           </h1>
           <Link
             className="border border-[#cbd5e1] place-self-start  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] rounded"
-            to="/add-category"
+            onClick={() => {
+              setOpenCategoryForm(!openCategoryForm);
+            }}
           >
             + Add Category
           </Link>
+
+          {/* =============   ADD CATEGORY FORM  ===============  */}
+          {openCategoryForm ? (
+            <form className="flex flex-col gap-2">
+              <div className="p-6 md:p-0 bg-gray-100 flex items-center ">
+                <div className="w-full md:max-w-[800px] ">
+                  <div>
+                    <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
+                      <div className="lg:col-span-2">
+                        <div className="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
+                          <div className="md:col-span-3">
+                            <label className="font-bold">Category name</label>
+                            <input
+                              type="text"
+                              name="full_name"
+                              id="full_name"
+                              className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
+                              required
+                              onChange={(e) => {
+                                setNewCategoryName(e.target.value);
+                              }}
+                            />
+                          </div>
+
+                          <div className="md:col-span-2">
+                            <label>Colour</label>
+
+                            {/* THIS MUST TO BE CHANGED TO LOOP BUT IT`S NOT FIRST NEED FIRGHT NOW */}
+                            <select
+                              onChange={(e) => {
+                                setSelectedColor(e.target.value);
+                              }}
+                              className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
+                            >
+                              <option
+                                className="md:col-span-2 bg-{#0ca3ee}"
+                                style={{ backgroundColor: "#0ca3ee" }}
+                              >
+                                #0ca3ee
+                              </option>
+                              <option
+                                className="md:col-span-2"
+                                style={{ backgroundColor: "#92E390" }}
+                              >
+                                #92E390
+                              </option>
+                              <option
+                                className="md:col-span-2"
+                                style={{ backgroundColor: "#fde798" }}
+                              >
+                                #fde798
+                              </option>
+                              <option
+                                className="md:col-span-2"
+                                style={{ backgroundColor: "#d9dfe4" }}
+                              >
+                                #d9dfe4
+                              </option>
+                              <option
+                                className="md:col-span-2"
+                                style={{ backgroundColor: "#107b1e" }}
+                              >
+                                #107b1e
+                              </option>
+                              <option
+                                className="md:col-span-2"
+                                style={{ backgroundColor: "#ebac15" }}
+                              >
+                                #ebac15
+                              </option>
+                            </select>
+                          </div>
+
+                          <div className="md:col-span-5 text-right bg-blue-500">
+                            <div className="inline-flex items-end">
+                              <button
+                                onClick={(e) => {
+                                  addCategoryHandler(e);
+                                }}
+                                className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                              >
+                                Confirm
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          ) : (
+            <></>
+          )}
+
+          {/* =============   ADD CATEGORY FORM ====== END  ===============  */}
+
           <header className="font-bold py-1  mt-4">Categories</header>
         </div>
         <section className="mt-4 flex flex-col gap-3">
@@ -107,49 +218,7 @@ const CategoriesList = () => {
                     Delete
                   </button>
                 </div>
-                {categoryEditing && (
-                  <div className="flex items-center gap-4 p-2 border border-[#e5e7eb] rounded">
-                    <input
-                      className="border uppercase border-[#cbd5e1] text-sm pl-1 place-self-start self-center py-1"
-                      type="text"
-                      placeholder={categoryItem.title}
-                    />
-                    <div className="relative ">
-                      <button
-                        className=" cursor-pointer w-6 h-6 grow flex "
-                        key={categoryItem.id}
-                        style={{
-                          backgroundColor:
-                            selectedColor === ""
-                              ? categoryItem.colour
-                              : selectedColor,
-                        }}
-                        onClick={() => {
-                          handleColorClick(categoryItem.colour);
-                          setOpenColorPicker(!openColorPicker);
-                        }}
-                      ></button>
-                      {openColorPicker && (
-                        <div className=" grid grid-cols-3 grid-flow-row gap-1 absolute top-0 left-10 border bg-white border-[#cbd5e1] p-1 w-24">
-                          {categories.map((category) => (
-                            <button
-                              className=" cursor-pointer w-6 h-6 grow flex"
-                              key={category.id}
-                              style={{ backgroundColor: category.colour }}
-                              onClick={() => {
-                                handleColorClick(category.colour);
-                                setOpenColorPicker(false);
-                              }}
-                            ></button>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                    <button className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] font-bold place-self-start self-center">
-                      Confirm
-                    </button>
-                  </div>
-                )}
+
                 <div className="grid grid-cols-1">
                   <div className="grid grid-cols-4 border-b border-[#cbd5e1]   py-1">
                     <span className="font-bold pl-2 text-sm">Name</span>
@@ -181,10 +250,17 @@ const CategoriesList = () => {
                           >
                             Edit
                           </button>
-                          <button className="flex items-center justify-center place-self-end self-center text-[#0369a1] text-xs shadowed px-2 py-1 font-bold hover:underline">
+                          <button
+                            className="flex items-center justify-center place-self-end self-center text-[#0369a1] text-xs shadowed px-2 py-1 font-bold hover:underline"
+                            onClick={() => {
+                              dispatch(
+                                removeDishFromMenu(dishes, filteredDish)
+                              );
+                            }}
+                          >
                             Remove
                           </button>
-
+                          {/* ===========  editor panel ============ */}
                           {dishEditing && (
                             <div className="col-start-1 col-end-5 flex gap-2 w-full mt-2 p-2 bg-gray-200">
                               <input
@@ -206,6 +282,7 @@ const CategoriesList = () => {
                               </button>
                             </div>
                           )}
+                          {/* ===========  editor panel == END ============ */}
                         </div>
                       );
                     })}
@@ -255,7 +332,7 @@ const CategoriesList = () => {
             </main>
           </div>
         )}{" "}
-        {/* ================ ADD NEW DISH MODAL START ================ */}
+        {/* ================ ADD NEW DISH MODAL ================ */}
         {addProductModal && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
             <main className="bg-white p-4 max-w-[400px] w-full">

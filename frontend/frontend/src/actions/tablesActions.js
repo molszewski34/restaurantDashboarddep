@@ -153,6 +153,7 @@ export const createNewTable =
     }
   };
 
+// ================= Remove table from restaurant ===========
 export const removeTable = (table, tables) => async (dispatch) => {
   const tablesAfterRemove = tables.filter((el) => el.id != table.id);
 
@@ -164,9 +165,18 @@ export const removeTable = (table, tables) => async (dispatch) => {
       },
     });
 
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
     // delete table - request
     const { data } = await axios
-      .delete(`orders/remove-table/${table.id}`)
+      .delete(`orders/remove-table/${table.id}`, config)
       .then(function (response) {
         if (response.status == 200) {
           alert("Table removed");
@@ -186,3 +196,5 @@ export const removeTable = (table, tables) => async (dispatch) => {
     });
   }
 };
+
+// ================= Remove table from restaurant ==== END ===========

@@ -100,6 +100,26 @@ export const removeDishFromMenu =
           dishesAfterRemove,
         },
       });
+
+      // ================= JWT Authorization data ===========
+      let userInfo = JSON.parse(localStorage.userInfo);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + String(userInfo.access),
+        },
+      };
+      const data = await axios
+        .delete(`/dishes/delete-dish/${filteredDish.id}`, config)
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, display OK alert
+            alert("Remove dish status: OK");
+            dispatch(listDishes());
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: REMOVE_DISH_FROM_MENU_FAIL,
@@ -109,15 +129,4 @@ export const removeDishFromMenu =
             : error.message,
       });
     }
-
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-
-    const { removedDish } = await axios.delete(
-      `/dishes/delete-dish/${filteredDish.id}`,
-      config
-    );
   };

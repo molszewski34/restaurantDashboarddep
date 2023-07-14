@@ -1,14 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
-import NavbarTop from '../../../components/navbars/NavbarTop';
-import { useDispatch, useSelector } from 'react-redux';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useNavigate } from 'react-router-dom';
-import ModalAddDishes from '../../../components/modals/ModalAddDishes';
-import ModalEditiDishes from '../../../components/modals/ModalEditDishes';
-import ModalAddCategory from '../../../components/modals/ModalAddCategory';
-import { AiFillEdit, AiFillDelete } from 'react-icons/ai';
-import { listCategories } from '../../../actions/categoriesActions';
-import { listDishes } from '../../../actions/dishActions';
+import { useState, useEffect, useRef } from "react";
+import NavbarTop from "../../../components/navbars/NavbarTop";
+import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
+import { useNavigate } from "react-router-dom";
+import ModalAddDishes from "../../../components/modals/ModalAddDishes";
+import ModalEditiDishes from "../../../components/modals/ModalEditDishes";
+import ModalAddCategory from "../../../components/modals/ModalAddCategory";
+import { AiFillEdit } from "react-icons/ai";
+import { listCategories } from "../../../actions/categoriesActions";
+import { listDishes } from "../../../actions/dishActions";
 
 const Labor = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,6 @@ const Labor = () => {
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
-    // WADOMOŚĆ  GDY HASŁO NIE PASUJE (LUB LOGIN)
     <div>Ups! Password and login doesn`t match!</div>
   ) : (
     <main className=" flex flex-col items-center bg-secondary-bg-color relative h-full">
@@ -54,7 +53,6 @@ const Labor = () => {
                 onClick={() => {
                   setNewDishModalOpen(true);
                   setOverlay(true);
-                  // setSelectedCategories(categoriesList);
                 }}
                 className="text-sm font-bold border-2 rounded-full py-1 px-3 bg-primary-bg-color text-white ml-2 my-2"
               >
@@ -72,17 +70,13 @@ const Labor = () => {
             </div>
 
             <select className="p-1" name="" id="">
-              <option value={'filter_category'}>
+              <option value={"filter_category"}>
                 <b>Filter Category</b>
               </option>
               {categoriesList.categories.map((categoryItem) => (
                 <option key={categoryItem.id} value={categoryItem.title}>
                   {categoryItem.title}
                 </option>
-                // <div className="">
-
-                //     {/* {categoryItem.title} */}
-                // </div>
               ))}
             </select>
           </section>
@@ -101,10 +95,6 @@ const Labor = () => {
                   className="grid grid-cols-4 p-1 border-b border-r border-l bg-white items-center"
                 >
                   <span>{dishList.title}</span>
-                  {/* {categories.map((category) => (
-                <span key={category.id}>{category.title}</span>
-              ))} */}
-
                   <span>{dishList.category}</span>
                   <span>{dishList.price}</span>
                   <span className="flex justify-center">

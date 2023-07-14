@@ -21,18 +21,23 @@ def getAllDishes(request):
 
 # Add dish category (only admin) 
 @api_view(['POST'])
-#@permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def createDishCategory(request):
     
+    # GETING DATA FROM FRONTEND
     data = request.data 
     categoryToAdd = data['title']
+    categoryColour = data['colour']
     
-    
+    # IF DISH CATEGORY ALREADY EXIST
     if DishCategory.objects.filter(title=str(categoryToAdd)).count()>0:
         return Response("This category already exist")
 
+
+# CREATE NEW CATEGORY IN DATABASE
     dishCategory = DishCategory.objects.create(
-        title = data['title']
+        title = categoryToAdd,
+        colour = categoryColour
     )
     serializer = DishCategorySerializer(dishCategory, many=False)
     
