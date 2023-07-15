@@ -305,6 +305,7 @@ const CategoriesList = () => {
             );
           })}
         </section>
+        {/* ===========  REMOVE CATEGORY PANEL  ============ */}
         {modalOpen && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
             <main className="bg-white p-4 max-w-[400px] w-full">
@@ -336,6 +337,7 @@ const CategoriesList = () => {
             </main>
           </div>
         )}{" "}
+        {/* ===========  REMOVE CATEGORY PANEL === EMD  ============ */}
         {/* ================ ADD NEW DISH MODAL ================ */}
         {addProductModal && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
