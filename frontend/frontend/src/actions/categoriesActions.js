@@ -62,3 +62,33 @@ export const createNewCategory = (categoryName, colour) => async (dispatch) => {
 };
 
 // ==============  CREATE NEW CATEGORY IN RESTAURANT === END ====================
+
+// ==============  REMOVE CATEGORY FROM RESTAURANT ====================
+
+export const removeCategory = (categoryId) => async (dispatch) => {
+  try {
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const data = await axios
+      .delete(`dishes/delete-category/${categoryId}`, config)
+      .then(function (response) {
+        if (response.status == 200) {
+          //if response is 200, alert 'status ok', dispatch - listCategories
+          alert("Create category status: OK");
+          dispatch(listCategories());
+        } else {
+          alert("Something went wrong, status code: ", response.status);
+        }
+      });
+  } catch (error) {
+    alert(error);
+  }
+};
+
+// ==============  REMOVE CATEGORY FROM RESTAURANT === END ====================

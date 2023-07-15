@@ -49,16 +49,20 @@ def createDishCategory(request):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])
 def getDishCategories(request):
-    print("działam")
+
     dishCategories = DishCategory.objects.all()
-    print(dishCategories)
+
     serializer = DishCategorySerializer(dishCategories, many=True)
-    print("po sera")
+  
     return Response(serializer.data)
+
+
+
+
 
 # Delete dish category (only admin) 
 @api_view(['DELETE'])
-#@permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def deleteDishCategory(request,pk):
     categoryToRemove = DishCategory.objects.get(id=pk)
     categoryToRemove.delete()
@@ -71,7 +75,7 @@ def deleteDishCategory(request,pk):
 #@permission_classes([IsAdminUser])
 def addDishToMenu(request):
     data = request.data
-    print(data)
+ 
     dishTitle = data['body']['title']
     dishCategory = data['body']['category']
     dishPrice = data['body']['price']

@@ -9,6 +9,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import { addDishToMenu } from "../../../../actions/dishActions";
 import { removeDishFromMenu } from "../../../../actions/dishActions";
 import { createNewCategory } from "../../../../actions/categoriesActions";
+import { removeCategory } from "../../../../actions/categoriesActions";
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { error, loading, categories } = categoriesList;
@@ -159,6 +160,7 @@ const CategoriesList = () => {
                               <button
                                 onClick={(e) => {
                                   addCategoryHandler(e);
+                                  setOpenCategoryForm(!openCategoryForm);
                                 }}
                                 className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
                               >
@@ -212,10 +214,11 @@ const CategoriesList = () => {
                     onClick={() => {
                       setModalOpen(true);
                       setOverlay(true);
+                      setCategoryId(categoryItem.id);
                     }}
                     className="flex place-self-end self-center text-[#0369a1] text-xs  shadowed px-2 py-1 font-bold hover:underline"
                   >
-                    Delete
+                    Delete category
                   </button>
                 </div>
 
@@ -312,6 +315,7 @@ const CategoriesList = () => {
                 {" "}
                 <button
                   onClick={() => {
+                    dispatch(removeCategory(categoryId));
                     setModalOpen(false);
                     setOverlay(false);
                   }}
