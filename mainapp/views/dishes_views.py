@@ -126,14 +126,34 @@ def getOrderedDishById(request,pk):
         })
 
 
+
+#REMOVE DISH FROM MENU
 @api_view(['DELETE'])
+@permission_classes([IsAdminUser])
 def deleteDish(request,pk):
     dishToDelete = Dish.objects.get(id=pk)
     dishToDelete.delete()
     return Response("Dish removed")
 
 
-        
+#EDIT EXISTING DISH IN MENU
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def editDish(request,pk):
+
+    data = request.data
+    
+    dishToEdit = Dish.objects.get(id=pk)
+    print(data)
+    for key, value in data.items():
+            
+        if len(value) > 0:
+              
+            setattr(dishToEdit, key, value)
+
+    dishToEdit.save()
+
+    return Response("Dish edited")   
 
 
    

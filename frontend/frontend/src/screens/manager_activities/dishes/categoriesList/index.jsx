@@ -10,6 +10,7 @@ import { addDishToMenu } from "../../../../actions/dishActions";
 import { removeDishFromMenu } from "../../../../actions/dishActions";
 import { createNewCategory } from "../../../../actions/categoriesActions";
 import { removeCategory } from "../../../../actions/categoriesActions";
+import { editDish } from "../../../../actions/dishActions";
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { error, loading, categories } = categoriesList;
@@ -33,19 +34,12 @@ const CategoriesList = () => {
   // INITIAL STATE OF CATEGORY ID
   const [categoryId, setCategoryId] = useState(null);
 
-  // INITIAL NAME AND PRICE VALUES (ADD DISH)
+  // INITIAL NAME AND PRICE VALUES (ADD DISH AND EDIT)
   const [newDishName, setNewDishName] = useState("");
   const [dishPrice, setDishPrice] = useState("");
   const [categoryName, setCategoryName] = useState(null);
   const [selectedDishId, setSelectedDishId] = useState(null);
 
-  const handleColorClick = (color) => {
-    setSelectedColor(color);
-  };
-
-  const handleDishEditClick = (dishId) => {
-    setSelectedDishId(dishId);
-  };
   const handleCategoryEditClick = (categoryId) => {
     setCategoryName(categoryId);
   };
@@ -248,7 +242,7 @@ const CategoriesList = () => {
                             {filteredDish.price}
                           </span>
                           <button
-                            onClick={() => handleDishEditClick(filteredDish.id)}
+                            onClick={() => setSelectedDishId(filteredDish.id)}
                             className="flex justify-center items-center w-8 h-8 text-[#0369a1] text-xs font-bold hover:underline "
                           >
                             Edit
@@ -263,29 +257,46 @@ const CategoriesList = () => {
                           >
                             Remove
                           </button>
-                          {/* ===========  editor panel ============ */}
+                          {/* ===========  EDIT DISH - editor panel ============ */}
                           {dishEditing && (
                             <div className="col-start-1 col-end-5 flex gap-2 w-full mt-2 p-2 bg-gray-200">
                               <input
                                 className="bg-[#e0f2fe] rounded p-1"
                                 type="text"
                                 placeholder={filteredDish.title}
+                                onChange={(e) => {
+                                  setNewDishName(e.target.value);
+                                }}
                               />
                               <input
                                 className="bg-[#e0f2fe]  rounded p-1"
                                 type="text"
                                 placeholder={filteredDish.price}
+                                onChange={(e) => {
+                                  setDishPrice(e.target.value);
+                                }}
                               />
 
                               <button
                                 className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] bg-white font-bold"
-                                onClick={() => setSelectedDishId(null)}
+                                onClick={() => {
+                                  console.log("Edytuje");
+                                  console.log();
+                                  dispatch(
+                                    editDish(
+                                      filteredDish.id,
+                                      newDishName,
+                                      dishPrice
+                                    )
+                                  );
+                                  setSelectedDishId(null);
+                                }}
                               >
                                 Confirm
                               </button>
                             </div>
                           )}
-                          {/* ===========  editor panel == END ============ */}
+                          {/* ===========  EDIT DISH - editor panel == END ============ */}
                         </div>
                       );
                     })}

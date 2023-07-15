@@ -89,6 +89,38 @@ export const addDishToMenu =
     }
   };
 
+export const editDish = (id, title, price) => async (dispatch) => {
+  try {
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const body = {
+      title: title,
+      price: price,
+    };
+
+    const data = await axios
+      .put(`/dishes/edit-dish/${id}`, body, config)
+      .then(function (response) {
+        if (response.status == 200) {
+          //if response is 200, display OK alert
+          alert("Edit dish status: OK");
+          dispatch(listDishes());
+        } else {
+          alert("Something went wrong, status code: ", response.status);
+        }
+      });
+  } catch (error) {
+    alert(error);
+  }
+};
+
 export const removeDishFromMenu =
   (dishes, filteredDish) => async (dispatch) => {
     const dishesAfterRemove = dishes.filter((el) => el.id != filteredDish.id);
