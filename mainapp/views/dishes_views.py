@@ -72,13 +72,15 @@ def deleteDishCategory(request,pk):
 
 # Add dish To menu (only admin)
 @api_view(['POST'])
-#@permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def addDishToMenu(request):
     data = request.data
  
-    dishTitle = data['body']['title']
-    dishCategory = data['body']['category']
-    dishPrice = data['body']['price']
+    dishTitle = data['title']
+    dishCategory = data['category']
+    dishPrice = data['price'].replace(",",".")
+
+
    #check if dish category exist
     if DishCategory.objects.filter(title=str(dishCategory)).count()<=0:
         return Response("Category doesn`t exist")

@@ -57,18 +57,24 @@ export const listOrderDishes = (id) => async (dispatch) => {
 export const addDishToMenu =
   (category, dishName, dishPrice) => async (dispatch) => {
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: {
+
+      // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+   
+        const body = {
           category: category, //categoryName
           title: dishName, //dishName
           price: dishPrice, //dishPrice
-        },
-      };
+        }
+      
       const data = await axios
-        .post("/dishes/add-dish", config)
+        .post("/dishes/add-dish",body, config)
         .then(function (response) {
           if (response.status == 200) {
             //if response is 200, display OK alert
