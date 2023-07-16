@@ -80,7 +80,7 @@ export const removeCategory = (categoryId) => async (dispatch) => {
       .then(function (response) {
         if (response.status == 200) {
           //if response is 200, alert 'status ok', dispatch - listCategories
-          alert("Create category status: OK");
+          alert("Remove category status: OK");
           dispatch(listCategories());
         } else {
           alert("Something went wrong, status code: ", response.status);

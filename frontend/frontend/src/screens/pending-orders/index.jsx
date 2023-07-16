@@ -1,9 +1,23 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import NavbarTop from "../../components/navbars/NavbarTop";
+import { useDispatch, useSelector } from "react-redux";
 
 import data from "./data.json";
+import { listOrders } from "../../actions/ordersActions";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const PendingOrders = () => {
+  const dispatch = useDispatch();
+  const orderList = useSelector((state) => state.orderList);
+  const { error, loading, orders } = orderList;
+
+  const orderDishList = useSelector((state) => state.orderDishList);
+  const {
+    error: errorDishList,
+    loading: loadingDishList,
+    orderDishes,
+  } = orderDishList;
+
   const [cancelIndex, setCancelIndex] = useState(null);
 
   const [selectedButton, setSelectedButton] = useState("all");
@@ -37,10 +51,21 @@ const PendingOrders = () => {
     });
   };
 
-  return (
+  useEffect(() => {
+    dispatch(listOrders());
+  }, []);
+
+  console.log(orders);
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <main>
       <NavbarTop />
+
       <div className="flex flex-col justify-center items-center mb-4 relative w-[calc(100%_-_50px)]">
+        {/* ============= BUTTONS ON THE RIGHT ==================== */}
         <div className="flex flex-col items-center gap-3 my-4 text-sm font-bold fixed top-10 right-0 mr-1 ">
           <button
             className={`rounded shadow p-2 bg-white border uppercase  ${
@@ -98,8 +123,101 @@ const PendingOrders = () => {
             Completed
           </button>
         </div>
+
+        {/* ============= BUTTONS ON THE RIGHT ======== END ============= */}
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 px-2 max-w-[1600px]">
-          {data.orders.map((order) => {
+          fff
+          {orders.map((order) => (
+            <div
+              key={order.id}
+              className="flex flex-col max-w-[300px] self-start mt-4 rounded-b-lg bg-[none]"
+            >
+              {orderDishes.map((filteredDish) => (
+                <div className="flex justify-between gap-8 font-bold border border-[#d1d5db] p-2">
+                  <div className="flex flex-col w-full">
+                    <span className="text-xs">data</span>
+                    <span className="text-sm">dupa</span>
+                  </div>
+                  <div className="flex flex-col ">
+                    <span className="text-xs">WAiter name</span>
+
+                    <span className="">{`#${order.id}`}</span>
+                  </div>
+                </div>
+              ))}
+              {/* {order.items.length > 0 && (
+                <div className="flex justify-between gap-8 font-bold border border-[#d1d5db] p-2">
+                  <div className="flex flex-col w-full">
+                    <span className="text-xs">
+                      {new Date(order.order_time).toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                      })}
+                    </span>
+                    <span className="text-sm">{`${order.room_name} #${order.table_number}`}</span>
+                  </div>
+                  <div className="flex flex-col ">
+                    <span
+                      className={`text-xs ${
+                        order.waiter_name.length < 6 ? "" : "break-all"
+                      }`}
+                    >
+                      {order.waiter_name}
+                    </span>
+
+                    <span className="">{`#${order.order_number}`}</span>
+                  </div>
+                </div>
+              )} */}
+              {/* <div className="flex flex-col ">
+                <div className="flex flex-col  gap-1">
+                  {filteredItems.map((item) => (
+                    <div
+                      key={item.id}
+                      onMouseDown={() => {
+                        if (item.isReady) {
+                          handleOnMouseDown(item.id);
+                        }
+                      }}
+                      onMouseUp={handleOnMouseUp}
+                      className={`flex flex-col p-2 border-b-2 border-[#d1d5db] rounded-b-lg last:border-b-0 last:rounded-b-lg last:shadow-lg text-[#4b5563] cursor-pointer ${
+                        item.isNew
+                          ? "bg-[#fca5a5]"
+                          : item.isAccepted
+                          ? "bg-[#a5f3fc]"
+                          : item.isReady
+                          ? "bg-[#fde68a]"
+                          : item.isComplete
+                          ? "bg-[#e2e8f0]"
+                          : ""
+                      }`}
+                    >
+                      <div className="flex items-center gap-2">
+                        <span className="text-xs font-bold">{`x${item.quantity}`}</span>
+                        <span className="font-bold text-sm">
+                          {item.dish_name}
+                        </span>
+                      </div>
+                      <div className="flex justify-between">
+                        <div className="font-bold text-right"></div>
+                        <div className="font-bold text-right">{`${item.price} $`}</div>
+                      </div>
+                      {cancelIndex === item.id && item.isReady && (
+                        <button
+                          className="font-bold bg-[#d1d5db] mt-2"
+                          onClick={() => handleCancel(item.id)}
+                        >
+                          Cancel
+                        </button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div> */}
+            </div>
+          ))}
+          {/* {orders.map((order) => {
             if (order.items.length > 0) {
               const filteredItems = order.items.filter((item) => {
                 if (selectedButton === "all") {
@@ -201,7 +319,7 @@ const PendingOrders = () => {
             } else {
               return "";
             }
-          })}
+          })} */}
         </div>
       </div>
     </main>
