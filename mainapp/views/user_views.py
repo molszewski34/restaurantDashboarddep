@@ -96,9 +96,7 @@ def editEmployee(request,pk):
     data = request.data 
 
     employee = Employee.objects.get(id=pk)
-    print(employee.id)
-    
-
+   
     for key, value in data.items():
             
         if len(value) > 0:

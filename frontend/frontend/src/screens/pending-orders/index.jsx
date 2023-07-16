@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
-import NavbarTop from "../../../components/navbars/NavbarTop";
+import NavbarTop from "../../components/navbars/NavbarTop";
+
 import data from "./data.json";
 
 const PendingOrders = () => {

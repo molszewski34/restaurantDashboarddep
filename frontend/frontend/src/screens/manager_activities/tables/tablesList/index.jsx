@@ -92,9 +92,7 @@ const TablesList = () => {
             {addRoomIsActive ? "+ Add" : "+ Add room"}
           </button>
         </div>
-
         {/* SECTION : ADD ROOM ++ END */}
-
         <section className="mt-4 flex flex-col gap-4">
           <header className=" font-bold border-b border-[#cbd5e1] pl-2">
             Name
@@ -120,9 +118,6 @@ const TablesList = () => {
                         setRoomRemoval(true);
                         setOverlay(true);
                       }}
-                      // onClick={() => {
-                      //   dispatch(removeRoom(room, rooms));
-                      // }}
                     >
                       Delete
                     </button>
@@ -229,12 +224,9 @@ const TablesList = () => {
             <CircularProgress color="secondary" />
           )}
         </section>
+        SECTION - REMOVE ROOM WITH TABLES FROM DATABASE
         {roomRemoval && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            {/* <ModalAddEmployee
-                closeModal={() => setModalOpen(false)}
-                closeOverlay={() => setOverlay(false)}
-              /> */}
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">
                 Do you want to remove room and all tables inside?
