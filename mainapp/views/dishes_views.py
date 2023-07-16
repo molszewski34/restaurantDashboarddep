@@ -142,14 +142,12 @@ def deleteDish(request,pk):
 def editDish(request,pk):
 
     data = request.data
-    
     dishToEdit = Dish.objects.get(id=pk)
-    print(data)
+   
     for key, value in data.items():
             
         if len(value) > 0:
-              
-            setattr(dishToEdit, key, value)
+            setattr(dishToEdit, key, value.replace(",","."))
 
     dishToEdit.save()
 

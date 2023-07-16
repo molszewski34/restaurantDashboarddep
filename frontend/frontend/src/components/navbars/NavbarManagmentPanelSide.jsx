@@ -23,7 +23,6 @@ const NavbarManagmentPanelSide = () => {
         >
           FakePos
         </span>
-        {/* <span  onClick={() => { navigate("/services")}} className='text-xl font-bold cursor-pointer'>FakePos</span>  */}
       </div>
       <div className="flex flex-col  border-b-2 border-[#e2e8f0] w-full py-4">
         <NavLink
@@ -39,13 +38,7 @@ const NavbarManagmentPanelSide = () => {
             className="flex items-center gap-2 text-[#6b7280] text-sm font-bold "
           >
             <MdFastfood className="text-xl" />
-            Menu
-          </Link>
-          <Link
-            to="/add-category"
-            className="flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline"
-          >
-            + Add Category
+            Menu Management
           </Link>
         </NavLink>
         <NavLink
@@ -61,14 +54,8 @@ const NavbarManagmentPanelSide = () => {
         >
           <li className="flex items-center gap-2 text-[#6b7280] text-sm font-bold cursor-pointer">
             <GiCook className="text-xl" />
-            Employess
+            Employess Management
           </li>
-          <Link
-            to="/employess/new-employee"
-            className="flex items-center  text-[#6b7280] text-xs font-bold cursor-pointer hover:underline"
-          >
-            + Add Employee
-          </Link>
         </NavLink>
         <NavLink
           to="/tablesList"
