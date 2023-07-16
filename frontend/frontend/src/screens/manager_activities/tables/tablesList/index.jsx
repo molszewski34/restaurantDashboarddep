@@ -10,6 +10,7 @@ import { createNewTable, removeTable } from "../../../../actions/tablesActions";
 import { removeRoom } from "../../../../actions/roomsActions";
 
 import ClearIcon from "@mui/icons-material/Clear";
+import { CgLayoutGrid } from "react-icons/cg";
 
 const TablesList = () => {
   const roomsList = useSelector((state) => state.roomsList);
@@ -21,16 +22,25 @@ const TablesList = () => {
     tables,
   } = tableList;
 
+  //INITIAL STATE OF ROOM NAME
   const [newRoomName, setNewRoomName] = useState("");
+  //INITIAL STATE OF EDITOR FOR ROOM ADDING
   const [addRoomIsActive, setAddRoomIsActive] = useState(false);
+
+  //INITIAL STATE OF ACTIVE ROOM (NEEDED TO ADD TABLE, REMOVE TABLE AND REMOVE ROOM)
   const [activeRoom, setActiveRoom] = useState("");
+  //INITIAL STATE OF ACTIVE TABE (NEEDED TO REMOVE TABLE)
+  const [activeTable, setActiveTable] = useState("");
+
+  //INITIAL STATE OF NUMBER OF GUESTS, NEEDED TO ADD NEW TABLE
   const [numberOfGusets, setnumberOfGusets] = useState(1);
+
+  // WHO KNOWS WHAT IS THIS??
   const [roomRemoval, setRoomRemoval] = useState(false);
   const [tableRemoval, setTableRemoval] = useState(false);
   const [overlay, setOverlay] = useState(false);
 
   const handleTableSubmit = (e) => {
-    // room, numberOfPersons, tables, rooms
     e.preventDefault();
 
     dispatch(createNewTable(activeRoom, numberOfGusets, tables, rooms));
@@ -117,9 +127,10 @@ const TablesList = () => {
                       onClick={() => {
                         setRoomRemoval(true);
                         setOverlay(true);
+                        setActiveRoom(room.id);
                       }}
                     >
-                      Delete
+                      Delete Room
                     </button>
                   </div>
                   {/* // DISPLAY TABLES */}
@@ -140,10 +151,9 @@ const TablesList = () => {
                         <p
                           className="text-[#dc2626] cursor-pointer"
                           onClick={() => {
-                            console.log("remove table");
+                            setActiveTable(filteredTable.id);
                             setTableRemoval(true);
                             setOverlay(true);
-                            // dispatch(removeTable(filteredTable, tables));
                           }}
                         >
                           <ClearIcon />
@@ -224,7 +234,7 @@ const TablesList = () => {
             <CircularProgress color="secondary" />
           )}
         </section>
-        SECTION - REMOVE ROOM WITH TABLES FROM DATABASE
+        {/* ======= SECTION - REMOVE ROOM WITH TABLES FROM DATABASE ================= */}
         {roomRemoval && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
             <main className="bg-white p-4 max-w-[400px] w-full">
@@ -235,9 +245,9 @@ const TablesList = () => {
                 {" "}
                 <button
                   onClick={() => {
-                    // dispatch(removeRoom(room, rooms));
                     setRoomRemoval(false);
                     setOverlay(false);
+                    dispatch(removeRoom(activeRoom));
                   }}
                   className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
                 >
@@ -248,9 +258,6 @@ const TablesList = () => {
                     setRoomRemoval(false);
                     setOverlay(false);
                   }}
-                  // onClick={() => {
-                  //
-                  // }}
                   className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
                 >
                   Cancel
@@ -259,21 +266,20 @@ const TablesList = () => {
             </main>
           </div>
         )}
+
+        {/* ===== SECTION - REMOVE ROOM WITH TABLES FROM DATABASE =============== END ========= */}
+        {/* =================== REMOVE TABLE MODAL ================= */}
         {tableRemoval && (
           <div className="fixed z-50 top-0 left-0 w-full h-full bg-black bg-opacity-50 flex items-center justify-center">
-            {/* <ModalAddEmployee
-                closeModal={() => setModalOpen(false)}
-                closeOverlay={() => setOverlay(false)}
-              /> */}
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">Do you want to remove this table?</b>
               <div className="flex justify-between gap-2">
                 {" "}
                 <button
                   onClick={() => {
-                    // dispatch(removeRoom(room, rooms));
                     setTableRemoval(false);
                     setOverlay(false);
+                    dispatch(removeTable(activeTable));
                   }}
                   className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
                 >
@@ -284,9 +290,6 @@ const TablesList = () => {
                     setTableRemoval(false);
                     setOverlay(false);
                   }}
-                  // onClick={() => {
-                  //
-                  // }}
                   className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
                 >
                   Cancel
@@ -295,6 +298,7 @@ const TablesList = () => {
             </main>
           </div>
         )}
+        {/* =================== REMOVE TABLE MODAL ====== END ================= */}
       </main>
       {overlay && (
         <div className="fixed z-40 top-0 bottom-0 left-0 right-0 bg-[#000] opacity-40"></div>

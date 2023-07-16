@@ -154,17 +154,11 @@ export const createNewTable =
   };
 
 // ================= Remove table from restaurant ===========
-export const removeTable = (table, tables) => async (dispatch) => {
-  const tablesAfterRemove = tables.filter((el) => el.id != table.id);
+export const removeTable = (id) => async (dispatch) => {
+ 
 
   try {
-    dispatch({
-      type: REMOVE_TABLE,
-      payload: {
-        tablesAfterRemove,
-      },
-    });
-
+ 
     // ================= JWT Authorization data ===========
     let userInfo = JSON.parse(localStorage.userInfo);
     const config = {
@@ -176,7 +170,7 @@ export const removeTable = (table, tables) => async (dispatch) => {
 
     // delete table - request
     const { data } = await axios
-      .delete(`orders/remove-table/${table.id}`, config)
+      .delete(`orders/remove-table/${id}`, config)
       .then(function (response) {
         if (response.status == 200) {
           alert("Table removed");
