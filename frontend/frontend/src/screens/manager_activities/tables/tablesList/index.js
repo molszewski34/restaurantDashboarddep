@@ -114,7 +114,7 @@ const TablesList = () => {
                       {room.name}
                     </div>
                     <button
-                      className="text-[#0369a1] cursor-pointer text-sm font-bold hover:underline"
+                      className="text-[#0369a1] cursor-pointer text-xs font-bold hover:underline"
                       type=""
                       onClick={() => {
                         setRoomRemoval(true);
@@ -280,7 +280,7 @@ const TablesList = () => {
                 <button
                   onClick={() => {
                     // dispatch(removeRoom(room, rooms));
-                    setRoomRemoval(false);
+                    setTableRemoval(false);
                     setOverlay(false);
                   }}
                   className="border border-[#b91c1c] text-[#b91c1c] py-1 px-3 text-sm my-2  font-bold"
@@ -289,7 +289,7 @@ const TablesList = () => {
                 </button>
                 <button
                   onClick={() => {
-                    setRoomRemoval(false);
+                    setTableRemoval(false);
                     setOverlay(false);
                   }}
                   // onClick={() => {
