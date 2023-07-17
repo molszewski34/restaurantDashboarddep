@@ -13,6 +13,8 @@ class Employee(models.Model):
     email = models.CharField(max_length=200, blank=True, null=True)
     phone = models.IntegerField(null=True, blank=True)
     position = models.CharField(max_length=20, default="BARTENDER")
+    isCashier = models.BooleanField(default=False)
+    isDriver = models.BooleanField(default=False)
 
 
     def __str__(self):

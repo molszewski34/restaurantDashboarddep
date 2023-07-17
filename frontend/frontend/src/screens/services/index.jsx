@@ -66,7 +66,7 @@ const Services = () => {
               </button>
               <button
                 onClick={() => {
-                  navigate("/labor");
+                  navigate("/employess");
                 }}
                 className="flex justify-center items-center  bg-white text-center font-bold text-xl"
               >
@@ -76,7 +76,7 @@ const Services = () => {
               <button
                 className="flex justify-center items-center  bg-white text-center font-bold text-xl"
                 onClick={() => {
-                  navigate("/tables");
+                  navigate("/tablesList");
                   dispatch(listRooms());
                   dispatch(listTables());
                 }}
