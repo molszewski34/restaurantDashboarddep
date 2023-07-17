@@ -6,6 +6,7 @@ node_modules
 restaurant/__pycache__
 _pycatch
 /node_modules
-/mainapp/__pycache__/
+mainapp/__pycache__
 __pycache__/
 *.py[cod]
+*__pycache__*
