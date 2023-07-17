@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
@@ -9,9 +9,7 @@ import {
   getOrderDetails,
   changeDishQty,
   addToOrder,
-  removeFromOrder,
   deleteFromOrder,
-  increaseDishQty,
   listOrders,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
@@ -19,23 +17,19 @@ import { listOrderDishes } from "../../actions/dishActions";
 import { updatePaymentMethod } from "../../actions/ordersActions";
 
 import NavbarOrders from "../../components/navbars/NavbarOrders";
-import { BsCheckLg } from "react-icons/bs";
 
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
   let { id } = useParams();
   let navigate = useNavigate();
-
-
 
   const orderDetails = useSelector((state) => state.orderDetails);
   const { error, loading, orderDetail } = orderDetails;
@@ -49,11 +43,11 @@ const OrdersPanel = () => {
 
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-  console.log(dishes)
+  console.log(dishes);
   const categoriesList = useSelector((state) => state.categoriesList);
-  
+
   const { categoriesError, categoriesLoading, categories } = categoriesList;
-  console.log(categories)
+  console.log(categories);
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -80,7 +74,6 @@ const OrdersPanel = () => {
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
       );
       const dishToDisplay = dishToDisplayArr[0];
-     
 
       setDishNameToDisplay(dishToDisplay);
       setdishToChange(filteredDish);
@@ -145,8 +138,6 @@ const OrdersPanel = () => {
     dispatch(listOrders());
   };
 
-
-
   return loading ? (
     <CircularProgress color="secondary" />
   ) : error ? (
@@ -164,9 +155,7 @@ const OrdersPanel = () => {
             <p>{userInfo.first_name}</p>
           </section>
           <section className="grid grid-cols-5 border-b-2 border-gray-light py-1  bg-[#e2e8f0] ">
-            {/* <section className="flex justify-between px-2 text-sm font-bold border-b-2 border-gray-light py-1"> */}
             <span className="col-start-1 col-end-3 font-bold pl-2">Name</span>
-            {/* <span className="w-half col-start-1 col-end-3 ">Name</span> */}
 
             <span className="text-center font-bold">QTY</span>
             <span className="text-center font-bold">EACH</span>
@@ -179,7 +168,6 @@ const OrdersPanel = () => {
                 <div
                   key={filteredDish.id}
                   className=" grid grid-cols-5 border-b-2 border-gray-light pb-1"
-                  // className=" flex justify-between items-center w-full bg-secondary-bg-color border  px-2"
                   onClick={() => {
                     setDishToDisplay(filteredDish);
                   }}
@@ -340,8 +328,6 @@ const OrdersPanel = () => {
             </span>
           </section>
 
-          {/* <section className="grid grid-cols-3 grid-flow-row px-2 py-4 bg-secondary-bg-color gap-2  "> */}
-          {/* <section className="grid auto-cols-[calc(30%_-_4rem)]  grid-flow-col gap-4 overflow-x-auto  "> */}
           <section className="relative flex items-center ">
             {/* // ============= SECTION: Display Categories ================ */}
             <div className="w-screen h-full  overflow-auto whitespace-nowrap scroll-smooth py-4 md:grid md:grid-cols-4 gap-y-2 bg-white">
@@ -372,10 +358,9 @@ const OrdersPanel = () => {
             {dishList.dishes
               .filter(
                 (filteredDishes) => filteredDishes.category == activeCategory
-               
-                )
-                .map((dishToDisplay) => (
-                  <button
+              )
+              .map((dishToDisplay) => (
+                <button
                   style={{
                     backgroundColor: `${activeCategoryColour}`,
                     borderColor: "white",
@@ -389,11 +374,11 @@ const OrdersPanel = () => {
                   className={`${
                     activeDish == dishToDisplay ? "border-b-4" : ""
                   } uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[60px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
-                  >
+                >
                   {dishToDisplay.title}
                 </button>
               ))}
-         
+
             {/* // ============= END SECTION: Display Dish From active Category ================ */}
           </section>
         </div>

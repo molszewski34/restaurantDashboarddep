@@ -14,11 +14,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 def createOrder(request,pk):
     data = request.data
     user = request.user
-    print("USER: ",data['body']["user"])
-
     user = User.objects.get(id=data['body']["user"])
-    print(user)
-
+ 
     # get table for order, each order is assigned to table
     table = Table.objects.get(id=pk)
     if table.isOccupied == False:
@@ -228,20 +225,25 @@ def getAllTables(request):
 @permission_classes([IsAdminUser])
 def createTable(request):
     user=request.user
-    print(user)
     data = request.data 
-    requestedRoom = Room.objects.filter(id=data['body']['tableData']['room']['id'])
-    tableNumber = data['body']['tableData']['tableNumber']
-    numberOfPersons = data['body']['tableData']['numberOfPersons']
-    isOccupied = data['body']['tableData']['isOccupied']
+   
+    requestedRoom = Room.objects.filter(id=data['tableData']['room']['id'])
+    
+    tableNumber = data['tableData']['tableNumber'] + 1 
+    print(tableNumber)
+    numberOfPersons = data['tableData']['numberOfPersons']
+    isOccupied = data['tableData']['isOccupied']
     newTable = Table.objects.create(
         room=requestedRoom[0],
         tableNumber=tableNumber,
         numberOfPersons=numberOfPersons,
         isOccupied=isOccupied
     )
+    tables = Table.objects.all()
+    serializer = TableSerializer(tables, many=True)
 
-    return Response("Table created")
+
+    return Response(serializer.data)
 
 
 

@@ -55,35 +55,35 @@ export const listOrderDishes = (id) => async (dispatch) => {
 };
 
 export const addDishToMenu =
-  (category, categoryId, dishName, dishPrice, dishes) => async (dispatch) => {
-    const dishData = {
-      id: dishes.length,
-      category: categoryId,
-      title: dishName,
-      price: dishPrice,
-      countInStock: 100,
-    };
-
+  (category, dishName, dishPrice) => async (dispatch) => {
     try {
-      dispatch({
-        type: ADD_DISH_TO_MENU,
-        payload: {
-          dishData,
-          dishes,
-        },
-      });
 
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: {
-          category: category,
-          title: dishName,
-          price: dishPrice,
-        },
-      };
-      const { data } = await axios.post("/dishes/add-dish", config);
+      // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+   
+        const body = {
+          category: category, //categoryName
+          title: dishName, //dishName
+          price: dishPrice, //dishPrice
+        }
+      
+      const data = await axios
+        .post("/dishes/add-dish",body, config)
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, display OK alert
+            alert("Add new dish status: OK");
+            dispatch(listDishes());
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: ADD_DISH_TO_MENU_FAIL,
@@ -95,11 +95,40 @@ export const addDishToMenu =
     }
   };
 
+export const editDish = (id, title, price) => async (dispatch) => {
+  try {
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const body = {
+      title: title,
+      price: price,
+    };
+
+    const data = await axios
+      .put(`/dishes/edit-dish/${id}`, body, config)
+      .then(function (response) {
+        if (response.status == 200) {
+          //if response is 200, display OK alert
+          alert("Edit dish status: OK");
+          dispatch(listDishes());
+        } else {
+          alert("Something went wrong, status code: ", response.status);
+        }
+      });
+  } catch (error) {
+    alert(error);
+  }
+};
+
 export const removeDishFromMenu =
   (dishes, filteredDish) => async (dispatch) => {
-    console.log("Dishes: ", dishes);
-    console.log("Filtered dish: ", filteredDish);
-
     const dishesAfterRemove = dishes.filter((el) => el.id != filteredDish.id);
 
     try {
@@ -109,6 +138,26 @@ export const removeDishFromMenu =
           dishesAfterRemove,
         },
       });
+
+      // ================= JWT Authorization data ===========
+      let userInfo = JSON.parse(localStorage.userInfo);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + String(userInfo.access),
+        },
+      };
+      const data = await axios
+        .delete(`/dishes/delete-dish/${filteredDish.id}`, config)
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, display OK alert
+            alert("Remove dish status: OK");
+            dispatch(listDishes());
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: REMOVE_DISH_FROM_MENU_FAIL,
@@ -118,15 +167,4 @@ export const removeDishFromMenu =
             : error.message,
       });
     }
-
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-
-    const { removedDish } = await axios.delete(
-      `/dishes/delete-dish/${filteredDish.id}`,
-      config
-    );
   };

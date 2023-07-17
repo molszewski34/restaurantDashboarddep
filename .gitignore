@@ -3,8 +3,10 @@ backend/restaurant/frontend/node_modules
 frontend/frontend/node_modules
 node_modules
 /env
-restaurant/_pycatch
-mainapp
+restaurant/__pycache__
 _pycatch
 /node_modules
+mainapp/__pycache__
+__pycache__/
+*.py[cod]
 *__pycache__*

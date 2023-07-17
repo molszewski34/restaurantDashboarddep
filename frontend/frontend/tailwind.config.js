@@ -23,5 +23,5 @@ module.exports = {
       'tables-panel-headers': '#14b8a6',
     },
   },
-  plugins: [],
+  plugins: [require('tailwindcss-animated')],
 };
