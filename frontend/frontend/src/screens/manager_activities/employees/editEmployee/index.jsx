@@ -37,27 +37,37 @@ const EditEmployee = () => {
   } = employeeDetails;
 
   const handleInputChange = (e, setInputText) => {
+    // Get the input value from the event
     const inputValue = e.target.value;
+    
+    // Regular expression to match numbers
     const numbersRegex = /^[0-9]*$/;
+    
+    // Check if the input value is empty or consists only of numbers
     if (inputValue === "" || numbersRegex.test(inputValue)) {
+      // Set the input text using the provided setter function
       setInputText(inputValue);
     }
   };
-
+  
   const validateEmail = (e, setInputChange) => {
     const inputValue = e.target.value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+    // Regular expression to match email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    // Check if the input value is empty or matches the email regex
     if (inputValue === "" || emailRegex.test(inputValue)) {
+      // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError("");
+      setEmailError(""); // Clear the email error
     } else {
+      // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError("Incorect email format");
+      setEmailError("Incorrect email format"); // Set the email error message
     }
   };
-
-  console.log(employee);
+  
 
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();

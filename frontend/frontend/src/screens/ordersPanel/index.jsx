@@ -268,7 +268,7 @@ const OrdersPanel = () => {
           <section className="flex flex-nowrap justify-between items-center gap-2 px-1 border-b h-14 border-x-1 bg-white">
             <div className="flex gap-2">
               <button
-                className="w-16 h-12 w-9 font-bold border-2 rounded-sm border-black text-lg"
+                className="h-12 w-9 font-bold border-2 rounded-sm border-black text-lg"
                 onClick={() => {
                   decrementDishQty();
                 }}
@@ -282,7 +282,7 @@ const OrdersPanel = () => {
               {/* // ============= END SECTION: Display QTY of selected dish ================ */}
 
               <button
-                className=" w-16 h-12 w-9 font-bold border-2 rounded-sm border-black"
+                className="  h-12 w-9 font-bold border-2 rounded-sm border-black"
                 onClick={() => {
                   incrementDishQty();
                 }}

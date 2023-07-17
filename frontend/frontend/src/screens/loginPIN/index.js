@@ -9,7 +9,7 @@ const LoginPin = () => {
   const Number = ({ value }) => {
     const handleClick = () => {
       if (PIN.length < 4) {
-        // Dodano warunek sprawdzający długość PIN
+        // Condition checking length of PIN
         setPIN((prevNum) => prevNum + value.toString());
       }
     };
@@ -41,7 +41,6 @@ const LoginPin = () => {
           <input
             type="password"
             value={output}
-            // onChange={handleInputChange}
             maxLength={5}
             placeholder="Max 4 Digits"
             className={` col-start-1 col-end-3 text-xl text-center p-2`}
