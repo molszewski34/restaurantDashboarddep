@@ -1,18 +1,18 @@
-import React from "react";
-import { Routes, Route, HashRouter as Router } from "react-router-dom";
+import React from 'react';
+import { Routes, Route, HashRouter as Router } from 'react-router-dom';
 
-import CssBaseline from "@mui/material/CssBaseline";
-import SignIn from "./screens/login";
-import Services from "./screens/services";
-import StartingPanel from "./screens/startingPanel";
-import TablesPanel from "./screens/tablesPanel";
-import OrdersPanel from "./screens/ordersPanel";
-import EmployeesList from "./screens/manager_activities/employees/employeesList";
-import CategoriesList from "./screens/manager_activities/dishes/categoriesList";
-import TablesList from "./screens/manager_activities/tables/tablesList";
-import NewEmployee from "./screens/manager_activities/employees/newEmployee";
-import EditEmployee from "./screens/manager_activities/employees/editEmployee";
-import PendingOrders from "./screens/pending-orders";
+import CssBaseline from '@mui/material/CssBaseline';
+import SignIn from './screens/login';
+import Services from './screens/services';
+import StartingPanel from './screens/startingPanel';
+import TablesPanel from './screens/tablesPanel';
+import OrdersPanel from './screens/ordersPanel';
+import EmployeesList from './screens/manager_activities/employees/employeesList';
+import CategoriesList from './screens/manager_activities/dishes/categoriesList';
+import TablesList from './screens/manager_activities/tables/tablesList';
+import NewEmployee from './screens/manager_activities/employees/newEmployee';
+import EditEmployee from './screens/manager_activities/employees/editEmployee';
+import PendingOrders from './screens/pending-orders';
 
 function App() {
   return (

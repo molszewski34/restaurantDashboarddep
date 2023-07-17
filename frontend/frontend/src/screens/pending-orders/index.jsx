@@ -4,88 +4,93 @@ import NavbarTop from "../../components/navbars/NavbarTop";
 import data from "./data.json";
 
 const PendingOrders = () => {
-  const [cancelIndex, setCancelIndex] = useState(null);
+  // const [cancelIndex, setCancelIndex] = useState(null);
   const [selectedButton, setSelectedButton] = useState("all");
-  const timerRef = useRef();
-  function startPressTimer(id) {
-    timerRef.current = setTimeout(() => {
-      setCancelIndex(id);
-    }, 1500);
-  }
-  function handleOnMouseDown(id) {
-    startPressTimer(id);
-  }
-  function handleOnMouseUp() {
-    clearTimeout(timerRef.current);
-  }
-  const handleCancel = (id) => {
-    setCancelIndex(null);
-    const updatedData = { ...data };
-    updatedData.orders.forEach((order) => {
-      order.items.forEach((item) => {
-        if (item.id === id) {
-          item.isReady = false;
-          item.isAccepted = true;
-        }
-      });
-    });
-  };
+  // const timerRef = useRef();
+  // function startPressTimer(id) {
+  //   timerRef.current = setTimeout(() => {
+  //     setCancelIndex(id);
+  //   }, 1500);
+  // }
+  // function handleOnMouseDown(id) {
+  //   startPressTimer(id);
+  // }
+  // function handleOnMouseUp() {
+  //   clearTimeout(timerRef.current);
+  // }
+  // const handleCancel = (id) => {
+  //   setCancelIndex(null);
+  //   const updatedData = { ...data };
+  //   updatedData.orders.forEach((order) => {
+  //     order.items.forEach((item) => {
+  //       if (item.id === id) {
+  //         item.isReady = false;
+  //         item.isAccepted = true;
+  //       }
+  //     });
+  //   });
+  // };
   return (
     <main>
       <NavbarTop />
       <div className="flex flex-col justify-center items-center mb-4 relative w-[calc(100%_-_50px)]">
         <div className="flex flex-col items-center gap-3 my-4 text-sm font-bold fixed top-10 right-0 mr-1 ">
           <button
-            className={`rounded shadow p-2 bg-white border uppercase  ${
-              selectedButton === "all"
-                ? " border-[#64748b] border-2"
-                : "border-[#e2e8f0]"
-            }`}
-            onClick={() => setSelectedButton("all")}
+            // className={`rounded shadow p-2 bg-white border uppercase  ${
+            //   selectedButton === "all"
+            //     ? " border-[#64748b] border-2"
+            //     : "border-[#e2e8f0]"
+            // }`}
+            className="rounded shadow p-2 bg-white border uppercase"
+            // onClick={() => setSelectedButton("all")}
             style={{ writingMode: "vertical-lr" }}
           >
             All
           </button>
           <button
-            className={`rounded shadow border p-2 bg-[#fca5a5] uppercase ${
-              selectedButton === "new"
-                ? " border-[#ef4444]  border-2"
-                : "border-[#fca5a5]"
-            }`}
-            onClick={() => setSelectedButton("new")}
+            // className={`rounded shadow border p-2 bg-[#fca5a5] uppercase ${
+            //   selectedButton === "new"
+            //     ? " border-[#ef4444]  border-2"
+            //     : "border-[#fca5a5]"
+            // }`}
+            className="rounded shadow p-2 bg-white border uppercase"
+            // onClick={() => setSelectedButton("new")}
             style={{ writingMode: "vertical-lr" }}
           >
             New
           </button>
           <button
-            className={`rounded shadow p-2 bg-[#a5f3fc] border uppercase align-middle ${
-              selectedButton === "accepted"
-                ? "border-[#06b6d4]  border-2"
-                : "border-[#a5f3fc]"
-            }`}
-            onClick={() => setSelectedButton("accepted")}
+            // className={`rounded shadow p-2 bg-[#a5f3fc] border uppercase align-middle ${
+            //   selectedButton === "accepted"
+            //     ? "border-[#06b6d4]  border-2"
+            //     : "border-[#a5f3fc]"
+            // }`}
+            className="rounded shadow p-2 bg-white border uppercase"
+            // onClick={() => setSelectedButton("accepted")}
             style={{ writingMode: "vertical-lr" }}
           >
             Accepted
           </button>
           <button
-            className={`rounded shadow p-2 border bg-[#fde68a] uppercase ${
-              selectedButton === "ready"
-                ? "border-[#f59e0b]  border-2"
-                : "border-[#fde68a]"
-            }`}
-            onClick={() => setSelectedButton("ready")}
+            // className={`rounded shadow p-2 border bg-[#fde68a] uppercase ${
+            //   selectedButton === "ready"
+            //     ? "border-[#f59e0b]  border-2"
+            //     : "border-[#fde68a]"
+            // }`}
+            className="rounded shadow p-2 bg-white border uppercase"
+            // onClick={() => setSelectedButton("ready")}
             style={{ writingMode: "vertical-lr" }}
           >
             Ready
           </button>
           <button
-            className={`rounded shadow p-2 bg-[#e2e8f0] border uppercase align-baseline ${
-              selectedButton === "complete"
-                ? "border-[#64748b] border-2"
-                : "border-[#e2e8f0]"
-            }`}
-            onClick={() => setSelectedButton("complete")}
+            // className={`rounded shadow p-2 bg-[#e2e8f0] border uppercase align-baseline ${
+            //   selectedButton === "complete"
+            //     ? "border-[#64748b] border-2"
+            //     : "border-[#e2e8f0]"
+            // }`}
+            className="rounded shadow p-2 bg-white border uppercase"
+            // onClick={() => setSelectedButton("complete")}
             style={{ writingMode: "vertical-lr" }}
           >
             Completed
@@ -93,6 +98,9 @@ const PendingOrders = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 px-2 max-w-[1600px]">
           {data.orders.map((order) => {
+            
+            //Remove not needed statutes from filtering. Please notice, filtering is connected to filtering buttons at the top of file.
+
             if (order.items.length > 0) {
               const filteredItems = order.items.filter((item) => {
                 if (selectedButton === "all") {
@@ -146,12 +154,12 @@ const PendingOrders = () => {
                       {filteredItems.map((item) => (
                         <div
                           key={item.id}
-                          onMouseDown={() => {
-                            if (item.isReady) {
-                              handleOnMouseDown(item.id);
-                            }
-                          }}
-                          onMouseUp={handleOnMouseUp}
+                          // onMouseDown={() => {
+                          //   if (item.isReady) {
+                          //     handleOnMouseDown(item.id);
+                          //   }
+                          // }}
+                          // onMouseUp={handleOnMouseUp}
                           className={`flex flex-col p-2 border-b-2 border-[#d1d5db] rounded-b-lg last:border-b-0 last:rounded-b-lg last:shadow-lg text-[#4b5563] cursor-pointer ${
                             item.isNew
                               ? "bg-[#fca5a5]"
@@ -174,14 +182,14 @@ const PendingOrders = () => {
                             <div className="font-bold text-right"></div>
                             <div className="font-bold text-right">{`${item.price} $`}</div>
                           </div>
-                          {cancelIndex === item.id && item.isReady && (
+                          {/* {cancelIndex === item.id && item.isReady && (
                             <button
                               className="font-bold bg-[#d1d5db] mt-2"
                               onClick={() => handleCancel(item.id)}
                             >
                               Cancel
                             </button>
-                          )}
+                          )} */}
                         </div>
                       ))}
                     </div>
@@ -189,7 +197,7 @@ const PendingOrders = () => {
                 </div>
               );
             } else {
-              return "";
+              return null;
             }
           })}
         </div>
