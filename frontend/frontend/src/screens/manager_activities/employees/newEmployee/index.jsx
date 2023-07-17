@@ -9,58 +9,71 @@ import { createNewEmployee } from '../../../../actions/userActions';
 const NewEmployee = () => {
   let dispatch = useDispatch();
 
-  // first states of Name, email and phone number
-  const [phoneNumber, setPhoneNumber] = useState('');
-  const [email, setEmail] = useState('');
-  const [emailError, setEmailError] = useState('');
-  const [fullName, setFullName] = useState('');
+// First states of Name, email, and phone number
+const [phoneNumber, setPhoneNumber] = useState('');
+const [email, setEmail] = useState('');
+const [emailError, setEmailError] = useState('');
+const [fullName, setFullName] = useState('');
 
-  const [position, setPosition] = useState('Bartender');
-  const [isCashier, setIsCashier] = useState('Yes');
-  const [isDriver, setIsDriver] = useState('Yes');
+const [position, setPosition] = useState('Bartender');
+const [isCashier, setIsCashier] = useState('Yes');
+const [isDriver, setIsDriver] = useState('Yes');
 
-  // get employees positions
-  const positionsList = useSelector((state) => state.positionsList);
-  const { error, loading, positions } = positionsList;
+// Get employees positions
+const positionsList = useSelector((state) => state.positionsList);
+const { error, loading, positions } = positionsList;
 
-  const handleInputChange = (e, setInputText) => {
-    const inputValue = e.target.value;
-    const numbersRegex = /^[0-9]*$/;
-    if (inputValue === '' || numbersRegex.test(inputValue)) {
-      setInputText(inputValue);
-    }
-  };
+const handleInputChange = (e, setInputText) => {
+  // Get the input value from the event
+  const inputValue = e.target.value;
 
-  const validateEmail = (e, setInputChange) => {
-    const inputValue = e.target.value;
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  // Regular expression to match numbers
+  const numbersRegex = /^[0-9]*$/;
 
-    if (inputValue === '' || emailRegex.test(inputValue)) {
-      setInputChange(inputValue);
-      setEmailError('');
-    } else {
-      setInputChange(inputValue);
-      setEmailError('Incorect email format');
-    }
-  };
+  // Check if the input value is empty or consists only of numbers
+  if (inputValue === '' || numbersRegex.test(inputValue)) {
+    // Set the input text using the provided setter function
+    setInputText(inputValue);
+  }
+};
 
-  const confirmEmployeeHandler = (e) => {
-    e.preventDefault();
-    dispatch(
-      createNewEmployee(
-        fullName,
-        email,
-        phoneNumber,
-        position,
-        isCashier,
-        isDriver
-      )
-    );
-  };
+const validateEmail = (e, setInputChange) => {
+  // Get the input value from the event
+  const inputValue = e.target.value;
 
-  useEffect(() => {
-    dispatch(getEmployeePositions());
-  }, []);
+  // Regular expression to match email format
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  // Check if the input value is empty or matches the email regex
+  if (inputValue === '' || emailRegex.test(inputValue)) {
+    // Set the input text using the provided setter function
+    setInputChange(inputValue);
+    setEmailError('');
+  } else {
+    // Set the input text using the provided setter function
+    setInputChange(inputValue);
+    setEmailError('Incorrect email format');
+  }
+};
+
+const confirmEmployeeHandler = (e) => {
+  e.preventDefault();
+  dispatch(
+    createNewEmployee(
+      fullName,
+      email,
+      phoneNumber,
+      position,
+      isCashier,
+      isDriver
+    )
+  );
+};
+
+useEffect(() => {
+  dispatch(getEmployeePositions());
+}, []);
+
 
   return loading ? (
     <CircularProgress color="secondary" />
