@@ -14,11 +14,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 def createOrder(request,pk):
     data = request.data
     user = request.user
-    print("USER: ",data['body']["user"])
-
     user = User.objects.get(id=data['body']["user"])
-    print(user)
-
+ 
     # get table for order, each order is assigned to table
     table = Table.objects.get(id=pk)
     if table.isOccupied == False:

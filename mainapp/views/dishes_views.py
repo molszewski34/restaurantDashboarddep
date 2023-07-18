@@ -21,18 +21,23 @@ def getAllDishes(request):
 
 # Add dish category (only admin) 
 @api_view(['POST'])
-#@permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def createDishCategory(request):
     
+    # GETING DATA FROM FRONTEND
     data = request.data 
     categoryToAdd = data['title']
+    categoryColour = data['colour']
     
-    
+    # IF DISH CATEGORY ALREADY EXIST
     if DishCategory.objects.filter(title=str(categoryToAdd)).count()>0:
         return Response("This category already exist")
 
+
+# CREATE NEW CATEGORY IN DATABASE
     dishCategory = DishCategory.objects.create(
-        title = data['title']
+        title = categoryToAdd,
+        colour = categoryColour
     )
     serializer = DishCategorySerializer(dishCategory, many=False)
     
@@ -44,16 +49,20 @@ def createDishCategory(request):
 @api_view(['GET'])
 #@permission_classes([IsAuthenticated])
 def getDishCategories(request):
-    print("działam")
+
     dishCategories = DishCategory.objects.all()
-    print(dishCategories)
+
     serializer = DishCategorySerializer(dishCategories, many=True)
-    print("po sera")
+  
     return Response(serializer.data)
+
+
+
+
 
 # Delete dish category (only admin) 
 @api_view(['DELETE'])
-#@permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def deleteDishCategory(request,pk):
     categoryToRemove = DishCategory.objects.get(id=pk)
     categoryToRemove.delete()
@@ -63,13 +72,15 @@ def deleteDishCategory(request,pk):
 
 # Add dish To menu (only admin)
 @api_view(['POST'])
-#@permission_classes([IsAdminUser])
+@permission_classes([IsAdminUser])
 def addDishToMenu(request):
     data = request.data
-    print(data)
-    dishTitle = data['body']['title']
-    dishCategory = data['body']['category']
-    dishPrice = data['body']['price']
+ 
+    dishTitle = data['title']
+    dishCategory = data['category']
+    dishPrice = data['price'].replace(",",".")
+
+
    #check if dish category exist
     if DishCategory.objects.filter(title=str(dishCategory)).count()<=0:
         return Response("Category doesn`t exist")
@@ -117,14 +128,32 @@ def getOrderedDishById(request,pk):
         })
 
 
+
+#REMOVE DISH FROM MENU
 @api_view(['DELETE'])
+@permission_classes([IsAdminUser])
 def deleteDish(request,pk):
     dishToDelete = Dish.objects.get(id=pk)
     dishToDelete.delete()
     return Response("Dish removed")
 
 
-        
+#EDIT EXISTING DISH IN MENU
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def editDish(request,pk):
+
+    data = request.data
+    dishToEdit = Dish.objects.get(id=pk)
+   
+    for key, value in data.items():
+            
+        if len(value) > 0:
+            setattr(dishToEdit, key, value.replace(",","."))
+
+    dishToEdit.save()
+
+    return Response("Dish edited")   
 
 
    
