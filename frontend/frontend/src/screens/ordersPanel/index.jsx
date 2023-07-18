@@ -1,30 +1,29 @@
-import React from "react";
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useParams } from "react-router-dom";
-
-import { listDishes } from "../../actions/dishActions";
+import React from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useParams } from 'react-router-dom';
+import { listDishes } from '../../actions/dishActions';
 import {
   getOrderDetails,
   changeDishQty,
   addToOrder,
   deleteFromOrder,
   listOrders,
-} from "../../actions/ordersActions";
-import { listCategories } from "../../actions/categoriesActions";
-import { listOrderDishes } from "../../actions/dishActions";
-import { updatePaymentMethod } from "../../actions/ordersActions";
+} from '../../actions/ordersActions';
+import { listCategories } from '../../actions/categoriesActions';
+import { listOrderDishes } from '../../actions/dishActions';
+import { updatePaymentMethod } from '../../actions/ordersActions';
 
-import NavbarOrders from "../../components/navbars/NavbarOrders";
+import NavbarOrders from '../../components/navbars/NavbarOrders';
 
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import CreditCardIcon from "@mui/icons-material/CreditCard";
+import RemoveIcon from '@mui/icons-material/Remove';
+import AddIcon from '@mui/icons-material/Add';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CreditCardIcon from '@mui/icons-material/CreditCard';
 
-import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const OrdersPanel = () => {
   const dispatch = useDispatch();
@@ -55,8 +54,8 @@ const OrdersPanel = () => {
     userInfo,
   } = userLogin;
   // First states of SECTION:  Change order QTY
-  const [dishToChange, setdishToChange] = useState("-");
-  const [dishNameToDisplay, setDishNameToDisplay] = useState("-");
+  const [dishToChange, setdishToChange] = useState('-');
+  const [dishNameToDisplay, setDishNameToDisplay] = useState('-');
 
   const [dishQty, setDishQty] = useState(0);
 
@@ -64,8 +63,8 @@ const OrdersPanel = () => {
 
   //First state of active category and dish
   const [activeCategory, setActiveCategory] = useState(0);
-  const [activeCategoryColour, setActiveCategoryColour] = useState("white");
-  const [activeDish, setActiveDish] = useState("");
+  const [activeCategoryColour, setActiveCategoryColour] = useState('white');
+  const [activeDish, setActiveDish] = useState('');
 
   // Setting states of dish to display in SECTION:  Change order QTY
   const setDishToDisplay = (filteredDish) => {
@@ -74,7 +73,6 @@ const OrdersPanel = () => {
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
       );
       const dishToDisplay = dishToDisplayArr[0];
-
       setDishNameToDisplay(dishToDisplay);
       setdishToChange(filteredDish);
       setDishQty(filteredDish.qty);
@@ -121,7 +119,7 @@ const OrdersPanel = () => {
   const setOrderAsPaid = async () => {
     const config = {
       headers: {
-        "Content-type": "application/json",
+        'Content-type': 'application/json',
       },
       body: {
         isPaid: true,
@@ -133,7 +131,7 @@ const OrdersPanel = () => {
       config
     );
 
-    navigate("/services");
+    navigate('/services');
     //list orders after close old order
     dispatch(listOrders());
   };
@@ -223,9 +221,9 @@ const OrdersPanel = () => {
           <section className="flex justify-items-stretch justify-center py-2 bg-white gap-0.5 border-b h-20 md:h-[150px]">
             <button
               className="w-[100px] grow font-bold  py-1"
-              style={{ backgroundColor: "#00D100" }}
+              style={{ backgroundColor: '#00D100' }}
               onClick={() => {
-                dispatch(updatePaymentMethod(id, "CASH"));
+                dispatch(updatePaymentMethod(id, 'CASH'));
               }}
             >
               Cash
@@ -233,9 +231,9 @@ const OrdersPanel = () => {
             </button>
             <button
               className="w-[100px] grow font-bold  py-1"
-              style={{ backgroundColor: "#1877F2" }}
+              style={{ backgroundColor: '#1877F2' }}
               onClick={() => {
-                dispatch(updatePaymentMethod(id, "CARD"));
+                dispatch(updatePaymentMethod(id, 'CARD'));
               }}
             >
               Card
@@ -243,7 +241,7 @@ const OrdersPanel = () => {
             </button>
             <button
               className="w-[100px] grow  font-bold  py-1"
-              style={{ backgroundColor: "#00a8e8" }}
+              style={{ backgroundColor: '#00a8e8' }}
               onClick={() => {
                 setOrderAsPaid(id);
               }}
@@ -277,7 +275,7 @@ const OrdersPanel = () => {
               </button>
               {/* // ============= SECTION: Display QTY of selected dish ================ */}
 
-              <button className=" w-16 h-12 w-9 font-bold">{dishQty}</button>
+              <button className=" w-16 h-12 font-bold">{dishQty}</button>
 
               {/* // ============= END SECTION: Display QTY of selected dish ================ */}
 
@@ -294,15 +292,15 @@ const OrdersPanel = () => {
               <button
                 type=""
                 className="uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[40px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70"
-                style={{ backgroundColor: "#00a8e8" }}
+                style={{ backgroundColor: '#00a8e8' }}
                 onClick={() => {
                   // dishNameToDisplay - dish from menu with 'price' table in data base
                   //dishToCHange - dish from order with 'qty' table in data base
 
                   //If there is no dishNameToDisplay or dishToChange, don`t do anything
                   //after "DONE" is cklicked
-                  if (dishNameToDisplay != "-" || dishToChange != "-") {
-                    if (dishToChange != "-") {
+                  if (dishNameToDisplay != '-' || dishToChange != '-') {
+                    if (dishToChange != '-') {
                       sendDishQty();
                     } else {
                       dispatch(addToOrder(dishNameToDisplay, id, dishQty));
@@ -318,7 +316,7 @@ const OrdersPanel = () => {
             </div>
           </section>
           <section className="py-2 bg-white">
-            {" "}
+            {' '}
             <span className="text-s font-bold text-center">
               {dishNameToDisplay.title ? (
                 <div>{dishNameToDisplay.title}</div>
@@ -335,11 +333,11 @@ const OrdersPanel = () => {
                 <button
                   key={category.id}
                   className={`uppercase text-sm w-[100px] md:w-auto inline-block mx-1  ${
-                    activeCategory == category.id ? "border-b-4" : ""
+                    activeCategory == category.id ? 'border-b-4' : ''
                   } shadow-lg font-bold text-center  h-[60px] text-ellipsis whitespace-nowrap  px-2 hover:opacity-70 `}
                   style={{
                     backgroundColor: `${category.colour}`,
-                    borderColor: "white",
+                    borderColor: 'white',
                   }}
                   onClick={() => {
                     setActiveCategory(category.id);
@@ -363,16 +361,16 @@ const OrdersPanel = () => {
                 <button
                   style={{
                     backgroundColor: `${activeCategoryColour}`,
-                    borderColor: "white",
+                    borderColor: 'white',
                   }}
                   onClick={() => {
-                    setdishToChange("-");
+                    setdishToChange('-');
                     setActiveDish(dishToDisplay);
                     setDishToDisplay(dishToDisplay);
                   }}
                   key={dishToDisplay.id}
                   className={`${
-                    activeDish == dishToDisplay ? "border-b-4" : ""
+                    activeDish == dishToDisplay ? 'border-b-4' : ''
                   } uppercase shadow-xl text-sm font-bold text-center min-w-[80px] h-[60px]  text-ellipsis whitespace-nowrap overflow-hidden px-2 hover:opacity-70`}
                 >
                   {dishToDisplay.title}
