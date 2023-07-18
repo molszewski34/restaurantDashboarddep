@@ -1,69 +1,44 @@
-import React from "react";
-import { Routes, Route, HashRouter as Router } from "react-router-dom";
+import React from 'react';
+import { Routes, Route, HashRouter as Router } from 'react-router-dom';
 
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import Dashboard from "./screens/dashboard";
-import DishMenu from "./screens/DishMenu";
-import Tables from "./screens/Tables";
-import Orders from "./screens/orders/index";
-import Admin from "./screens/admin";
-import Order from "./screens/order";
-import Staff from "./screens/staff";
-import Login from "./screens/login";
-import Services from "./screens/services";
-import StartingPanel from "./screens/startingPanel";
-import OrderNew from "./screens/orderNew";
-// import SideBarComponent from './components/SideBarComponent';
-import Invoices from './screens/invoices';
-import Invite from './screens/invite';
-import { red, purple } from '@mui/material/colors';
+import CssBaseline from '@mui/material/CssBaseline';
+import SignIn from './screens/login';
+import Services from './screens/services';
+import StartingPanel from './screens/startingPanel';
 import TablesPanel from './screens/tablesPanel';
 import OrdersPanel from './screens/ordersPanel';
-
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
-});
+import EmployeesList from './screens/manager_activities/employees/employeesList';
+import CategoriesList from './screens/manager_activities/dishes/categoriesList';
+import TablesList from './screens/manager_activities/tables/tablesList';
+import NewEmployee from './screens/manager_activities/employees/newEmployee';
+import EditEmployee from './screens/manager_activities/employees/editEmployee';
+import PendingOrders from './screens/pending-orders';
 
 function App() {
   return (
-    // <ThemeProvider theme={darkTheme}>
     <>
       <CssBaseline />
       <Router>
-        {/* <div id="app" style={({ height: '100vh' }, { display: 'flex' })}> */}
         <div>
-          {/* <SideBarComponent /> */}
-          {/* <main className="content" style={{ marginTop: '50px' }}> */}
           <main>
             <Routes>
               <Route element={<StartingPanel />} path="/" />
-
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/dishmenu" element={<DishMenu />} />
-              <Route path="/tables" element={<Tables />} />
-              <Route path="/orders" element={<Orders />} />
-              <Route path="orders/order/:id" element={<Order />} />
-              <Route path="/staff" element={<Staff />} />
-              <Route path="/invoices" element={<Invoices />} />
-              <Route path="/invite" element={<Invite />} />
-              <Route path="/ordernew" element={<OrderNew />} />
+              <Route path="orders/order/:id" element={<OrdersPanel />} />
               <Route path="/start" element={<StartingPanel />} />
-
-              <Route path="/admin-panel" element={<Admin />} />
-              <Route path="/login" element={<Login />} />
+              <Route path="/login" element={<SignIn />} />
               <Route path="/services" element={<Services />} />
               <Route path="/tablesPanel" element={<TablesPanel />} />
-              <Route path="/ordersPanel" element={<OrdersPanel />} />
+              <Route path="/tablesList" element={<TablesList />} />
+              <Route path="/employess/" element={<EmployeesList />} />
+              <Route path="/employess/:id" element={<EditEmployee />} />
+              <Route path="/employess/new-employee" element={<NewEmployee />} />
+              <Route path="/menu" element={<CategoriesList />} />
+              <Route path="/pending-orders" element={<PendingOrders />} />
             </Routes>
           </main>
         </div>
       </Router>
     </>
-    // </ThemeProvider>
   );
 }
 

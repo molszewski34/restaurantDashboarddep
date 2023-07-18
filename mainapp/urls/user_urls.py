@@ -13,9 +13,13 @@ urlpatterns=[
     path('create/', views.createUser, name='create'),
     path('profile/', views.getUserProfile, name='profile'),
     path('employees/', views.get_employees, name="employees"),
+    path('positions/', views.getPositions, name="positions"),
+    path('create-employee/', views.createEmployee, name="create-employee"),
+    path('edit-employee/<str:pk>', views.editEmployee, name="edit-employee"),
     
 
     path('users/<str:pk>/', views.getUserById, name='user'),
     path('remove/<str:pk>/', views.deleteUser, name='delete-user'),
+    path('employees/<str:pk>', views.getEmployeeById, name="employee")
     
 ]

@@ -102,9 +102,10 @@ export const createNewTable =
 
     const tableRoomToSend = rooms.find(findTableRoom);
 
+    // Data to be sent to the backend
     const tableData = {
       room: tableRoomToSend,
-      tableNumber: tableArray.length + 1,
+      tableNumber: tableArray.length,
       numberOfPersons: numberOfPersons,
       isOccupied: false,
     };
@@ -117,16 +118,30 @@ export const createNewTable =
         },
       });
 
+      const body = {
+        tableData: tableData,
+      };
+      // ================= JWT Authorization data ===========
+      let userInfo = JSON.parse(localStorage.userInfo);
       const config = {
         headers: {
           "Content-type": "application/json",
-        },
-        body: {
-          tableData,
+          Authorization: "Bearer " + String(userInfo.access),
         },
       };
 
-      const { data } = await axios.post("orders/create-new-table", config);
+      // Sending data to backend
+      const { data } = await axios
+        .post("orders/create-new-table", body, config)
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, list tables again. It`s nesesary to get the correct table ID
+            alert("Create Table status: OK");
+            dispatch(listTables());
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: REMOVE_TABLE_FAIL,
@@ -138,18 +153,33 @@ export const createNewTable =
     }
   };
 
-export const removeTable = (table, tables) => async (dispatch) => {
-  const tablesAfterRemove = tables.filter((el) => el.id != table.id);
+// ================= Remove table from restaurant ===========
+export const removeTable = (id) => async (dispatch) => {
+ 
 
   try {
-    dispatch({
-      type: REMOVE_TABLE,
-      payload: {
-        tablesAfterRemove,
+ 
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
       },
-    });
+    };
 
-    const { data } = await axios.delete(`orders/remove-table/${table.id}`);
+    // delete table - request
+    const { data } = await axios
+      .delete(`orders/remove-table/${id}`, config)
+      .then(function (response) {
+        if (response.status == 200) {
+          alert("Table removed");
+          // Get all tables again after remove
+          dispatch(listTables());
+        } else {
+          alert("Something went wrong, status code: ", response.status);
+        }
+      });
   } catch (error) {
     dispatch({
       type: CREATE_NEW_TABLE_FAIL,
@@ -160,3 +190,5 @@ export const removeTable = (table, tables) => async (dispatch) => {
     });
   }
 };
+
+// ================= Remove table from restaurant ==== END ===========
