@@ -115,9 +115,9 @@ def getOrderDish(request):
 
 # get active ordered dishes
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def getActiveOrderedDishes(request):
-    orderedDishes = OrderDish.objects.get(isActive=True)
+    orderedDishes = OrderDish.objects.filter(isActive=True)
     print(orderedDishes)
     serializer = OrderDishSerializer(orderedDishes, many=True)
     return Response(serializer.data)

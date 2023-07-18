@@ -7,10 +7,12 @@ import {
   ORDER_DISH_LIST_REQUEST,
   ORDER_DISH_LIST_SUCCESS,
   ORDER_DISH_LIST_FAIL,
-  ADD_DISH_TO_MENU,
   ADD_DISH_TO_MENU_FAIL,
   REMOVE_DISH_FROM_MENU,
   REMOVE_DISH_FROM_MENU_FAIL,
+  ORDER_ACTIVE_DISH_LIST_REQUEST,
+  ORDER_ACTIVE_DISH_LIST_SUCCESS,
+  ORDER_ACTIVE_DISH_LIST_FAIL,
 } from "../constants/dishConstants";
 
 export const listDishes = () => async (dispatch) => {
@@ -32,27 +34,55 @@ export const listDishes = () => async (dispatch) => {
   }
 };
 
+// List ordered dishes By order Id
 export const listOrderDishes = (id) => async (dispatch) => {
   try {
-    dispatch({ type: ORDER_DISH_LIST_REQUEST });
-    const { data } = await axios.get("/dishes/get-order-dishes");
+    dispatch({ type: ORDER_DISH_LIST_REQUEST }); // Dispatch an action to indicate the start of the order dish listing request
+    const { data } = await axios.get("/dishes/get-order-dishes"); // Send a GET request to fetch all order dishes
 
-    const orderedDishes = data.filter((el) => el.order == id);
+    const orderedDishes = data.filter((el) => el.order == id); // Filter the fetched data to get order dishes for the specified ID
 
     dispatch({
-      type: ORDER_DISH_LIST_SUCCESS,
-      payload: orderedDishes,
+      type: ORDER_DISH_LIST_SUCCESS,// Dispatch an action to indicate the successful listing of order dishes
+      payload: orderedDishes,  // Pass the filtered order dishes as the payload
     });
   } catch (error) {
     dispatch({
-      type: ORDER_DISH_LIST_FAIL,
+      type: ORDER_DISH_LIST_FAIL, // Dispatch an action to indicate the failure of the order dish listing request
       payload:
         error.response && error.response.data.message
           ? error.response.data.message
-          : error.message,
+          : error.message, // Pass the error message as the payload
     });
   }
 };
+
+
+// List ordered active dishes 
+export const listActiveOrderDishes = () => async (dispatch) => {
+  try {
+    dispatch({ type: ORDER_ACTIVE_DISH_LIST_REQUEST }); // Dispatch an action to indicate the start of the order dish listing request
+    const { data } = await axios.get("/dishes/get-active-ordered-dishes"); // Send a GET request to fetch all order dishes
+
+    const orderedActiveDishes = data.filter((el) => el.isActive == true); // Filter the fetched data to get order dishes for the specified ID
+    console.log(orderedActiveDishes)
+    dispatch({
+      type: ORDER_ACTIVE_DISH_LIST_SUCCESS,// Dispatch an action to indicate the successful listing of order dishes
+      payload: orderedActiveDishes,  // Pass the filtered order dishes as the payload
+    });
+  } catch (error) {
+    dispatch({
+      type: ORDER_ACTIVE_DISH_LIST_FAIL, // Dispatch an action to indicate the failure of the order dish listing request
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message, // Pass the error message as the payload
+    });
+  }
+};
+
+
+
 
 export const addDishToMenu =
   (category, dishName, dishPrice) => async (dispatch) => {

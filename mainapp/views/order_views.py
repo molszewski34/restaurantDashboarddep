@@ -50,20 +50,21 @@ def getOrderById(request,pk):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated])
 def updateOrder(request,pk):
-    data= request.data
-    order = Order.objects.get(id=pk)
-    table = order.table
-          
-    table.isOccupied = False
-    table.save()
-    order.isPaid = data['body']['isPaid']
-    order.table = None
-    order.save()
-    print( order.isPaid)
- 
-        
-       
 
+    data = request.data  
+    order = Order.objects.get(id=pk)  # Retrieve the Order object with the specified id
+    table = order.table  # Get the associated table of the order
+    table.isOccupied = False  # Set the table's occupancy status to False
+    table.save()  # Save the changes to the table object
+    order.isPaid = data['body']['isPaid']  # Update the isPaid field of the order based on the data
+    order.table = None  # Remove the association of the table from the order
+    # Get dishes from order an set the isActive field to False
+    orderedDishesToRemove = OrderDish.objects.filter(order=pk)
+    for dish in orderedDishesToRemove:
+        dish.isActive = False
+        dish.save()
+    
+    order.save()  # Save the changes to the order object
     return Response("Order updated")
 
 
@@ -139,9 +140,9 @@ def changeDishQty(request,pk):
        #get order contains dish to change
         order = Order.objects.get(id=dishToChange.order.id)
 
-        #Change total proce of order afte qty was changed
+        #Change total price of order after qty was changed
 
-        #Check if new aty value is different from zero
+        #Check if new qty value is different from zero
         if dishToChange.qty != 0:
               
             # if new qty value is greater than old 
