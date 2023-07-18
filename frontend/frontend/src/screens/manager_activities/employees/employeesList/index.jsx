@@ -30,7 +30,7 @@ const EmployeesList = () => {
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
-      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
+      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_170px)]  md:p-[30px] md:left-[170px]  md:top-0;">
         <header className="font-bold py-1 border-b text-2xl border-[#cbd5e1]">
           Employess
         </header>
@@ -41,7 +41,7 @@ const EmployeesList = () => {
           + Add employee
         </Link>
         <section className="flex flex-col mt-4">
-          <div className="grid grid-cols-3 md:grid-cols-6 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs ">
+          <div className="grid grid-cols-3 md:grid-cols-6 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs md:text-[0.7em] lg:text-xs">
             <span>Full name</span>
             <span>Position</span>
 
@@ -58,18 +58,27 @@ const EmployeesList = () => {
                   key={employee.id}
                   className="grid grid-cols-3 md:grid-cols-6 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
                 >
-                  <span className="flex ">{employee.name}</span>
-                  <span>{employee.position}</span>
+                  <span className="flex md:text-[0.9em] lg:text-xs">
+                    {employee.name}
+                  </span>
+                  <span className="md:text-[0.9em] lg:text-xs">
+                    {employee.position}
+                  </span>
 
-                  <span className="hidden md:flex">
+                  <span className="hidden md:flex md:text-[0.9em] lg:text-xs">
                     {employee.isCashier ? 'Yes' : 'No'}
                   </span>
-                  <span className="hidden md:flex">
+                  <span className="hidden md:flex md:text-[0.9em] lg:text-xs">
                     {employee.isDriver ? 'Yes' : 'No'}
                   </span>
 
-                  <span className="flex break-all">{employee.phone}</span>
-                  <span className="  hidden md:flex">{employee.email}</span>
+                  <span className="flex break-all md:text-[0.9em] lg:text-xs">
+                    {employee.phone}
+                  </span>
+                  <span className="  hidden md:flex md:text-[0.9em] lg:text-xs">
+                    {employee.email}
+                  </span>
+                  {/* <span className="  hidden md:flex">{employee.email}</span> */}
                 </Link>
               ))}
             </div>

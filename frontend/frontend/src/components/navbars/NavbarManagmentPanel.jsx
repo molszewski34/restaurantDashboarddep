@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { BiUserCircle } from "react-icons/bi";
+import { BiUserCircle } from 'react-icons/bi';
 import {
   MdTableBar,
   MdOutlineKeyboardArrowDown,
   MdFastfood,
-} from "react-icons/md";
+} from 'react-icons/md';
 
-import { GiCook } from "react-icons/gi";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { GiCook } from 'react-icons/gi';
+import { useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 const NavbarManagmentPanel = () => {
+  let navigate = useNavigate();
   const [logoutPanel, setLogoutPanel] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const {
@@ -25,7 +25,12 @@ const NavbarManagmentPanel = () => {
     <main className="flex flex-col ">
       <section className="flex justify-between shadow-md text-[#6b7280] relative">
         <button className="flex items-center justify-center text-center bg-primary-bg-color w-[40px]">
-          <GiCook className="text-white text-2xl" />
+          <GiCook
+            onClick={() => {
+              navigate('/services');
+            }}
+            className="text-white text-2xl"
+          />
         </button>
         <div
           onClick={() => {
@@ -51,8 +56,8 @@ const NavbarManagmentPanel = () => {
           to="/menu"
           className={({ isActive }) =>
             isActive
-              ? "py-2 px-4 flex flex-col items-center bg-secondary-bg-color"
-              : "py-2 px-4 flex flex-col items-center"
+              ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color'
+              : 'py-2 px-4 flex flex-col items-center'
           }
         >
           <MdFastfood />
@@ -63,8 +68,8 @@ const NavbarManagmentPanel = () => {
           to="/employess"
           className={({ isActive }) =>
             isActive
-              ? "py-2 px-4 flex flex-col items-center bg-secondary-bg-color"
-              : "py-2 px-4 flex flex-col items-center"
+              ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color'
+              : 'py-2 px-4 flex flex-col items-center'
           }
         >
           <GiCook />
@@ -75,8 +80,8 @@ const NavbarManagmentPanel = () => {
           to="/tablesList"
           className={({ isActive }) =>
             isActive
-              ? "py-2 px-4 flex flex-col items-center bg-secondary-bg-color"
-              : "py-2 px-4 flex flex-col items-center"
+              ? 'py-2 px-4 flex flex-col items-center bg-secondary-bg-color'
+              : 'py-2 px-4 flex flex-col items-center'
           }
         >
           <MdTableBar />
