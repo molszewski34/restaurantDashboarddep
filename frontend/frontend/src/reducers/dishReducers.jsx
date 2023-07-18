@@ -137,7 +137,7 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
 };
 
 export const activeOrderDishesReducer = (
-  state = { orderActiveDishes: [] },
+  state = { activeDishes: [] },
   action
 ) => {
   switch (action.type) {
@@ -145,7 +145,7 @@ export const activeOrderDishesReducer = (
       return { loading: true, dishes: [] };
 
     case ORDER_ACTIVE_DISH_LIST_SUCCESS:
-      return { loading: false, orderActiveDishes: action.payload };
+      return { loading: false, activeDishes: action.payload };
 
     case ORDER_ACTIVE_DISH_LIST_FAIL:
       return { loading: false, error: action.payload };

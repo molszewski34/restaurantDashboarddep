@@ -64,11 +64,9 @@ export const listActiveOrderDishes = () => async (dispatch) => {
     dispatch({ type: ORDER_ACTIVE_DISH_LIST_REQUEST }); // Dispatch an action to indicate the start of the order dish listing request
     const { data } = await axios.get("/dishes/get-active-ordered-dishes"); // Send a GET request to fetch all order dishes
 
-    const orderedActiveDishes = data.filter((el) => el.isActive == true); // Filter the fetched data to get order dishes for the specified ID
-    console.log(orderedActiveDishes)
     dispatch({
       type: ORDER_ACTIVE_DISH_LIST_SUCCESS,// Dispatch an action to indicate the successful listing of order dishes
-      payload: orderedActiveDishes,  // Pass the filtered order dishes as the payload
+      payload: data,  // Pass the filtered order dishes as the payload
     });
   } catch (error) {
     dispatch({
