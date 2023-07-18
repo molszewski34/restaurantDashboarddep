@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import CircularProgress from "@mui/material/CircularProgress";
-import { getEmployeePositions } from "../../../../actions/userActions";
-import { getEmployeeById } from "../../../../actions/userActions";
-import { editEmployee } from "../../../../actions/userActions";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import CircularProgress from '@mui/material/CircularProgress';
+import { getEmployeePositions } from '../../../../actions/userActions';
+import { getEmployeeById } from '../../../../actions/userActions';
+import { editEmployee } from '../../../../actions/userActions';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const EditEmployee = () => {
   let dispatch = useDispatch();
@@ -15,14 +15,14 @@ const EditEmployee = () => {
   let navigate = useNavigate();
 
   // first states of Name, email and phone number
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [fullName, setFullName] = useState('');
 
-  const [position, setPosition] = useState("");
-  const [isCashier, setIsCashier] = useState("");
-  const [isDriver, setIsDriver] = useState("");
+  const [position, setPosition] = useState('');
+  const [isCashier, setIsCashier] = useState('');
+  const [isDriver, setIsDriver] = useState('');
 
   // get employees positions
   const positionsList = useSelector((state) => state.positionsList);
@@ -36,38 +36,39 @@ const EditEmployee = () => {
     employee,
   } = employeeDetails;
 
+  console.log(employee);
+
   const handleInputChange = (e, setInputText) => {
     // Get the input value from the event
     const inputValue = e.target.value;
-    
+
     // Regular expression to match numbers
     const numbersRegex = /^[0-9]*$/;
-    
+
     // Check if the input value is empty or consists only of numbers
-    if (inputValue === "" || numbersRegex.test(inputValue)) {
+    if (inputValue === '' || numbersRegex.test(inputValue)) {
       // Set the input text using the provided setter function
       setInputText(inputValue);
     }
   };
-  
+
   const validateEmail = (e, setInputChange) => {
     const inputValue = e.target.value;
 
     // Regular expression to match email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  
+
     // Check if the input value is empty or matches the email regex
-    if (inputValue === "" || emailRegex.test(inputValue)) {
+    if (inputValue === '' || emailRegex.test(inputValue)) {
       // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError(""); // Clear the email error
+      setEmailError(''); // Clear the email error
     } else {
       // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError("Incorrect email format"); // Set the email error message
+      setEmailError('Incorrect email format'); // Set the email error message
     }
   };
-  
 
   const confirmEmployeeHandler = (e) => {
     e.preventDefault();
@@ -106,7 +107,7 @@ const EditEmployee = () => {
                             type="text"
                             name="full_name"
                             id="full_name"
-                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
+                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50 bg-[#e0f2fe]"
                             placeholder={employee.name}
                             required
                             onChange={(e) => {
@@ -127,10 +128,14 @@ const EditEmployee = () => {
                             type="text"
                             name="email"
                             id="email"
-                            className={`h-10 border mt-1 rounded pl-2 w-full bg-gray-50`}
+                            className={`h-10 border mt-1 rounded pl-2 w-full bg-[#e0f2fe]`}
                             onChange={(e) => validateEmail(e, setEmail)}
                             value={email}
-                            placeholder={employee.email}
+                            // placeholder={
+                            //   employee.email === null
+                            //     ? 'ex: example@email.com'
+                            //     : employee.email
+                            // }
                             required
                           />
                         </div>
@@ -141,7 +146,7 @@ const EditEmployee = () => {
                             type="text"
                             name="address"
                             id="address"
-                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
+                            className="h-10 border mt-1 rounded pl-2 w-full bg-[#e0f2fe]"
                             onChange={(e) => {
                               setPhoneNumber(e.target.value);
 
@@ -162,7 +167,7 @@ const EditEmployee = () => {
                               }}
                               className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                             >
-                              {" "}
+                              {' '}
                               <option value=""></option>
                               {positions.map((position, i) => (
                                 <option key={i} value={position.title}>

@@ -1,10 +1,10 @@
-import React from "react";
-import NavbarTop from "../../components/navbars/NavbarTop";
-import { useSelector, useDispatch } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
-import { listRooms } from "../../actions/tablesActions";
-import { listTables } from "../../actions/tablesActions";
+import React from 'react';
+import NavbarTop from '../../components/navbars/NavbarTop';
+import { useSelector, useDispatch } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
+import { listRooms } from '../../actions/tablesActions';
+import { listTables } from '../../actions/tablesActions';
 
 const Services = () => {
   let navigate = useNavigate();
@@ -29,15 +29,18 @@ const Services = () => {
             <div className="grid grid-cols-2  gap-1">
               <button
                 onClick={() => {
-                  navigate("/tablesPanel");
+                  navigate('/tablesPanel');
                 }}
                 className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
               >
                 Table Service
               </button>
-              <button   onClick={() => {
-                  navigate("/pending-orders");
-                }} className="flex justify-center items-center  bg-white text-center font-bold text-xl">
+              <button
+                onClick={() => {
+                  navigate('/pending-orders');
+                }}
+                className="flex justify-center items-center  bg-white text-center font-bold text-xl"
+              >
                 Pending orders
               </button>
               {/* <button className="flex justify-center items-center  bg-white text-center font-bold text-xl">
@@ -59,29 +62,29 @@ const Services = () => {
               <button
                 className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
                 onClick={() => {
-                  navigate("/menu");
+                  navigate('/menu');
                 }}
               >
-                Menu
+                Menu Managment
               </button>
               <button
                 onClick={() => {
-                  navigate("/employess");
+                  navigate('/employess');
                 }}
                 className="flex justify-center items-center  bg-white text-center font-bold text-xl"
               >
-                Labor
+                Employees Managment
               </button>
 
               <button
                 className="flex justify-center items-center  bg-white text-center font-bold text-xl"
                 onClick={() => {
-                  navigate("/tablesList");
+                  navigate('/tablesList');
                   dispatch(listRooms());
                   dispatch(listTables());
                 }}
               >
-                Tables
+                Rooms Managment
               </button>
               {/* <div className="p-8 bg-white">Pending Orders</div>
 =======
