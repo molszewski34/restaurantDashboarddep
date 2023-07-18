@@ -24,9 +24,9 @@ def createOrder(request,pk):
             user = user,
             table = table
         )
-        print(order)
+     
     else:
-        print("dupa")
+     
         return Response('Table is occupied')
 
     #swicth table.isOccupied to True, no one else can make an order assigned this table
@@ -37,7 +37,7 @@ def createOrder(request,pk):
     return Response(serializer.data)
     
 
-#update order only for assigned user
+#get order by id for assigned user
 @api_view(['GET'])
 def getOrderById(request,pk):
     order = Order.objects.get(id=pk)
@@ -88,29 +88,27 @@ def setPaymentMenthod(request, pk):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated])
 def addDishToOrder(request):
-    data=request.data 
-    user = request.user  
+    data=request.data # Data sent in the request
+    user = request.user  # Currently logged-in user
     
-    order = Order.objects.get(id=data['order'])      
-    dish = Dish.objects.get(id=data['dish'])
-    qty = int(data['qty'])
+    order = Order.objects.get(id=data['order'])  # Retrieve the Order object with the specified id from the data     
+    dish = Dish.objects.get(id=data['dish'])  # Retrieve the Dish object with the specified id from the data
+    qty = int(data['qty'])  # Get the quantity of the dish from the data
 
-    orderedDishes = OrderDish.objects.filter(order=order)
-  
-
+    orderedDishes = OrderDish.objects.filter(order=order)  # Get all ordered dishes for the given order
+     
+    existOrderDish = orderedDishes.filter(dish=dish)  # Check if the dish already exists in the order
     
-    existOrderDish = orderedDishes.filter(dish=dish)
-    print("ExisteOrderDis: ",len(existOrderDish))
     if len(existOrderDish)>0:
-        print("Dish exist, try to increase qty")
-        return Response("Dish exist, try to increase qty")
+        return Response("Dish exist, try to increase qty")   # If the dish already exists, return a response with an error message
            
     dishToOrder = OrderDish.objects.create(
         dish=dish,
         order = order,
         qty=qty,
+        isActive = True
 
-        )
+        ) # Create a new OrderDish object for the given dish and order
 
     order.totalPrice = float(order.totalPrice) + float(data['price'] * float(data['qty']))
     order.save()

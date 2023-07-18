@@ -1,36 +1,39 @@
-import React, { useRef, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import CircularProgress from "@mui/material/CircularProgress";
 import NavbarTop from "../../components/navbars/NavbarTop";
+import { listOrderDishes } from "../../actions/dishActions";
+import { listOrders } from "../../actions/ordersActions";
 
 import data from "./data.json";
 
 const PendingOrders = () => {
-  // const [cancelIndex, setCancelIndex] = useState(null);
+  let dispatch = useDispatch();
+  const orderList = useSelector((state) => state.orderList);
+  const { error, loading, orders } = orderList;
+
+  const orderDishList = useSelector((state) => state.orderDishList);
+  const {
+    error: errorDishList,
+    loading: loadingDishList,
+    orderDishes,
+  } = orderDishList;
+
+  console.log(orders);
+  console.log(orderDishes);
+
   const [selectedButton, setSelectedButton] = useState("all");
-  // const timerRef = useRef();
-  // function startPressTimer(id) {
-  //   timerRef.current = setTimeout(() => {
-  //     setCancelIndex(id);
-  //   }, 1500);
-  // }
-  // function handleOnMouseDown(id) {
-  //   startPressTimer(id);
-  // }
-  // function handleOnMouseUp() {
-  //   clearTimeout(timerRef.current);
-  // }
-  // const handleCancel = (id) => {
-  //   setCancelIndex(null);
-  //   const updatedData = { ...data };
-  //   updatedData.orders.forEach((order) => {
-  //     order.items.forEach((item) => {
-  //       if (item.id === id) {
-  //         item.isReady = false;
-  //         item.isAccepted = true;
-  //       }
-  //     });
-  //   });
-  // };
-  return (
+
+  useEffect(() => {
+    dispatch(listOrders());
+    dispatch(listOrderDishes());
+  }, []);
+
+  return loading ? (
+    <CircularProgress color="secondary" />
+  ) : error ? (
+    <div>Something went wrong</div>
+  ) : (
     <main>
       <NavbarTop />
       <div className="flex flex-col justify-center items-center mb-4 relative w-[calc(100%_-_50px)]">
@@ -98,7 +101,6 @@ const PendingOrders = () => {
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 px-2 max-w-[1600px]">
           {data.orders.map((order) => {
-            
             //Remove not needed statutes from filtering. Please notice, filtering is connected to filtering buttons at the top of file.
 
             if (order.items.length > 0) {
