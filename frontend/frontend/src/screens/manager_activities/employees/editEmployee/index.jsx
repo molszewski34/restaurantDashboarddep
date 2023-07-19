@@ -131,11 +131,11 @@ const EditEmployee = () => {
                             className={`h-10 border mt-1 rounded pl-2 w-full bg-[#e0f2fe]`}
                             onChange={(e) => validateEmail(e, setEmail)}
                             value={email}
-                            // placeholder={
-                            //   employee.email === null
-                            //     ? 'ex: example@email.com'
-                            //     : employee.email
-                            // }
+                            placeholder={
+                              employee.email === null
+                                ? 'ex: example@email.com'
+                                : employee.email
+                            }
                             required
                           />
                         </div>
@@ -153,7 +153,11 @@ const EditEmployee = () => {
                               handleInputChange(e, setPhoneNumber);
                             }}
                             value={phoneNumber}
-                            placeholder={employee.phone}
+                            placeholder={
+                              employee.phone === null
+                                ? 'Enter your phone number...'
+                                : employee.phone
+                            }
                             required
                           />
                         </div>
@@ -168,7 +172,7 @@ const EditEmployee = () => {
                               className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                             >
                               {' '}
-                              <option value=""></option>
+                              <option value={employee.title}></option>
                               {positions.map((position, i) => (
                                 <option key={i} value={position.title}>
                                   {position.title}

@@ -1,16 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { batch, useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import { listDishes } from "../../../../actions/dishActions";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import { listCategories } from "../../../../actions/categoriesActions";
-import { Link } from "react-router-dom";
-import CircularProgress from "@mui/material/CircularProgress";
-import { addDishToMenu } from "../../../../actions/dishActions";
-import { removeDishFromMenu } from "../../../../actions/dishActions";
-import { createNewCategory } from "../../../../actions/categoriesActions";
-import { removeCategory } from "../../../../actions/categoriesActions";
-import { editDish } from "../../../../actions/dishActions";
+import React, { useEffect, useState } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import { listDishes } from '../../../../actions/dishActions';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import { listCategories } from '../../../../actions/categoriesActions';
+import { Link } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+import { addDishToMenu } from '../../../../actions/dishActions';
+import { removeDishFromMenu } from '../../../../actions/dishActions';
+import { createNewCategory } from '../../../../actions/categoriesActions';
+import { removeCategory } from '../../../../actions/categoriesActions';
+import { editDish } from '../../../../actions/dishActions';
+import { BiTrashAlt } from 'react-icons/bi';
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { error, loading, categories } = categoriesList;
@@ -27,16 +28,16 @@ const CategoriesList = () => {
   const [overlay, setOverlay] = useState(false);
 
   // ADD CATEGORY - INITIAL STATE OF VARIABLES
-  const [selectedColor, setSelectedColor] = useState("#0ca3ee");
-  const [newCategoryName, setNewCategoryName] = useState("");
+  const [selectedColor, setSelectedColor] = useState('#0ca3ee');
+  const [newCategoryName, setNewCategoryName] = useState('');
   const [openCategoryForm, setOpenCategoryForm] = useState(false);
 
   // INITIAL STATE OF CATEGORY ID
   const [categoryId, setCategoryId] = useState(null);
 
   // INITIAL NAME AND PRICE VALUES (ADD DISH AND EDIT)
-  const [newDishName, setNewDishName] = useState("");
-  const [dishPrice, setDishPrice] = useState("");
+  const [newDishName, setNewDishName] = useState('');
+  const [dishPrice, setDishPrice] = useState('');
   const [categoryName, setCategoryName] = useState(null);
   const [selectedDishId, setSelectedDishId] = useState(null);
 
@@ -65,11 +66,11 @@ const CategoriesList = () => {
       <NavbarManagmentPanelSide />
       <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
         <div className="flex flex-col px-1 border-b border-[#cbd5e1] my-2">
-          <h1 className="font-bold py-1 border-b border-[#cbd5e1] mt-4">
+          <h1 className="font-bold py-1 border-b border-[#cbd5e1] mt-4 text-3xl">
             Menu
           </h1>
           <Link
-            className="border border-[#cbd5e1] place-self-start  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] rounded"
+            className="border border-[#cbd5e1] place-self-start  py-1 px-3 text-sm my-2 mt-3 text-[#0369a1] font-bold hover:bg-[#f1f5f9] rounded shadow"
             onClick={() => {
               setOpenCategoryForm(!openCategoryForm);
             }}
@@ -112,37 +113,37 @@ const CategoriesList = () => {
                             >
                               <option
                                 className="md:col-span-2 bg-{#0ca3ee}"
-                                style={{ backgroundColor: "#0ca3ee" }}
+                                style={{ backgroundColor: '#0ca3ee' }}
                               >
                                 #0ca3ee
                               </option>
                               <option
                                 className="md:col-span-2"
-                                style={{ backgroundColor: "#92E390" }}
+                                style={{ backgroundColor: '#92E390' }}
                               >
                                 #92E390
                               </option>
                               <option
                                 className="md:col-span-2"
-                                style={{ backgroundColor: "#fde798" }}
+                                style={{ backgroundColor: '#fde798' }}
                               >
                                 #fde798
                               </option>
                               <option
                                 className="md:col-span-2"
-                                style={{ backgroundColor: "#d9dfe4" }}
+                                style={{ backgroundColor: '#d9dfe4' }}
                               >
                                 #d9dfe4
                               </option>
                               <option
                                 className="md:col-span-2"
-                                style={{ backgroundColor: "#107b1e" }}
+                                style={{ backgroundColor: '#107b1e' }}
                               >
                                 #107b1e
                               </option>
                               <option
                                 className="md:col-span-2"
-                                style={{ backgroundColor: "#ebac15" }}
+                                style={{ backgroundColor: '#ebac15' }}
                               >
                                 #ebac15
                               </option>
@@ -185,121 +186,127 @@ const CategoriesList = () => {
             <span className="text-sm font-bold  pl-2 place-self-start">
               Color
             </span>
-          </div>{" "}
+          </div>{' '}
           {categoriesList.categories.map((categoryItem) => {
             const categoryEditing = categoryItem.id === categoryName;
             return (
-              <div key={categoryItem.id} className="flex flex-col w-full gap-2">
-                <div className="grid grid-cols-4 items-center  px-2 bg-[#f1f5f9] py-2 border-b border-white rounded">
-                  <p className="uppercase text-sm text-[#6b7280] font-bold">
-                    {categoryItem.title}
-                  </p>
-                  <span
-                    className=" w-6 h-6 grow flex border-2 border-white"
-                    style={{ backgroundColor: categoryItem.colour }}
-                  ></span>
-                  <button
-                    onClick={() => handleCategoryEditClick(categoryItem.id)}
-                    className="flex justify-center items-center w-8 h-8 text-[#0369a1] text-xs font-bold hover:underline"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={() => {
-                      setModalOpen(true);
-                      setOverlay(true);
-                      setCategoryId(categoryItem.id);
-                    }}
-                    className="flex place-self-end self-center text-[#0369a1] text-xs  shadowed px-2 py-1 font-bold hover:underline"
-                  >
-                    Delete category
-                  </button>
-                </div>
-
-                <div className="grid grid-cols-1">
-                  <div className="grid grid-cols-4 border-b border-[#cbd5e1]   py-1">
-                    <span className="font-bold pl-2 text-sm">Name</span>
-                    <span className="font-bold text-sm">Price</span>
+              <div
+                key={categoryItem.id}
+                className="flex flex-col w-full gap-2 "
+              >
+                <div className="shadow">
+                  <div className="grid grid-cols-4 items-center  px-2 bg-[#f1f5f9] py-2 border-b border-white rounded shadow">
+                    <p className="uppercase text-sm text-[#6b7280] font-bold">
+                      {categoryItem.title}
+                    </p>
+                    <span
+                      className=" w-6 h-6 grow flex border-2 border-white"
+                      style={{ backgroundColor: categoryItem.colour }}
+                    ></span>
+                    <button
+                      onClick={() => handleCategoryEditClick(categoryItem.id)}
+                      className="flex justify-center items-center w-8 h-8 text-[#64748b] text-sm font-bold hover:underline"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => {
+                        setModalOpen(true);
+                        setOverlay(true);
+                        setCategoryId(categoryItem.id);
+                      }}
+                      className="flex place-self-end self-center text-[#94a3b8] hover:text-[#dc2626] text-lg  shadowed px-2 py-1 font-bold hover:underline bg-white rounded shadow"
+                    >
+                      {/* Delete category */}
+                      <BiTrashAlt />
+                    </button>
                   </div>
-                  {dishes
-                    .filter((dish) => dish.category == categoryItem.id)
-                    .map((filteredDish, index) => {
-                      const dishEditing = filteredDish.id === selectedDishId;
 
-                      return (
-                        <div
-                          key={filteredDish.id}
-                          className="grid grid-cols-4 items-center  text-sm "
-                          style={{
-                            backgroundColor:
-                              index % 2 === 1 ? "white" : "#f1f5f9",
-                          }}
-                        >
-                          <span className="pl-2 text-[#0369a1] cursor-pointer">
-                            {filteredDish.title}
-                          </span>
-                          <span className="text-[#0369a1] cursor-pointer">
-                            {filteredDish.price}
-                          </span>
-                          <button
-                            onClick={() => setSelectedDishId(filteredDish.id)}
-                            className="flex justify-center items-center w-8 h-8 text-[#0369a1] text-xs font-bold hover:underline "
-                          >
-                            Edit
-                          </button>
-                          <button
-                            className="flex items-center justify-center place-self-end self-center text-[#0369a1] text-xs shadowed px-2 py-1 font-bold hover:underline"
-                            onClick={() => {
-                              dispatch(
-                                removeDishFromMenu(dishes, filteredDish)
-                              );
+                  <div className="grid grid-cols-1">
+                    <div className="grid grid-cols-4   py-4">
+                      <span className="font-bold pl-2 text-sm">Name</span>
+                      <span className="font-bold text-sm">Price</span>
+                    </div>
+                    {dishes
+                      .filter((dish) => dish.category == categoryItem.id)
+                      .map((filteredDish, index) => {
+                        const dishEditing = filteredDish.id === selectedDishId;
+
+                        return (
+                          <div
+                            key={filteredDish.id}
+                            className="grid grid-cols-4 items-center  text-sm py-1"
+                            style={{
+                              backgroundColor:
+                                index % 2 === 1 ? 'white' : '#f1f5f9',
                             }}
                           >
-                            Remove
-                          </button>
-                          {/* ===========  EDIT DISH - editor panel ============ */}
-                          {dishEditing && (
-                            <div className="col-start-1 col-end-5 flex gap-2 w-full mt-2 p-2 bg-gray-200">
-                              <input
-                                className="bg-[#e0f2fe] rounded p-1"
-                                type="text"
-                                placeholder={filteredDish.title}
-                                onChange={(e) => {
-                                  setNewDishName(e.target.value);
-                                }}
-                              />
-                              <input
-                                className="bg-[#e0f2fe]  rounded p-1"
-                                type="text"
-                                placeholder={filteredDish.price}
-                                onChange={(e) => {
-                                  setDishPrice(e.target.value);
-                                }}
-                              />
+                            <span className="pl-2  cursor-pointer text-[0.9em] font-bold py-1">
+                              {filteredDish.title}
+                            </span>
+                            <span className=" cursor-pointer">
+                              {filteredDish.price}
+                            </span>
+                            <button
+                              onClick={() => setSelectedDishId(filteredDish.id)}
+                              className="flex justify-center items-center w-8 h-8 text-xs font-bold hover:underline "
+                            >
+                              Edit
+                            </button>
+                            <button
+                              className="flex place-self-end self-center text-[#94a3b8] hover:text-[#dc2626] text-lg  shadowed px-2 py-1 font-bold hover:underline bg-white rounded shadow mr-2"
+                              onClick={() => {
+                                dispatch(
+                                  removeDishFromMenu(dishes, filteredDish)
+                                );
+                              }}
+                            >
+                              <BiTrashAlt />
+                            </button>
+                            {/* ===========  EDIT DISH - editor panel ============ */}
+                            {dishEditing && (
+                              <div className="col-start-1 col-end-5 flex gap-2 w-full mt-2 p-2 bg-gray-200">
+                                <input
+                                  className="bg-[#e0f2fe] rounded p-1"
+                                  type="text"
+                                  placeholder={filteredDish.title}
+                                  onChange={(e) => {
+                                    setNewDishName(e.target.value);
+                                  }}
+                                />
+                                <input
+                                  className="bg-[#e0f2fe]  rounded p-1"
+                                  type="text"
+                                  placeholder={filteredDish.price}
+                                  onChange={(e) => {
+                                    setDishPrice(e.target.value);
+                                  }}
+                                />
 
-                              <button
-                                className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] bg-white font-bold"
-                                onClick={() => {
-                                  console.log("Edytuje");
-                                  console.log();
-                                  dispatch(
-                                    editDish(
-                                      filteredDish.id,
-                                      newDishName,
-                                      dishPrice
-                                    )
-                                  );
-                                  setSelectedDishId(null);
-                                }}
-                              >
-                                Confirm
-                              </button>
-                            </div>
-                          )}
-                          {/* ===========  EDIT DISH - editor panel == END ============ */}
-                        </div>
-                      );
-                    })}
+                                <button
+                                  className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] bg-white font-bold"
+                                  onClick={() => {
+                                    console.log('Edytuje');
+                                    console.log();
+                                    dispatch(
+                                      editDish(
+                                        filteredDish.id,
+                                        newDishName,
+                                        dishPrice
+                                      )
+                                    );
+                                    setSelectedDishId(null);
+                                  }}
+                                >
+                                  Confirm
+                                </button>
+                              </div>
+                            )}
+                            {/* ===========  EDIT DISH - editor panel == END ============ */}
+                          </div>
+                        );
+                      })}
+                  </div>
                 </div>
                 <button
                   onClick={() => {
@@ -308,7 +315,7 @@ const CategoriesList = () => {
                     setCategoryName(categoryItem.title);
                     setCategoryId(categoryItem.id);
                   }}
-                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] place-self-start"
+                  className="border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold hover:bg-[#f1f5f9] place-self-start rounded shadow-md"
                 >
                   + Add
                 </button>
@@ -324,7 +331,7 @@ const CategoriesList = () => {
                 Do you want to delete room and all items inside?
               </b>
               <div className="flex justify-between gap-2">
-                {" "}
+                {' '}
                 <button
                   onClick={() => {
                     dispatch(removeCategory(categoryId));
@@ -347,7 +354,7 @@ const CategoriesList = () => {
               </div>
             </main>
           </div>
-        )}{" "}
+        )}{' '}
         {/* ===========  REMOVE CATEGORY PANEL === EMD  ============ */}
         {/* ================ ADD NEW DISH MODAL ================ */}
         {addProductModal && (

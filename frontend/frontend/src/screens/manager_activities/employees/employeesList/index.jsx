@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 
-import CircularProgress from "@mui/material/CircularProgress";
-import { getEmployees } from "../../../../actions/userActions";
+import CircularProgress from '@mui/material/CircularProgress';
+import { getEmployees } from '../../../../actions/userActions';
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
@@ -66,10 +66,10 @@ const EmployeesList = () => {
                   </span>
 
                   <span className="hidden md:flex md:text-[0.9em] lg:text-xs">
-                    {employee.isCashier ? "Yes" : "No"}
+                    {employee.isCashier ? 'Yes' : 'No'}
                   </span>
                   <span className="hidden md:flex md:text-[0.9em] lg:text-xs">
-                    {employee.isDriver ? "Yes" : "No"}
+                    {employee.isDriver ? 'Yes' : 'No'}
                   </span>
 
                   <span className="flex break-all md:text-[0.9em] lg:text-xs">
@@ -83,7 +83,10 @@ const EmployeesList = () => {
               ))}
             </div>
           ) : (
-            <CircularProgress color="secondary" />
+            <CircularProgress
+              className="grid self-center justify-self-center w-screen "
+              color="secondary"
+            />
           )}
         </section>
       </main>
