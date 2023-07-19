@@ -18,7 +18,16 @@ import {
 export const listDishes = () => async (dispatch) => {
   try {
     dispatch({ type: DISH_LIST_REQUEST });
-    const { data } = await axios.get("/dishes/get-dishes");
+
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+    const { data } = await axios.get("/dishes/get-dishes", config);
     dispatch({
       type: DISH_LIST_SUCCESS,
       payload: data,
@@ -38,13 +47,22 @@ export const listDishes = () => async (dispatch) => {
 export const listOrderDishes = (id) => async (dispatch) => {
   try {
     dispatch({ type: ORDER_DISH_LIST_REQUEST }); // Dispatch an action to indicate the start of the order dish listing request
-    const { data } = await axios.get("/dishes/get-order-dishes"); // Send a GET request to fetch all order dishes
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const { data } = await axios.get("/dishes/get-order-dishes", config); // Send a GET request to fetch all order dishes
 
     const orderedDishes = data.filter((el) => el.order == id); // Filter the fetched data to get order dishes for the specified ID
 
     dispatch({
-      type: ORDER_DISH_LIST_SUCCESS,// Dispatch an action to indicate the successful listing of order dishes
-      payload: orderedDishes,  // Pass the filtered order dishes as the payload
+      type: ORDER_DISH_LIST_SUCCESS, // Dispatch an action to indicate the successful listing of order dishes
+      payload: orderedDishes, // Pass the filtered order dishes as the payload
     });
   } catch (error) {
     dispatch({
@@ -57,16 +75,27 @@ export const listOrderDishes = (id) => async (dispatch) => {
   }
 };
 
-
-// List ordered active dishes 
+// List ordered active dishes
 export const listActiveOrderDishes = () => async (dispatch) => {
   try {
     dispatch({ type: ORDER_ACTIVE_DISH_LIST_REQUEST }); // Dispatch an action to indicate the start of the order dish listing request
-    const { data } = await axios.get("/dishes/get-active-ordered-dishes"); // Send a GET request to fetch all order dishes
+
+    // ================= JWT Authorization data ===========
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+    const { data } = await axios.get(
+      "/dishes/get-active-ordered-dishes",
+      config
+    ); // Send a GET request to fetch all order dishes
 
     dispatch({
-      type: ORDER_ACTIVE_DISH_LIST_SUCCESS,// Dispatch an action to indicate the successful listing of order dishes
-      payload: data,  // Pass the filtered order dishes as the payload
+      type: ORDER_ACTIVE_DISH_LIST_SUCCESS, // Dispatch an action to indicate the successful listing of order dishes
+      payload: data, // Pass the filtered order dishes as the payload
     });
   } catch (error) {
     dispatch({
@@ -79,30 +108,26 @@ export const listActiveOrderDishes = () => async (dispatch) => {
   }
 };
 
-
-
-
 export const addDishToMenu =
   (category, dishName, dishPrice) => async (dispatch) => {
     try {
-
       // ================= JWT Authorization data ===========
-    let userInfo = JSON.parse(localStorage.userInfo);
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(userInfo.access),
-      },
-    };
-   
-        const body = {
-          category: category, //categoryName
-          title: dishName, //dishName
-          price: dishPrice, //dishPrice
-        }
-      
+      let userInfo = JSON.parse(localStorage.userInfo);
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + String(userInfo.access),
+        },
+      };
+
+      const body = {
+        category: category, //categoryName
+        title: dishName, //dishName
+        price: dishPrice, //dishPrice
+      };
+
       const data = await axios
-        .post("/dishes/add-dish",body, config)
+        .post("/dishes/add-dish", body, config)
         .then(function (response) {
           if (response.status == 200) {
             //if response is 200, display OK alert

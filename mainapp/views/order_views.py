@@ -10,11 +10,11 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 #create order 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def createOrder(request,pk):
     data = request.data
     user = request.user
-    user = User.objects.get(id=data['body']["user"])
+    
  
     # get table for order, each order is assigned to table
     table = Table.objects.get(id=pk)
@@ -73,7 +73,7 @@ def setPaymentMenthod(request, pk):
     data= request.data['paymentMethod']
     order =Order.objects.get(id=pk)
     order.paymentMethod = data
-    print(order.paymentMethod)
+  
     order.save()
 
 
@@ -215,7 +215,8 @@ def getAllRooms(request):
 @permission_classes([IsAuthenticated])
 def getAllTables(request):
     user=request.user
-    print("USER IN TABLES: ",user)
+   
+
     tables = Table.objects.all()
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
@@ -229,7 +230,7 @@ def createTable(request):
     requestedRoom = Room.objects.filter(id=data['tableData']['room']['id'])
     
     tableNumber = data['tableData']['tableNumber'] + 1 
-    print(tableNumber)
+
     numberOfPersons = data['tableData']['numberOfPersons']
     isOccupied = data['tableData']['isOccupied']
     newTable = Table.objects.create(
