@@ -11,7 +11,6 @@ urlpatterns=[
     path('login/', views.MyTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('users/', views.getUsers, name='users'),
     path('create/', views.createUser, name='create'),
-    path('profile/', views.getUserProfile, name='profile'),
     path('employees/', views.get_employees, name="employees"),
     path('positions/', views.getPositions, name="positions"),
     path('create-employee/', views.createEmployee, name="create-employee"),

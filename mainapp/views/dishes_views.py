@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 # get all dishes from menu
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getAllDishes(request):
     dishes = Dish.objects.all()
     serializer = DishSerializer(dishes, many=True)
@@ -139,7 +139,7 @@ def setAciveDishAsInactive(request,pk):
 
 #get ordered dish by id
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def getOrderedDishById(request,pk):
     orderedDish = OrderDish.objects.get(id=pk)
     dishes = Dish.objects.all()
@@ -152,15 +152,6 @@ def getOrderedDishById(request,pk):
         "orderedDishPrice" : dishPrice,
         })
 
-
-
-#REMOVE DISH FROM MENU
-@api_view(['DELETE'])
-@permission_classes([IsAdminUser])
-def deleteDish(request,pk):
-    dishToDelete = Dish.objects.get(id=pk)
-    dishToDelete.delete()
-    return Response("Dish removed")
 
 
 #EDIT EXISTING DISH IN MENU

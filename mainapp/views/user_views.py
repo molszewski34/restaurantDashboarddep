@@ -32,12 +32,6 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-@api_view(['GET'])
-def getUserProfile(request):
-    user= request.user
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data)
-
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -55,10 +49,6 @@ def createEmployee(request):
     data = request.data 
     data['isCashier'] = bool(data['isCashier'] == "Yes")
     data['isDriver'] = bool(data['isDriver'] == "Yes")  
-    # if data['isCashier'] == "Yes" : data['isCashier'] = True
-    # if data['isCashier'] == "No" : data['isCashier'] = False
-    # if data['isDriver'] == "Yes" : data['isDriver'] = True
-    # if data['isDriver'] == "No" : data['isDriver'] = False
     newEmployee = Employee.objects.create(
        
             name = data['fullName'],
@@ -72,6 +62,7 @@ def createEmployee(request):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def get_employees(request):
 
     employees = Employee.objects.all()
@@ -111,13 +102,11 @@ def editEmployee(request,pk):
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getPositions(request):
     
-
     titles = Position.objects.all()
-
     serializer = PositionSerializer(titles, many=True)
-
     return Response(serializer.data)
 
 
@@ -125,8 +114,9 @@ def getPositions(request):
 
 
 @api_view(['POST'])
+@permission_classes([IsAdminUser])
 def createUser(request):
-    print("Creating")
+
 
     try:
         data = request.data 

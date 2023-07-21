@@ -155,10 +155,7 @@ export const createNewTable =
 
 // ================= Remove table from restaurant ===========
 export const removeTable = (id) => async (dispatch) => {
- 
-
   try {
- 
     // ================= JWT Authorization data ===========
     let userInfo = JSON.parse(localStorage.userInfo);
     const config = {

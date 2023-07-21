@@ -102,7 +102,7 @@ const OrdersPanel = () => {
     if (dishQty > 0) {
       dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
     } else {
-      dispatch(deleteFromOrder(dishToChange));
+      //dispatch(deleteFromOrder(dishToChange));
       dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
     }
   };

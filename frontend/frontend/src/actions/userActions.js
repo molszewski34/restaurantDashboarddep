@@ -132,7 +132,15 @@ export const getEmployees = () => async (dispatch) => {
       type: EMPLOYEE_LIST_REQUEST,
     });
 
-    const { data } = await axios.get("/user/employees/");
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const { data } = await axios.get("/user/employees/", config);
     dispatch({
       type: EMPLOYEE_LIST_SUCCESS,
       payload: data,
@@ -161,7 +169,7 @@ export const getEmployeeById = (id) => async (dispatch) => {
         Authorization: "Bearer " + String(userInfo.access),
       },
     };
-    const { data } = await axios.get(`/user/employees/${id}`);
+    const { data } = await axios.get(`/user/employees/${id}`, config);
     dispatch({
       type: EMPLOYEE_DETAILS_SUCCESS,
       payload: data,

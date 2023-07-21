@@ -14,7 +14,6 @@ urlpatterns = [
     path('set-active-dish-as-inactive/<str:pk>', views.setAciveDishAsInactive, name="set-active-dis-as-inactive"),
     path('delete-category/<str:pk>', views.deleteDishCategory, name='delete-category'),
     path('get-order-dish/<str:pk>', views.getOrderedDishById, name='get-order-dish'),
-    path('delete-dish/<str:pk>', views.deleteDish, name='delete-dish'),
     path('edit-dish/<str:pk>', views.editDish, name='edit-dish'),
 
 ]

@@ -51,7 +51,7 @@ def getOrderById(request,pk):
 
 #update order only for assigned user
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def updateOrder(request,pk):
 
     data = request.data  
@@ -90,7 +90,7 @@ def setPaymentMenthod(request, pk):
 # add dish to order
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def addDishToOrder(request):
     data=request.data # Data sent in the request
     user = request.user  # Currently logged-in user
@@ -179,7 +179,7 @@ def changeDishQty(request,pk):
 #remove dish from order
 
 @api_view(['DELETE'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def removeDishFromOrder(request,pk):
     dishToRemove = OrderDish.objects.get(id=pk)
     dishToRemove.delete()
@@ -189,7 +189,7 @@ def removeDishFromOrder(request,pk):
 # get All orders 
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getOrders(request):
 
     orders = Order.objects.all().filter(table__isnull = False)
@@ -252,6 +252,7 @@ def createTable(request):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAdminUser])
 def removeTable(request,pk):
     tableToRemove = Table.objects.get(id=pk)
     tableToRemove.delete()
