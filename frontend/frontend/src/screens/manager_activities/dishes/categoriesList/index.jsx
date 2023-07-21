@@ -11,7 +11,8 @@ import { removeDishFromMenu } from '../../../../actions/dishActions';
 import { createNewCategory } from '../../../../actions/categoriesActions';
 import { removeCategory } from '../../../../actions/categoriesActions';
 import { editDish } from '../../../../actions/dishActions';
-import { BiTrashAlt } from 'react-icons/bi';
+import { FaRegTrashAlt } from 'react-icons/fa';
+
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { error, loading, categories } = categoriesList;
@@ -215,10 +216,10 @@ const CategoriesList = () => {
                         setOverlay(true);
                         setCategoryId(categoryItem.id);
                       }}
-                      className="flex place-self-end self-center text-[#94a3b8] hover:text-[#dc2626] text-lg  shadowed px-2 py-1 font-bold hover:underline bg-white rounded shadow"
+                      className="flex place-self-end self-center text-[#6b7280]  hover:text-[#dc2626] text-lg   px-2 py-1 font-bold hover:underline "
                     >
                       {/* Delete category */}
-                      <BiTrashAlt />
+                      <FaRegTrashAlt />
                     </button>
                   </div>
 
@@ -235,7 +236,7 @@ const CategoriesList = () => {
                         return (
                           <div
                             key={filteredDish.id}
-                            className="grid grid-cols-4 items-center  text-sm py-1"
+                            className="grid grid-cols-4 items-center  text-sm text-[#6b7280] py-1"
                             style={{
                               backgroundColor:
                                 index % 2 === 1 ? 'white' : '#f1f5f9',
@@ -254,14 +255,14 @@ const CategoriesList = () => {
                               Edit
                             </button>
                             <button
-                              className="flex place-self-end self-center text-[#94a3b8] hover:text-[#dc2626] text-lg  shadowed px-2 py-1 font-bold hover:underline bg-white rounded shadow mr-2"
+                              className="flex place-self-end self-center text-[#6b7280]  hover:text-[#dc2626] text-lg  px-2 py-1 font-bold hover:underline mr-2"
                               onClick={() => {
                                 dispatch(
                                   removeDishFromMenu(dishes, filteredDish)
                                 );
                               }}
                             >
-                              <BiTrashAlt />
+                              <FaRegTrashAlt />
                             </button>
                             {/* ===========  EDIT DISH - editor panel ============ */}
                             {dishEditing && (
