@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 
-import CircularProgress from "@mui/material/CircularProgress";
-import { getEmployees } from "../../../../actions/userActions";
+import CircularProgress from '@mui/material/CircularProgress';
+import { getEmployees } from '../../../../actions/userActions';
 
 const EmployeesList = () => {
   const dispatch = useDispatch();
@@ -41,7 +41,7 @@ const EmployeesList = () => {
           + Add employee
         </Link>
         <section className="flex flex-col mt-4">
-          <div className="grid grid-cols-3 md:grid-cols-6 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] bg-[#e5e7eb] text-xs md:text-[0.7em] lg:text-xs">
+          <div className="grid grid-cols-3 md:grid-cols-6 px-2 font-bold py-2 text-xs md:text-[0.7em] lg:text-xs text-[#a3a3a3]">
             <span>Full name</span>
             <span>Position</span>
 
@@ -56,7 +56,7 @@ const EmployeesList = () => {
                 <Link
                   to={`/employess/${employee.id}`}
                   key={employee.id}
-                  className="grid grid-cols-3 md:grid-cols-6 px-2  py-2 border-b border-r border-l border-[#e5e7eb]  text-xs  hover:bg-secondary-bg-color"
+                  className="grid grid-cols-3 md:grid-cols-6 px-2  py-2 border rounded border-[#e5e7eb]  text-xs   font-bold mb-2"
                 >
                   <span className="flex md:text-[0.9em] lg:text-xs">
                     {employee.name}
@@ -65,17 +65,26 @@ const EmployeesList = () => {
                     {employee.position}
                   </span>
 
-                  <span className="hidden md:flex md:text-[0.9em] lg:text-xs">
-                    {employee.isCashier ? "Yes" : "No"}
-                  </span>
-                  <span className="hidden md:flex md:text-[0.9em] lg:text-xs">
-                    {employee.isDriver ? "Yes" : "No"}
+                  <span
+                    className={`hidden md:flex md:text-[0.9em] lg:text-xs  text-[#f97316] rounded py-1 px-2 place-self-start ${
+                      !employee.isCashier ? 'bg-white' : 'bg-[#ffedd5]'
+                    }`}
+                  >
+                    {employee.isCashier ? 'Cashier' : ''}
                   </span>
 
-                  <span className="flex break-all md:text-[0.9em] lg:text-xs">
+                  <span
+                    className={`hidden md:flex md:text-[0.9em] lg:text-xs  text-[#65a30d] rounded py-1 px-2 place-self-start ${
+                      !employee.isDriver ? 'bg-white' : 'bg-[#ecfccb]'
+                    }`}
+                  >
+                    {employee.isDriver ? 'Driver' : null}
+                  </span>
+
+                  <span className="flex break-all md:text-[0.9em] lg:text-xs text-[#94a3b8]">
                     {employee.phone}
                   </span>
-                  <span className="  hidden md:flex md:text-[0.9em] lg:text-xs">
+                  <span className="  hidden md:flex md:text-[0.9em] md:break-all lg:text-xs text-[#94a3b8]">
                     {employee.email}
                   </span>
                   {/* <span className="  hidden md:flex">{employee.email}</span> */}
@@ -83,7 +92,10 @@ const EmployeesList = () => {
               ))}
             </div>
           ) : (
-            <CircularProgress color="secondary" />
+            <CircularProgress
+              className="grid self-center justify-self-center w-screen "
+              color="secondary"
+            />
           )}
         </section>
       </main>

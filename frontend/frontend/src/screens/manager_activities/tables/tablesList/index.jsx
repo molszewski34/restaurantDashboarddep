@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import CircularProgress from "@mui/material/CircularProgress";
-import { listTables, listRooms } from "../../../../actions/tablesActions";
-import { createRoom } from "../../../../actions/roomsActions";
-import { createNewTable, removeTable } from "../../../../actions/tablesActions";
-import { removeRoom } from "../../../../actions/roomsActions";
-
-import ClearIcon from "@mui/icons-material/Clear";
-import { CgLayoutGrid } from "react-icons/cg";
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import CircularProgress from '@mui/material/CircularProgress';
+import { listTables, listRooms } from '../../../../actions/tablesActions';
+import { createRoom } from '../../../../actions/roomsActions';
+import { createNewTable, removeTable } from '../../../../actions/tablesActions';
+import { removeRoom } from '../../../../actions/roomsActions';
+import { FaRegTrashAlt } from 'react-icons/fa';
+import ClearIcon from '@mui/icons-material/Clear';
+import { CgLayoutGrid } from 'react-icons/cg';
 
 const TablesList = () => {
   const roomsList = useSelector((state) => state.roomsList);
@@ -23,14 +23,14 @@ const TablesList = () => {
   } = tableList;
 
   //INITIAL STATE OF ROOM NAME
-  const [newRoomName, setNewRoomName] = useState("");
+  const [newRoomName, setNewRoomName] = useState('');
   //INITIAL STATE OF EDITOR FOR ROOM ADDING
   const [addRoomIsActive, setAddRoomIsActive] = useState(false);
 
   //INITIAL STATE OF ACTIVE ROOM (NEEDED TO ADD TABLE, REMOVE TABLE AND REMOVE ROOM)
-  const [activeRoom, setActiveRoom] = useState("");
+  const [activeRoom, setActiveRoom] = useState('');
   //INITIAL STATE OF ACTIVE TABE (NEEDED TO REMOVE TABLE)
-  const [activeTable, setActiveTable] = useState("");
+  const [activeTable, setActiveTable] = useState('');
 
   //INITIAL STATE OF NUMBER OF GUESTS, NEEDED TO ADD NEW TABLE
   const [numberOfGusets, setnumberOfGusets] = useState(1);
@@ -81,16 +81,16 @@ const TablesList = () => {
           )}
 
           <button
-            className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+            className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9] shadow"
             onClick={() => {
               setAddRoomIsActive(!addRoomIsActive);
               if (addRoomIsActive) {
-                if (newRoomName != "") {
+                if (newRoomName != '') {
                   dispatch(createRoom(newRoomName, rooms));
                   setTimeout(() => {
                     window.scrollTo({
                       top: document.body.scrollHeight,
-                      behavior: "smooth",
+                      behavior: 'smooth',
                     });
                   }, 500);
                 } else {
@@ -99,7 +99,7 @@ const TablesList = () => {
               }
             }}
           >
-            {addRoomIsActive ? "+ Add" : "+ Add room"}
+            {addRoomIsActive ? '+ Add' : '+ Add room'}
           </button>
         </div>
         {/* SECTION : ADD ROOM ++ END */}
@@ -110,19 +110,19 @@ const TablesList = () => {
           {/*  */}
           {roomsList ? (
             <>
-              {" "}
+              {' '}
               {rooms.map((room) => (
                 //  DISPLAY ROOM NAMES
                 <div key={room.id} className="flex flex-col ">
-                  <div className="flex justify-between px-2 bg-[#e5e7eb] py-2 border-b border-white">
+                  <div className="flex justify-between px-2  py-2 border-b border-white">
                     <div
                       key={room.id}
-                      className="uppercase text-sm font-bold text-[#0369a1]"
+                      className="uppercase text-sm font-bold text-[#6b7280]"
                     >
                       {room.name}
                     </div>
                     <button
-                      className="text-[#0369a1] cursor-pointer text-xs font-bold hover:underline"
+                      className="text-[#6b7280] hover:text-[#dc2626] cursor-pointer text-xs font-bold hover:underline"
                       type=""
                       onClick={() => {
                         setRoomRemoval(true);
@@ -134,29 +134,35 @@ const TablesList = () => {
                     </button>
                   </div>
                   {/* // DISPLAY TABLES */}
-                  <div className="grid grid-cols-3 px-2 font-bold py-2 border-b border-r border-l border-[#e5e7eb] text-sm ">
+                  <div className="grid grid-cols-3 px-2 font-bold py-2   text-sm ">
                     <p>Table Number</p>
                     <p>Max Guests</p>
-                    <p>Remove</p>
+                    <p className="place-self-center">Remove</p>
                   </div>
                   {tables
                     .filter((table) => table.room === room.id)
-                    .map((filteredTable) => (
+                    .map((filteredTable, index) => (
                       <div
                         key={filteredTable.id}
-                        className="grid grid-cols-3 px-2  py-2  border-b border-r border-l border-[#e5e7eb] text-sm "
+                        className="grid grid-cols-3 px-2  py-2 text-sm text-[#6b7280] shadow "
+                        style={{
+                          backgroundColor:
+                            index % 2 === 1 ? 'white' : '#f1f5f9',
+                        }}
                       >
-                        <p>{filteredTable.tableNumber}</p>
+                        <p className="font-bold ">
+                          {filteredTable.tableNumber}
+                        </p>
                         <p>{filteredTable.numberOfPersons}</p>
                         <p
-                          className="text-[#dc2626] cursor-pointer"
+                          className=" cursor-pointer place-self-center text-[#6b7280]  hover:text-[#dc2626] text-lg   px-2 py-1 font-bold hover:underline  "
                           onClick={() => {
                             setActiveTable(filteredTable.id);
                             setTableRemoval(true);
                             setOverlay(true);
                           }}
                         >
-                          <ClearIcon />
+                          <FaRegTrashAlt />
                         </p>
                       </div>
                     ))}
@@ -202,10 +208,10 @@ const TablesList = () => {
                         <button
                           className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
                           onClick={() => {
-                            setActiveRoom("");
+                            setActiveRoom('');
 
-                            if (newRoomName != "") {
-                              console.log("add table");
+                            if (newRoomName != '') {
+                              console.log('add table');
                             }
                           }}
                         >
@@ -216,11 +222,11 @@ const TablesList = () => {
                       // SET ACTIVE ROOM TO ROOM NAME
                       <button
                         data-key={room.name}
-                        className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9]"
+                        className="border h-8 place-self-start border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold rounded-md hover:bg-[#f1f5f9] shadow"
                         onClick={(e) => {
-                          console.log(e.target.getAttribute("data-key"));
+                          console.log(e.target.getAttribute('data-key'));
 
-                          setActiveRoom(e.target.getAttribute("data-key"));
+                          setActiveRoom(e.target.getAttribute('data-key'));
                         }}
                       >
                         + Add table
@@ -242,7 +248,7 @@ const TablesList = () => {
                 Do you want to remove room and all tables inside?
               </b>
               <div className="flex justify-between gap-2">
-                {" "}
+                {' '}
                 <button
                   onClick={() => {
                     setRoomRemoval(false);
@@ -274,7 +280,7 @@ const TablesList = () => {
             <main className="bg-white p-4 max-w-[400px] w-full">
               <b className="">Do you want to remove this table?</b>
               <div className="flex justify-between gap-2">
-                {" "}
+                {' '}
                 <button
                   onClick={() => {
                     setTableRemoval(false);
