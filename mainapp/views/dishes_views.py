@@ -47,7 +47,7 @@ def createDishCategory(request):
 
 # Get dish categories (auth) 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getDishCategories(request):
 
     dishCategories = DishCategory.objects.all()
@@ -106,7 +106,7 @@ def addDishToMenu(request):
 
 # get ordered dishes
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getOrderDish(request):
     orderDishes = OrderDish.objects.all()
    
@@ -115,7 +115,7 @@ def getOrderDish(request):
 
 # get active ordered dishes
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getActiveOrderedDishes(request):
     orderedDishes = OrderDish.objects.filter(isActive=True)
     print(orderedDishes)
@@ -123,8 +123,11 @@ def getActiveOrderedDishes(request):
     return Response(serializer.data)
 
 
+
+
 #get ordered dish by id
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def getOrderedDishById(request,pk):
     orderedDish = OrderDish.objects.get(id=pk)
     dishes = Dish.objects.all()
