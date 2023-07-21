@@ -7,7 +7,9 @@ import {
   ORDER_DISH_LIST_FAIL,
   ADD_DISH_TO_MENU,
   REMOVE_DISH_FROM_MENU,
-  REMOVE_DISH_FROM_MENU_FAIL,
+  ORDER_ACTIVE_DISH_LIST_REQUEST,
+  ORDER_ACTIVE_DISH_LIST_SUCCESS,
+  ORDER_ACTIVE_DISH_LIST_FAIL,
 } from "../constants/dishConstants";
 import {
   ORDER_ADD_ITEM,
@@ -128,6 +130,24 @@ export const orderDishReducer = (state = { orderDishes: [] }, action) => {
       return { loading: false, orderDishes: action.payload };
 
     case ORDER_DISH_LIST_FAIL:
+      return { loading: false, error: action.payload };
+    default:
+      return state;
+  }
+};
+
+export const activeOrderDishesReducer = (
+  state = { activeDishes: [] },
+  action
+) => {
+  switch (action.type) {
+    case ORDER_ACTIVE_DISH_LIST_REQUEST:
+      return { loading: true, dishes: [] };
+
+    case ORDER_ACTIVE_DISH_LIST_SUCCESS:
+      return { loading: false, activeDishes: action.payload };
+
+    case ORDER_ACTIVE_DISH_LIST_FAIL:
       return { loading: false, error: action.payload };
     default:
       return state;

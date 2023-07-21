@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
-
 import { listDishes } from "../../actions/dishActions";
 import {
   getOrderDetails,
@@ -43,11 +42,11 @@ const OrdersPanel = () => {
 
   const dishList = useSelector((state) => state.dishList);
   const { error: dishListError, loading: dishListloading, dishes } = dishList;
-  console.log(dishes);
+
   const categoriesList = useSelector((state) => state.categoriesList);
 
   const { categoriesError, categoriesLoading, categories } = categoriesList;
-  console.log(categories);
+
   const userLogin = useSelector((state) => state.userLogin);
   const {
     error: userLoginError,
@@ -74,7 +73,6 @@ const OrdersPanel = () => {
         (dishToDisplay) => dishToDisplay.id == filteredDish.dish
       );
       const dishToDisplay = dishToDisplayArr[0];
-
       setDishNameToDisplay(dishToDisplay);
       setdishToChange(filteredDish);
       setDishQty(filteredDish.qty);
@@ -277,7 +275,7 @@ const OrdersPanel = () => {
               </button>
               {/* // ============= SECTION: Display QTY of selected dish ================ */}
 
-              <button className=" w-16 h-12 w-9 font-bold">{dishQty}</button>
+              <button className=" w-16 h-12 font-bold">{dishQty}</button>
 
               {/* // ============= END SECTION: Display QTY of selected dish ================ */}
 

@@ -1,7 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { composeWithDevTools } from "redux-devtools-extension";
-import { dishListReducer, orderDishReducer } from "./reducers/dishReducers";
+import { dishListReducer, orderDishReducer,activeOrderDishesReducer } from "./reducers/dishReducers";
 import { categoriesListReducer } from "./reducers/categoriesReducers";
 import {
   orderListReducer,
@@ -31,6 +31,7 @@ const reducer = combineReducers({
   pastOrdersList: pastOrdersListReducer,
   positionsList: employeePositionsListReducer,
   employeeDetails: employeeByIdReducer,
+  orderActiveDishes:activeOrderDishesReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem("userInfo")

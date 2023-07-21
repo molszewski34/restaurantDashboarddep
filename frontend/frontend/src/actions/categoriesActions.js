@@ -10,7 +10,15 @@ import axios from "axios";
 export const listCategories = () => async (dispatch) => {
   try {
     dispatch({ type: CATEGORIES_LIST_REQUEST });
-    const { data } = await axios.get("dishes/get-categories");
+    // =============== JWT AUTHORIZATION ==============================
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+    const { data } = await axios.get("dishes/get-categories", config);
     dispatch({
       type: CATEGORIES_LIST_SUCCESS,
       payload: data,
@@ -49,7 +57,7 @@ export const createNewCategory = (categoryName, colour) => async (dispatch) => {
       .post("dishes/create-category", body, config)
       .then(function (response) {
         if (response.status == 200) {
-          //if response is 200, list tables again. It`s nesesary to get the correct table ID
+          //if response is 200, list categories again.
           alert("Create category status: OK");
           dispatch(listCategories());
         } else {
