@@ -288,7 +288,9 @@ export const createNewEmployee =
   };
 
 export const logout = () => async (dispatch) => {
-  console.log("Logout");
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000);
 };

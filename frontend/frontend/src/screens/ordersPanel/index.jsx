@@ -8,7 +8,6 @@ import {
   getOrderDetails,
   changeDishQty,
   addToOrder,
-  deleteFromOrder,
   listOrders,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";

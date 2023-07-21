@@ -3,10 +3,14 @@ import { SlOptionsVertical } from "react-icons/sl";
 import { AiOutlineRollback } from "react-icons/ai";
 import { BiUserCircle } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../actions/userActions";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { useNavigate } from "react-router-dom";
 
 const NavbarTop = () => {
-  
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
   const [openSubMenu, setOpenSubMenu] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const {
@@ -33,7 +37,12 @@ const NavbarTop = () => {
           </span>
         </div>
         <button className="p-2">
-          <SlOptionsVertical className="text-xl" />
+          <LogoutIcon
+            onClick={() => {
+              dispatch(logout());
+              navigate("/");
+            }}
+          />
         </button>
       </div>
     </div>
