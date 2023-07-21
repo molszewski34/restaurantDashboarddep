@@ -118,10 +118,22 @@ def getOrderDish(request):
 @permission_classes([IsAuthenticated])
 def getActiveOrderedDishes(request):
     orderedDishes = OrderDish.objects.filter(isActive=True)
-    print(orderedDishes)
+    
     serializer = OrderDishSerializer(orderedDishes, many=True)
     return Response(serializer.data)
 
+
+# SET ACTIVE DISH AS INACTIVE 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def setAciveDishAsInactive(request,pk):
+   
+    dishToChange = OrderDish.objects.get(id=pk)
+    dishToChange.isActive = False
+    dishToChange.isDone = True
+    dishToChange.save()
+    
+    return Response("Dish inactive")
 
 
 

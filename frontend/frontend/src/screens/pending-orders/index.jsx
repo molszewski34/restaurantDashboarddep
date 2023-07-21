@@ -2,13 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import CircularProgress from "@mui/material/CircularProgress";
 import NavbarTop from "../../components/navbars/NavbarTop";
-import {
-  listOrderDishes,
-  listActiveOrderDishes,
-  listDishes,
-} from "../../actions/dishActions";
+import { listActiveOrderDishes, listDishes } from "../../actions/dishActions";
 import { listOrders } from "../../actions/ordersActions";
 import { getUsers } from "../../actions/userActions";
+import { setActiveDishAsInactive } from "../../actions/dishActions";
 
 const PendingOrders = () => {
   let dispatch = useDispatch();
@@ -27,7 +24,6 @@ const PendingOrders = () => {
 
   const userList = useSelector((state) => state.userList);
   const { error: userListError, loading: userListLoading, users } = userList;
-  console.log(users);
 
   const [selectedButton, setSelectedButton] = useState("all");
 
@@ -55,12 +51,14 @@ const PendingOrders = () => {
                 key={order.id}
                 className="flex flex-col max-w-[300px] self-start mt-4 rounded-b-lg bg-[none]"
               >
+                {/* ===============HEADER ==================== */}
                 <div className="flex justify-between gap-8 font-bold border border-[#d1d5db] p-2">
                   <div className="flex flex-col w-full">
                     <span className="text-xs">
                       created at {order.createdAt.slice(11, 16)}
                     </span>
-                    <span className="text-sm">{`${order.table} #${order.table}`}</span>
+                    <span className="text-xs">Main room</span>
+                    <span className="text-xs">Table #2</span>
                   </div>
                   <div className="flex flex-col ">
                     {users ? (
@@ -78,15 +76,16 @@ const PendingOrders = () => {
                     ) : (
                       <CircularProgress color="secondary" />
                     )}
-
-                    <span className="">{`#${order.id}`}</span>
                   </div>
                 </div>
+
+                {/* =============== HEADER ========== END========== */}
 
                 <div className="flex flex-col ">
                   <div className="flex flex-col  gap-1">
                     {activeDishes ? (
                       <div>
+                        {/* ============= DISPLAY ACTIVE DISH DETAILS ============= */}
                         {activeDishes
                           .filter(
                             (dishToDisplay) => dishToDisplay.order == order.id //find dish in restaurant to get price
@@ -142,6 +141,8 @@ const PendingOrders = () => {
                                       )}
                                     </div>
                                   </div>
+                                  {/* ============= DISPLAY ACTIVE DISH DETAILS ==== END ========= */}
+
                                   {/* =========== Buttons - Ready to go / Close ============== */}
                                   {activeDishSetAsReady && (
                                     <div className="flex justify-between">
@@ -149,6 +150,13 @@ const PendingOrders = () => {
                                       <button
                                         className="font-bold text-sm text-left text-white"
                                         style={{ backgroundColor: "green" }}
+                                        onClick={() => {
+                                          dispatch(
+                                            setActiveDishAsInactive(
+                                              selectedActiveDishId
+                                            )
+                                          );
+                                        }}
                                       >
                                         Ready to go!
                                       </button>
