@@ -6,6 +6,8 @@ import { listActiveOrderDishes, listDishes } from "../../actions/dishActions";
 import { listOrders } from "../../actions/ordersActions";
 import { getUsers } from "../../actions/userActions";
 import { setActiveDishAsInactive } from "../../actions/dishActions";
+import { listRooms } from "../../actions/tablesActions";
+import { listTables } from "../../actions/tablesActions";
 
 const PendingOrders = () => {
   let dispatch = useDispatch();
@@ -25,6 +27,16 @@ const PendingOrders = () => {
   const userList = useSelector((state) => state.userList);
   const { error: userListError, loading: userListLoading, users } = userList;
 
+  const roomsList = useSelector((state) => state.roomsList);
+  const { error: roomsListError, loading: roomsListLoading, rooms } = roomsList;
+
+  const tableList = useSelector((state) => state.tableList);
+  const {
+    error: tableListError,
+    loading: tableListLoading,
+    tables,
+  } = tableList;
+
   const [selectedButton, setSelectedButton] = useState("all");
 
   const [selectedActiveDishId, setSelectedActiveDishId] = useState("");
@@ -34,6 +46,8 @@ const PendingOrders = () => {
     dispatch(listActiveOrderDishes());
     dispatch(listDishes());
     dispatch(getUsers());
+    dispatch(listRooms());
+    dispatch(listTables());
   }, []);
 
   return loading ? (
@@ -57,9 +71,26 @@ const PendingOrders = () => {
                     <span className="text-xs">
                       created at {order.createdAt.slice(11, 16)}
                     </span>
-                    <span className="text-xs">Main room</span>
-                    <span className="text-xs">Table #2</span>
+
+                    <span className="text-xs">{order.roomName}</span>
+                    {/* ============= DISPLAY TABLE NUMBER============== */}
+                    {tables ? (
+                      <div>
+                        {tables
+                          .filter((table) => table.id == order.table)
+                          .map((tableToDisplay) => (
+                            <span className="text-xs">
+                              Table #{tableToDisplay.tableNumber}
+                            </span>
+                          ))}
+                      </div>
+                    ) : (
+                      <CircularProgress color="secondary" />
+                    )}
                   </div>
+                  {/* ============= DISPLAY TABLE NUMBER==== END========== */}
+
+                  {/* ============= DISPLAY USER NAME ============== */}
                   <div className="flex flex-col ">
                     {users ? (
                       <div>
@@ -77,6 +108,7 @@ const PendingOrders = () => {
                       <CircularProgress color="secondary" />
                     )}
                   </div>
+                  {/* ============= DISPLAY USER NAME ==== END ========== */}
                 </div>
 
                 {/* =============== HEADER ========== END========== */}

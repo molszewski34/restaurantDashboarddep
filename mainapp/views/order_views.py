@@ -18,11 +18,14 @@ def createOrder(request,pk):
  
     # get table for order, each order is assigned to table
     table = Table.objects.get(id=pk)
+    roomName = table.room
+    print(table.room)
     if table.isOccupied == False:
                   
         order = Order.objects.create(
             user = user,
-            table = table
+            table = table,
+            roomName = roomName,
         )
      
     else:
