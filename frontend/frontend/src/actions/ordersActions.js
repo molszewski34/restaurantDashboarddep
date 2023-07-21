@@ -23,7 +23,6 @@ import {
 } from "../constants/orderConstants";
 
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 export const createOrder = (id, orders) => async (dispatch, getState) => {
   try {
@@ -31,19 +30,21 @@ export const createOrder = (id, orders) => async (dispatch, getState) => {
       type: ORDER_CREATE_REQUEST,
     });
 
-    const {
-      userLogin: { userInfo },
-    } = getState();
-
-    const { data } = await axios.post(`/orders/create-order/${id}`, {
+    // Get userInfo from local storage and send it to backend for JWT authorization
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
       headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userInfo.id}`,
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
       },
-      body: {
-        user: userInfo.id,
-      },
-    });
+    };
+    const body = {};
+
+    const { data } = await axios.post(
+      `/orders/create-order/${id}`,
+      body,
+      config
+    );
 
     dispatch({
       type: ORDER_CREATE_SUCCESS,
@@ -264,6 +265,14 @@ export const deleteFromOrder = (filteredDish, id) => async (dispatch) => {
   //filteredDish - dish we want to change
   //id - order id
   const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
+  // =========== JWT AUTHORIZATION DATA ================
+  let userInfo = JSON.parse(localStorage.userInfo);
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: "Bearer " + String(userInfo.access),
+    },
+  };
 
   dispatch({
     type: ORDER_DELETE_ITEM,
@@ -273,11 +282,6 @@ export const deleteFromOrder = (filteredDish, id) => async (dispatch) => {
       filteredDish,
     },
   });
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-    },
-  };
 
   const { orderedDish } = await axios.delete(
     `/orders/remove-dish-from-order/${filteredDish.id}`,
@@ -288,9 +292,6 @@ export const deleteFromOrder = (filteredDish, id) => async (dispatch) => {
 // =============== UPDATE PAYMENT METHOD  ==========================
 
 export const updatePaymentMethod = (id, paymentMethod) => async (dispatch) => {
-  console.log("DZIAŁAM");
-  console.log("ID: ", id.id);
-  console.log("Payment: ", paymentMethod);
   try {
     dispatch({
       type: CHANGE_PAYMENT_METHOD,
@@ -304,7 +305,7 @@ export const updatePaymentMethod = (id, paymentMethod) => async (dispatch) => {
       id: id.id,
     };
 
-    // Authorization - userInfo is sending to backend
+    // =========== JWT AUTHORIZATION DATA ================
     let userInfo = JSON.parse(localStorage.userInfo);
     const config = {
       headers: {

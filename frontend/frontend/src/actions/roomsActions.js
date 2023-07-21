@@ -3,8 +3,6 @@ import {
   CREATE_ROOM_SUCCESS,
   CREATE_ROOM_FAIL,
   REMOVE_ROOM_FAIL,
-  REMOVE_ROOM_REQUEST,
-  REMOVE_ROOM_SUCCESS,
 } from "../constants/roomsConstants";
 
 import axios from "axios";
@@ -58,13 +56,11 @@ export const createRoom = (roomName, rooms) => async (dispatch) => {
   }
 };
 
-export const removeRoom = (room, rooms) => async (dispatch) => {
-  console.log(room);
+export const removeRoom = (id) => async (dispatch) => {
+ 
   try {
-    dispatch({
-      type: REMOVE_ROOM_REQUEST,
-    });
 
+// ======== JWT AUTHORIZATION DATA ==============
     let userInfo = JSON.parse(localStorage.userInfo);
     const config = {
       headers: {
@@ -73,24 +69,19 @@ export const removeRoom = (room, rooms) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios
-      .delete(`rooms/remove-room/${room.id}`, config)
+    const data = await axios
+      .delete(`rooms/remove-room/${id}`, config)
       .then(function (response) {
         if (response.status == 200) {
           alert("Room removed");
-          // Get all tables again after remove
+          // Get all room again after remove
           dispatch(listRooms());
+         
         } else {
           alert("Something went wrong, status code: ", response.status);
         }
       });
   } catch (error) {
-    dispatch({
-      type: REMOVE_ROOM_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
+   alert(error)
   }
 };

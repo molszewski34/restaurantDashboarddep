@@ -10,15 +10,12 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 
 #create order 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def createOrder(request,pk):
     data = request.data
     user = request.user
-    print("USER: ",data['body']["user"])
-
-    user = User.objects.get(id=data['body']["user"])
-    print(user)
-
+    
+ 
     # get table for order, each order is assigned to table
     table = Table.objects.get(id=pk)
     if table.isOccupied == False:
@@ -27,9 +24,9 @@ def createOrder(request,pk):
             user = user,
             table = table
         )
-        print(order)
+     
     else:
-        print("dupa")
+     
         return Response('Table is occupied')
 
     #swicth table.isOccupied to True, no one else can make an order assigned this table
@@ -40,7 +37,7 @@ def createOrder(request,pk):
     return Response(serializer.data)
     
 
-#update order only for assigned user
+#get order by id for assigned user
 @api_view(['GET'])
 def getOrderById(request,pk):
     order = Order.objects.get(id=pk)
@@ -53,20 +50,21 @@ def getOrderById(request,pk):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated])
 def updateOrder(request,pk):
-    data= request.data
-    order = Order.objects.get(id=pk)
-    table = order.table
-          
-    table.isOccupied = False
-    table.save()
-    order.isPaid = data['body']['isPaid']
-    order.table = None
-    order.save()
-    print( order.isPaid)
- 
-        
-       
 
+    data = request.data  
+    order = Order.objects.get(id=pk)  # Retrieve the Order object with the specified id
+    table = order.table  # Get the associated table of the order
+    table.isOccupied = False  # Set the table's occupancy status to False
+    table.save()  # Save the changes to the table object
+    order.isPaid = data['body']['isPaid']  # Update the isPaid field of the order based on the data
+    order.table = None  # Remove the association of the table from the order
+    # Get dishes from order an set the isActive field to False
+    orderedDishesToRemove = OrderDish.objects.filter(order=pk)
+    for dish in orderedDishesToRemove:
+        dish.isActive = False
+        dish.save()
+    
+    order.save()  # Save the changes to the order object
     return Response("Order updated")
 
 
@@ -75,7 +73,7 @@ def setPaymentMenthod(request, pk):
     data= request.data['paymentMethod']
     order =Order.objects.get(id=pk)
     order.paymentMethod = data
-    print(order.paymentMethod)
+  
     order.save()
 
 
@@ -91,29 +89,27 @@ def setPaymentMenthod(request, pk):
 @api_view(['POST'])
 #@permission_classes([IsAuthenticated])
 def addDishToOrder(request):
-    data=request.data 
-    user = request.user  
+    data=request.data # Data sent in the request
+    user = request.user  # Currently logged-in user
     
-    order = Order.objects.get(id=data['order'])      
-    dish = Dish.objects.get(id=data['dish'])
-    qty = int(data['qty'])
+    order = Order.objects.get(id=data['order'])  # Retrieve the Order object with the specified id from the data     
+    dish = Dish.objects.get(id=data['dish'])  # Retrieve the Dish object with the specified id from the data
+    qty = int(data['qty'])  # Get the quantity of the dish from the data
 
-    orderedDishes = OrderDish.objects.filter(order=order)
-  
-
+    orderedDishes = OrderDish.objects.filter(order=order)  # Get all ordered dishes for the given order
+     
+    existOrderDish = orderedDishes.filter(dish=dish)  # Check if the dish already exists in the order
     
-    existOrderDish = orderedDishes.filter(dish=dish)
-    print("ExisteOrderDis: ",len(existOrderDish))
     if len(existOrderDish)>0:
-        print("Dish exist, try to increase qty")
-        return Response("Dish exist, try to increase qty")
+        return Response("Dish exist, try to increase qty")   # If the dish already exists, return a response with an error message
            
     dishToOrder = OrderDish.objects.create(
         dish=dish,
         order = order,
         qty=qty,
+        isActive = True
 
-        )
+        ) # Create a new OrderDish object for the given dish and order
 
     order.totalPrice = float(order.totalPrice) + float(data['price'] * float(data['qty']))
     order.save()
@@ -144,9 +140,9 @@ def changeDishQty(request,pk):
        #get order contains dish to change
         order = Order.objects.get(id=dishToChange.order.id)
 
-        #Change total proce of order afte qty was changed
+        #Change total price of order after qty was changed
 
-        #Check if new aty value is different from zero
+        #Check if new qty value is different from zero
         if dishToChange.qty != 0:
               
             # if new qty value is greater than old 
@@ -219,7 +215,8 @@ def getAllRooms(request):
 @permission_classes([IsAuthenticated])
 def getAllTables(request):
     user=request.user
-    print("USER IN TABLES: ",user)
+   
+
     tables = Table.objects.all()
     serializer = TableSerializer(tables, many=True)
     return Response(serializer.data)
@@ -233,7 +230,7 @@ def createTable(request):
     requestedRoom = Room.objects.filter(id=data['tableData']['room']['id'])
     
     tableNumber = data['tableData']['tableNumber'] + 1 
-    print(tableNumber)
+
     numberOfPersons = data['tableData']['numberOfPersons']
     isOccupied = data['tableData']['isOccupied']
     newTable = Table.objects.create(
