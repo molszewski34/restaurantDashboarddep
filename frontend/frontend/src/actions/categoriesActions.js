@@ -60,6 +60,9 @@ export const createNewCategory = (categoryName, colour) => async (dispatch) => {
           //if response is 200, list categories again.
           alert("Create category status: OK");
           dispatch(listCategories());
+        }
+        if (response.status == 403) {
+          alert("You don`t have permission to do that");
         } else {
           alert("Something went wrong, status code: ", response.status);
         }
@@ -90,6 +93,9 @@ export const removeCategory = (categoryId) => async (dispatch) => {
           //if response is 200, alert 'status ok', dispatch - listCategories
           alert("Remove category status: OK");
           dispatch(listCategories());
+        }
+        if (response.status == 403) {
+          alert("You don`t have permission to do that");
         } else {
           alert("Something went wrong, status code: ", response.status);
         }

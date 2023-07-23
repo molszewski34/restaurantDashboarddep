@@ -211,6 +211,9 @@ export const editEmployee =
           if (response.status == 200) {
             //if response is 200, display OK alert
             alert("Edit Employee status: OK");
+          }
+          if (response.status == 403) {
+            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }

@@ -36,6 +36,9 @@ export const createRoom = (roomName, rooms) => async (dispatch) => {
         if (response.status == 200) {
           alert("Room added");
           dispatch(listRooms());
+        }
+        if (response.status == 403) {
+          alert("You don`t have permission to do that");
         } else {
           alert("Something went wrong, response status: ", response.status);
         }
@@ -57,10 +60,8 @@ export const createRoom = (roomName, rooms) => async (dispatch) => {
 };
 
 export const removeRoom = (id) => async (dispatch) => {
- 
   try {
-
-// ======== JWT AUTHORIZATION DATA ==============
+    // ======== JWT AUTHORIZATION DATA ==============
     let userInfo = JSON.parse(localStorage.userInfo);
     const config = {
       headers: {
@@ -76,12 +77,14 @@ export const removeRoom = (id) => async (dispatch) => {
           alert("Room removed");
           // Get all room again after remove
           dispatch(listRooms());
-         
+        }
+        if (response.status == 403) {
+          alert("You don`t have permission to do that");
         } else {
           alert("Something went wrong, status code: ", response.status);
         }
       });
   } catch (error) {
-   alert(error)
+    alert(error);
   }
 };

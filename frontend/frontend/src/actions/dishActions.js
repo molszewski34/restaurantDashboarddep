@@ -110,6 +110,7 @@ export const listActiveOrderDishes = () => async (dispatch) => {
 
 export const addDishToMenu =
   (category, dishName, dishPrice) => async (dispatch) => {
+    console.log("object");
     try {
       // ================= JWT Authorization data ===========
       let userInfo = JSON.parse(localStorage.userInfo);
@@ -129,10 +130,14 @@ export const addDishToMenu =
       const data = await axios
         .post("/dishes/add-dish", body, config)
         .then(function (response) {
+          console.log(response.status);
           if (response.status == 200) {
             //if response is 200, display OK alert
             alert("Add new dish status: OK");
             dispatch(listDishes());
+          }
+          if (response.status == 403) {
+            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }
@@ -171,6 +176,9 @@ export const editDish = (id, title, price) => async (dispatch) => {
           //if response is 200, display OK alert
           alert("Edit dish status: OK");
           dispatch(listDishes());
+        }
+        if (response.status == 403) {
+          alert("You don`t have permission to do that");
         } else {
           alert("Something went wrong, status code: ", response.status);
         }
@@ -207,6 +215,9 @@ export const removeDishFromMenu =
             //if response is 200, display OK alert
             alert("Remove dish status: OK");
             dispatch(listDishes());
+          }
+          if (response.status == 403) {
+            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }

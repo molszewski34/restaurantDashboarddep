@@ -138,6 +138,9 @@ export const createNewTable =
             //if response is 200, list tables again. It`s nesesary to get the correct table ID
             alert("Create Table status: OK");
             dispatch(listTables());
+          }
+          if (response.status == 403) {
+            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }
@@ -173,6 +176,9 @@ export const removeTable = (id) => async (dispatch) => {
           alert("Table removed");
           // Get all tables again after remove
           dispatch(listTables());
+        }
+        if (response.status == 403) {
+          alert("You don`t have permission to do that");
         } else {
           alert("Something went wrong, status code: ", response.status);
         }
