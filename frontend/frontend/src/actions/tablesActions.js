@@ -177,20 +177,13 @@ export const removeTable = (id) => async (dispatch) => {
           // Get all tables again after remove
           dispatch(listTables());
         }
-        if (response.status == 403) {
-          alert("You don`t have permission to do that");
-        } else {
-          alert("Something went wrong, status code: ", response.status);
-        }
       });
   } catch (error) {
-    dispatch({
-      type: CREATE_NEW_TABLE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
+    if (error.response.status == 403) {
+      alert("You don`t have permission to do that");
+    } else {
+      alert("Something went wrong, status code: ", error.response.status);
+    }
   }
 };
 

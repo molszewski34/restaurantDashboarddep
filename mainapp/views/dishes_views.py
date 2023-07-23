@@ -79,7 +79,7 @@ def addDishToMenu(request):
     dishTitle = data['title']
     dishCategory = data['category']
     dishPrice = data['price'].replace(",",".")
-
+    print(data)
 
    #check if dish category exist
     if DishCategory.objects.filter(title=str(dishCategory)).count()<=0:
@@ -95,13 +95,19 @@ def addDishToMenu(request):
             title = dishTitle,
             price = dishPrice,
             countInStock = 100,
-            isActive = False
+            
         )
+        print(dishToAdd)
         serializer = DishSerializer(dishToAdd, many=False)
         return Response(serializer.data)
 
 # delete dish from menu
-
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteDishFromMenu(request,pk):
+    dishToDelete = Dish.objects.get(id=pk)
+    dishToDelete.delete()
+    return Response("Dish removed")
 
 
 # get ordered dishes

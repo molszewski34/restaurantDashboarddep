@@ -110,7 +110,6 @@ export const listActiveOrderDishes = () => async (dispatch) => {
 
 export const addDishToMenu =
   (category, dishName, dishPrice) => async (dispatch) => {
-    console.log("object");
     try {
       // ================= JWT Authorization data ===========
       let userInfo = JSON.parse(localStorage.userInfo);
@@ -135,14 +134,14 @@ export const addDishToMenu =
             //if response is 200, display OK alert
             alert("Add new dish status: OK");
             dispatch(listDishes());
-          }
-          if (response.status == 403) {
-            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }
         });
     } catch (error) {
+      if (error.response.status == 403) {
+        alert("You don`t have permission to do that");
+      }
       dispatch({
         type: ADD_DISH_TO_MENU_FAIL,
         payload:
@@ -184,22 +183,15 @@ export const editDish = (id, title, price) => async (dispatch) => {
         }
       });
   } catch (error) {
-    alert(error);
+    if (error.response.status == 403) {
+      alert("You don`t have permission to do that");
+    }
   }
 };
 
 export const removeDishFromMenu =
   (dishes, filteredDish) => async (dispatch) => {
-    const dishesAfterRemove = dishes.filter((el) => el.id != filteredDish.id);
-
     try {
-      dispatch({
-        type: REMOVE_DISH_FROM_MENU,
-        payload: {
-          dishesAfterRemove,
-        },
-      });
-
       // ================= JWT Authorization data ===========
       let userInfo = JSON.parse(localStorage.userInfo);
       const config = {
@@ -216,20 +208,13 @@ export const removeDishFromMenu =
             alert("Remove dish status: OK");
             dispatch(listDishes());
           }
-          if (response.status == 403) {
-            alert("You don`t have permission to do that");
-          } else {
-            alert("Something went wrong, status code: ", response.status);
-          }
         });
     } catch (error) {
-      dispatch({
-        type: REMOVE_DISH_FROM_MENU_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
-      });
+      if (error.response.status == 403) {
+        alert("You don`t have permission to do that");
+      } else {
+        alert("something went wrong");
+      }
     }
   };
 

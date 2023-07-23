@@ -94,14 +94,13 @@ export const removeCategory = (categoryId) => async (dispatch) => {
           alert("Remove category status: OK");
           dispatch(listCategories());
         }
-        if (response.status == 403) {
-          alert("You don`t have permission to do that");
-        } else {
-          alert("Something went wrong, status code: ", response.status);
-        }
       });
   } catch (error) {
-    alert(error);
+    if (error.response.status == 403) {
+      alert("You don`t have permission to do that");
+    } else {
+      alert(error);
+    }
   }
 };
 

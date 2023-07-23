@@ -78,13 +78,12 @@ export const removeRoom = (id) => async (dispatch) => {
           // Get all room again after remove
           dispatch(listRooms());
         }
-        if (response.status == 403) {
-          alert("You don`t have permission to do that");
-        } else {
-          alert("Something went wrong, status code: ", response.status);
-        }
       });
   } catch (error) {
-    alert(error);
+    if (error.response.status == 403) {
+      alert("You don`t have permission to do that");
+    } else {
+      alert("Something went wrong, status code: ", error.response.status);
+    }
   }
 };
