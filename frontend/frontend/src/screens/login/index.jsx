@@ -73,22 +73,14 @@ export default function SignIn() {
             </button>
           </div>
         </label>
-        <div className="flex justify-between text-sm text-primary-gray">
-          <div className="">
-            <input
-              className="empty:bg-color-primary-gray default:bg-gray-300 checked:bg-gray-500"
-              type="checkbox"
-            />{" "}
-            <label htmlFor="">Stay logged in?</label>
-          </div>
-          <button>Forget password?</button>
+        <div className=" flex flex-col justify-between text-sm text-#171717">
+          <span>For testing use: </span>
+          <span>login : test@test.com </span>
+          <span>password: test123456</span>
         </div>
         <button className="text-[white] text-base font-semibold bg-primary-bg-color min-w-[277px] py-3 rounded-full shadow-md">
           Login
         </button>
-        {/* <div className="flex items-center justify-between text-primary-gray"> <hr className='bg-primary-gray w-full' />
-        <p className='px-2'>Or</p> 
-        <hr className='bg-primary-gray w-full' /> </div> */}
       </form>
     </div>
   );

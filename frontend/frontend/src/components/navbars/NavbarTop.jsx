@@ -25,7 +25,7 @@ const NavbarTop = () => {
 
   return (
     <div className="flex justify-between items-center p-2 text-white text-sm font-bold bg-primary-bg-color border-b-2 border-white w-full">
-      <Link to="../" className="flex items-center gap-2">
+      <Link to="/services" className="flex items-center gap-2">
         <AiOutlineRollback className="text-xl" />
         <p className="text-base text-[#ecfdf5]">Back</p>
       </Link>

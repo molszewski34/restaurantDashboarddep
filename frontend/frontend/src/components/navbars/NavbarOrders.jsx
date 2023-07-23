@@ -1,5 +1,5 @@
 import React from "react";
-import { TbSwitch3 } from "react-icons/tb";
+import { useNavigate } from "react-router-dom";
 import { SlOptionsVertical } from "react-icons/sl";
 import { AiOutlineRollback } from "react-icons/ai";
 import { Link } from "react-router-dom";
@@ -17,11 +17,12 @@ const NavbarTop = (id) => {
       style={{ backgroundColor: "#00a8e8" }}
     >
       {/* Link to navigate back */}
-      <Link to="../" className="flex items-center gap-2">
+      <Link to="/services" className="flex items-center gap-2">
         <AiOutlineRollback className="text-xl" />
         <p
           className="text-base text-[#ecfdf5]"
           onClick={() => {
+            console.log("dupa");
             dispatch(listOrders());
           }}
         >
