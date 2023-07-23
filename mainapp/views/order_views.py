@@ -53,13 +53,17 @@ def getOrderById(request,pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def updateOrder(request,pk):
-
+    
     data = request.data  
+   
     order = Order.objects.get(id=pk)  # Retrieve the Order object with the specified id
     table = order.table  # Get the associated table of the order
     table.isOccupied = False  # Set the table's occupancy status to False
+    
     table.save()  # Save the changes to the table object
-    order.isPaid = data['body']['isPaid']  # Update the isPaid field of the order based on the data
+
+    order.isPaid = data['isPaid']  # Update the isPaid field of the order based on the data
+   
     order.table = None  # Remove the association of the table from the order
     # Get dishes from order an set the isActive field to False
     orderedDishesToRemove = OrderDish.objects.filter(order=pk)

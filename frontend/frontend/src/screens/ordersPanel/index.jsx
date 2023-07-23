@@ -119,14 +119,14 @@ const OrdersPanel = () => {
     const config = {
       headers: {
         "Content-type": "application/json",
-      },
-      body: {
-        isPaid: true,
+        Authorization: "Bearer " + String(userInfo.access),
       },
     };
 
+    const body = { isPaid: true };
     const { setOrderAsPaid } = await axios.post(
       `/orders/update-order/${id}`,
+      body,
       config
     );
 
