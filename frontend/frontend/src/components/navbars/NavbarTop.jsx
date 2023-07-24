@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { SlOptionsVertical } from "react-icons/sl";
-import { AiOutlineRollback } from "react-icons/ai";
-import { BiUserCircle } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../../actions/userActions";
-import LogoutIcon from "@mui/icons-material/Logout";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { SlOptionsVertical } from 'react-icons/sl';
+import { AiOutlineRollback } from 'react-icons/ai';
+import { BiUserCircle } from 'react-icons/bi';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { logout } from '../../actions/userActions';
+import LogoutIcon from '@mui/icons-material/Logout';
+import { useNavigate } from 'react-router-dom';
 
 const NavbarTop = () => {
   let navigate = useNavigate();
@@ -40,7 +40,7 @@ const NavbarTop = () => {
           <LogoutIcon
             onClick={() => {
               dispatch(logout());
-              navigate("/");
+              navigate('/');
             }}
           />
         </button>
