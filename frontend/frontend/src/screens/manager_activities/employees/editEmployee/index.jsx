@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
-import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
-import CircularProgress from "@mui/material/CircularProgress";
-import { getEmployeePositions } from "../../../../actions/userActions";
-import { getEmployeeById } from "../../../../actions/userActions";
-import { editEmployee } from "../../../../actions/userActions";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { getUsers } from "../../../../actions/userActions";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+import CircularProgress from '@mui/material/CircularProgress';
+import { getEmployeePositions } from '../../../../actions/userActions';
+import { getEmployeeById } from '../../../../actions/userActions';
+import { editEmployee } from '../../../../actions/userActions';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { getUsers } from '../../../../actions/userActions';
 
 const EditEmployee = () => {
   let dispatch = useDispatch();
@@ -16,14 +16,14 @@ const EditEmployee = () => {
   let navigate = useNavigate();
 
   // first states of Name, email and phone number
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const [fullName, setFullName] = useState('');
 
-  const [position, setPosition] = useState("");
-  const [isCashier, setIsCashier] = useState("");
-  const [isDriver, setIsDriver] = useState("");
+  const [position, setPosition] = useState('');
+  const [isCashier, setIsCashier] = useState('');
+  const [isDriver, setIsDriver] = useState('');
 
   // get employees positions
   const positionsList = useSelector((state) => state.positionsList);
@@ -45,7 +45,7 @@ const EditEmployee = () => {
     const numbersRegex = /^[0-9]*$/;
 
     // Check if the input value is empty or consists only of numbers
-    if (inputValue === "" || numbersRegex.test(inputValue)) {
+    if (inputValue === '' || numbersRegex.test(inputValue)) {
       // Set the input text using the provided setter function
       setInputText(inputValue);
     }
@@ -58,14 +58,14 @@ const EditEmployee = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     // Check if the input value is empty or matches the email regex
-    if (inputValue === "" || emailRegex.test(inputValue)) {
+    if (inputValue === '' || emailRegex.test(inputValue)) {
       // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError(""); // Clear the email error
+      setEmailError(''); // Clear the email error
     } else {
       // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError("Incorrect email format"); // Set the email error message
+      setEmailError('Incorrect email format'); // Set the email error message
     }
   };
 
@@ -134,7 +134,7 @@ const EditEmployee = () => {
                               value={email}
                               placeholder={
                                 employee.email === null
-                                  ? "ex: example@email.com"
+                                  ? 'ex: example@email.com'
                                   : employee.email
                               }
                               required
@@ -156,15 +156,17 @@ const EditEmployee = () => {
                               value={phoneNumber}
                               placeholder={
                                 employee.phone === null
-                                  ? "Enter your phone number..."
+                                  ? 'Enter your phone number...'
                                   : employee.phone
                               }
                               required
                             />
                           </div>
 
-                          <div className="md:col-span-3">
-                            <label>Actual position : {employee.position}</label>
+                          <div className="md:col-span-3 ">
+                            <label className="font-bold">
+                              Actual position : {employee.position}
+                            </label>
                             {positions ? (
                               <select
                                 onChange={(e) => {
@@ -172,10 +174,15 @@ const EditEmployee = () => {
                                 }}
                                 className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                               >
-                                {" "}
-                                <option value={employee.title}></option>
+                                {' '}
+                                {/* <option value={employee.title}></option> */}
                                 {positions.map((position, i) => (
-                                  <option key={i} value={position.title}>
+                                  <option
+                                    key={i}
+                                    value={position.title}
+                                    className="font-normal"
+                                    // placeholder="Chosse new role"
+                                  >
                                     {position.title}
                                   </option>
                                 ))}

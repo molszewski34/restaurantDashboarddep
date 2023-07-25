@@ -30,7 +30,7 @@ const EmployeesList = () => {
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
-      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_170px)]  md:p-[30px] md:left-[170px]  md:top-0;">
+      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_170px)]  md:p-[30px] md:left-[170px]  md:top-10">
         <header className="font-bold py-1 border-b text-2xl border-[#cbd5e1]">
           Employess
         </header>
