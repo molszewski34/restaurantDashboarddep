@@ -65,7 +65,7 @@ const CategoriesList = () => {
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
-      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
+      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]   md:left-[270px] md:top-10">
         <div className="flex flex-col px-1 border-b border-[#cbd5e1] my-2">
           <h1 className="font-bold py-1 border-b border-[#cbd5e1] mt-4 text-3xl">
             Menu
@@ -94,11 +94,12 @@ const CategoriesList = () => {
                               type="text"
                               name="full_name"
                               id="full_name"
-                              className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
+                              className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50 border-[#94a3b8]"
                               required
                               onChange={(e) => {
                                 setNewCategoryName(e.target.value);
                               }}
+                              placeholder="ex: Pizza"
                             />
                           </div>
 
@@ -110,7 +111,7 @@ const CategoriesList = () => {
                               onChange={(e) => {
                                 setSelectedColor(e.target.value);
                               }}
-                              className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
+                              className="w-full h-10 bg-[#e2e8f0] flex border border-gray-200 rounded items-center mt-1 pl-2"
                             >
                               <option
                                 className="md:col-span-2 bg-{#0ca3ee}"
@@ -158,7 +159,7 @@ const CategoriesList = () => {
                                   addCategoryHandler(e);
                                   setOpenCategoryForm(!openCategoryForm);
                                 }}
-                                className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold"
+                                className="flex justify-center w-20 rounded border border-[#cbd5e1]  py-1 px-3 text-sm my-2 text-[#0369a1] font-bold shadow hover:bg-[#f1f5f9]"
                               >
                                 Confirm
                               </button>

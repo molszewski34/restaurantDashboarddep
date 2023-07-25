@@ -78,7 +78,7 @@ class Order(models.Model):
     isActive = models.BooleanField(null=False, blank=False, default = True)
     tip = models.FloatField(default=0.00, blank=True)
     totalPrice = models.DecimalField(max_digits=7, decimal_places =2, null=True, blank=True,default=0)
-   
+    roomName = models.CharField(max_length=200,default="")
 
     def __str__(self):
         return str(self.id)
@@ -89,6 +89,7 @@ class OrderDish(models.Model):
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, null=True, blank = True)
     qty = models.IntegerField(null=True, blank=True, default=0)
     isActive = models.BooleanField(null=False, blank=False, default = False)
+    isDone = models.BooleanField(null=False, blank=False, default=False)
     
     
 

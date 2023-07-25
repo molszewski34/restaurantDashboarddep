@@ -18,11 +18,14 @@ def createOrder(request,pk):
  
     # get table for order, each order is assigned to table
     table = Table.objects.get(id=pk)
+    roomName = table.room
+    print(table.room)
     if table.isOccupied == False:
                   
         order = Order.objects.create(
             user = user,
-            table = table
+            table = table,
+            roomName = roomName,
         )
      
     else:
@@ -48,15 +51,19 @@ def getOrderById(request,pk):
 
 #update order only for assigned user
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def updateOrder(request,pk):
-
+    
     data = request.data  
+   
     order = Order.objects.get(id=pk)  # Retrieve the Order object with the specified id
     table = order.table  # Get the associated table of the order
     table.isOccupied = False  # Set the table's occupancy status to False
+    
     table.save()  # Save the changes to the table object
-    order.isPaid = data['body']['isPaid']  # Update the isPaid field of the order based on the data
+
+    order.isPaid = data['isPaid']  # Update the isPaid field of the order based on the data
+   
     order.table = None  # Remove the association of the table from the order
     # Get dishes from order an set the isActive field to False
     orderedDishesToRemove = OrderDish.objects.filter(order=pk)
@@ -87,7 +94,7 @@ def setPaymentMenthod(request, pk):
 # add dish to order
 
 @api_view(['POST'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def addDishToOrder(request):
     data=request.data # Data sent in the request
     user = request.user  # Currently logged-in user
@@ -176,7 +183,7 @@ def changeDishQty(request,pk):
 #remove dish from order
 
 @api_view(['DELETE'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def removeDishFromOrder(request,pk):
     dishToRemove = OrderDish.objects.get(id=pk)
     dishToRemove.delete()
@@ -186,7 +193,7 @@ def removeDishFromOrder(request,pk):
 # get All orders 
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getOrders(request):
 
     orders = Order.objects.all().filter(table__isnull = False)
@@ -249,6 +256,7 @@ def createTable(request):
 
 
 @api_view(['DELETE'])
+@permission_classes([IsAdminUser])
 def removeTable(request,pk):
     tableToRemove = Table.objects.get(id=pk)
     tableToRemove.delete()

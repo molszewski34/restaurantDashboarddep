@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 # get all dishes from menu
 
 @api_view(['GET'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
 def getAllDishes(request):
     dishes = Dish.objects.all()
     serializer = DishSerializer(dishes, many=True)
@@ -79,7 +79,7 @@ def addDishToMenu(request):
     dishTitle = data['title']
     dishCategory = data['category']
     dishPrice = data['price'].replace(",",".")
-
+    print(data)
 
    #check if dish category exist
     if DishCategory.objects.filter(title=str(dishCategory)).count()<=0:
@@ -95,13 +95,19 @@ def addDishToMenu(request):
             title = dishTitle,
             price = dishPrice,
             countInStock = 100,
-            isActive = False
+            
         )
+        print(dishToAdd)
         serializer = DishSerializer(dishToAdd, many=False)
         return Response(serializer.data)
 
 # delete dish from menu
-
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteDishFromMenu(request,pk):
+    dishToDelete = Dish.objects.get(id=pk)
+    dishToDelete.delete()
+    return Response("Dish removed")
 
 
 # get ordered dishes
@@ -118,16 +124,28 @@ def getOrderDish(request):
 @permission_classes([IsAuthenticated])
 def getActiveOrderedDishes(request):
     orderedDishes = OrderDish.objects.filter(isActive=True)
-    print(orderedDishes)
+    
     serializer = OrderDishSerializer(orderedDishes, many=True)
     return Response(serializer.data)
 
+
+# SET ACTIVE DISH AS INACTIVE 
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def setAciveDishAsInactive(request,pk):
+   
+    dishToChange = OrderDish.objects.get(id=pk)
+    dishToChange.isActive = False
+    dishToChange.isDone = True
+    dishToChange.save()
+    
+    return Response("Dish inactive")
 
 
 
 #get ordered dish by id
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([IsAuthenticated])
 def getOrderedDishById(request,pk):
     orderedDish = OrderDish.objects.get(id=pk)
     dishes = Dish.objects.all()
@@ -140,15 +158,6 @@ def getOrderedDishById(request,pk):
         "orderedDishPrice" : dishPrice,
         })
 
-
-
-#REMOVE DISH FROM MENU
-@api_view(['DELETE'])
-@permission_classes([IsAdminUser])
-def deleteDish(request,pk):
-    dishToDelete = Dish.objects.get(id=pk)
-    dishToDelete.delete()
-    return Response("Dish removed")
 
 
 #EDIT EXISTING DISH IN MENU

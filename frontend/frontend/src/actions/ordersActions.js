@@ -23,6 +23,7 @@ import {
 } from "../constants/orderConstants";
 
 import axios from "axios";
+import { listDishes, listOrderDishes } from "./dishActions";
 
 export const createOrder = (id, orders) => async (dispatch, getState) => {
   try {
@@ -66,7 +67,15 @@ export const createOrder = (id, orders) => async (dispatch, getState) => {
 export const listOrders = () => async (dispatch) => {
   try {
     dispatch({ type: ORDER_LIST_REQUEST });
-    const { data } = await axios.get("/orders/get-orders");
+    // Get userInfo from local storage and send it to backend for JWT authorization
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+    const { data } = await axios.get("/orders/get-orders", config);
     dispatch({
       type: ORDER_LIST_SUCCESS,
       payload: data,
@@ -179,11 +188,21 @@ export const changeDishQty =
 
       //Send POST metod to backend with changed dish qty
 
-      const { orderedDish } = await axios.post(
-        `/orders/update-qty/${dish.id}`,
-        body, // if POST request, axios send headers as third parameter
-        config
-      );
+      const orderedDish = await axios
+        .post(
+          `/orders/update-qty/${dish.id}`,
+          body, // if POST request, axios send headers as third parameter
+          config
+        )
+        .then(function (response) {
+          if (response.status == 200) {
+            //if response is 200, list order dishes again.
+
+            dispatch(listOrderDishes(orderId));
+          } else {
+            alert("Something went wrong, status code: ", response.status);
+          }
+        });
     } catch (error) {
       dispatch({
         type: ORDER_DETAILS_FAIL,
@@ -227,64 +246,6 @@ export const addToOrder = (filteredDish, id, qty) => async (dispatch) => {
   const { dishToAdd } = await axios.post(
     `/orders/add-dish-to-order`,
     body,
-    config
-  );
-};
-
-export const removeFromOrder = (filteredDish, id) => async (dispatch) => {
-  //filteredDish - dish we want to change
-  //id - order id
-  const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
-  console.log("dishQty");
-  dispatch({
-    type: ORDER_REMOVE_ITEM,
-    payload: {
-      data,
-      id,
-      filteredDish,
-    },
-  });
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-    },
-    body: {
-      order: data.orderedDishData.order,
-      dish: data.orderedDishData.dish,
-      qty: data.orderedDishData.qty - 1,
-    },
-  };
-
-  const { orderedDish } = await axios.post(
-    `/orders/update-qty/${filteredDish.id}`,
-    config
-  );
-};
-
-export const deleteFromOrder = (filteredDish, id) => async (dispatch) => {
-  //filteredDish - dish we want to change
-  //id - order id
-  const { data } = await axios.get(`/dishes/get-order-dish/${filteredDish.id}`);
-  // =========== JWT AUTHORIZATION DATA ================
-  let userInfo = JSON.parse(localStorage.userInfo);
-  const config = {
-    headers: {
-      "Content-type": "application/json",
-      Authorization: "Bearer " + String(userInfo.access),
-    },
-  };
-
-  dispatch({
-    type: ORDER_DELETE_ITEM,
-    payload: {
-      data,
-      id,
-      filteredDish,
-    },
-  });
-
-  const { orderedDish } = await axios.delete(
-    `/orders/remove-dish-from-order/${filteredDish.id}`,
     config
   );
 };

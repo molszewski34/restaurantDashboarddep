@@ -132,7 +132,15 @@ export const getEmployees = () => async (dispatch) => {
       type: EMPLOYEE_LIST_REQUEST,
     });
 
-    const { data } = await axios.get("/user/employees/");
+    let userInfo = JSON.parse(localStorage.userInfo);
+    const config = {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + String(userInfo.access),
+      },
+    };
+
+    const { data } = await axios.get("/user/employees/", config);
     dispatch({
       type: EMPLOYEE_LIST_SUCCESS,
       payload: data,
@@ -161,7 +169,7 @@ export const getEmployeeById = (id) => async (dispatch) => {
         Authorization: "Bearer " + String(userInfo.access),
       },
     };
-    const { data } = await axios.get(`/user/employees/${id}`);
+    const { data } = await axios.get(`/user/employees/${id}`, config);
     dispatch({
       type: EMPLOYEE_DETAILS_SUCCESS,
       payload: data,
@@ -203,6 +211,9 @@ export const editEmployee =
           if (response.status == 200) {
             //if response is 200, display OK alert
             alert("Edit Employee status: OK");
+          }
+          if (response.status == 403) {
+            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }
@@ -280,7 +291,9 @@ export const createNewEmployee =
   };
 
 export const logout = () => async (dispatch) => {
-  console.log("Logout");
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+  setTimeout(() => {
+    window.location.reload();
+  }, 2000);
 };

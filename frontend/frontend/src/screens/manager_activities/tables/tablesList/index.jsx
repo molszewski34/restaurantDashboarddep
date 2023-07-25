@@ -59,7 +59,7 @@ const TablesList = () => {
     <div className="flex flex-col relative h-screen w-full">
       <NavbarManagmentPanel />
       <NavbarManagmentPanelSide />
-      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-0;">
+      <main className="my-4 px-1 flex flex-col md:absolute md:h-screen md:w-[calc(100%_-_270px)]  md:p-[30px] md:left-[270px] md:top-10">
         <header className="font-bold py-1 border-b text-2xl border-[#cbd5e1]">
           Rooms
         </header>
@@ -68,9 +68,9 @@ const TablesList = () => {
           {addRoomIsActive ? (
             <label>
               <input
-                className="h-8 m-2 border rounded-md border-[#cbd5e1] pl-2"
+                className="h-8 m-2 border rounded-md border-[#cbd5e1] pl-2 text-sm"
                 type="text "
-                placeholder="Name of Room"
+                placeholder="ex: Main room"
                 onChange={(e) => {
                   setNewRoomName(e.target.value);
                 }}

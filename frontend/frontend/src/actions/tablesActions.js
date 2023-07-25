@@ -138,6 +138,9 @@ export const createNewTable =
             //if response is 200, list tables again. It`s nesesary to get the correct table ID
             alert("Create Table status: OK");
             dispatch(listTables());
+          }
+          if (response.status == 403) {
+            alert("You don`t have permission to do that");
           } else {
             alert("Something went wrong, status code: ", response.status);
           }
@@ -155,10 +158,7 @@ export const createNewTable =
 
 // ================= Remove table from restaurant ===========
 export const removeTable = (id) => async (dispatch) => {
- 
-
   try {
- 
     // ================= JWT Authorization data ===========
     let userInfo = JSON.parse(localStorage.userInfo);
     const config = {
@@ -176,18 +176,14 @@ export const removeTable = (id) => async (dispatch) => {
           alert("Table removed");
           // Get all tables again after remove
           dispatch(listTables());
-        } else {
-          alert("Something went wrong, status code: ", response.status);
         }
       });
   } catch (error) {
-    dispatch({
-      type: CREATE_NEW_TABLE_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
-    });
+    if (error.response.status == 403) {
+      alert("You don`t have permission to do that");
+    } else {
+      alert("Something went wrong, status code: ", error.response.status);
+    }
   }
 };
 

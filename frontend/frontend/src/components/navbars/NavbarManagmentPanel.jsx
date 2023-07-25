@@ -8,11 +8,13 @@ import {
 } from 'react-icons/md';
 
 import { GiCook } from 'react-icons/gi';
-import { useSelector } from 'react-redux';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { NavLink, useNavigate } from 'react-router-dom';
-
+import { logout } from '../../actions/userActions';
+import { useSelector, useDispatch } from 'react-redux';
 const NavbarManagmentPanel = () => {
   let navigate = useNavigate();
+  let dispatch = useDispatch();
   const [logoutPanel, setLogoutPanel] = useState(false);
   const userLogin = useSelector((state) => state.userLogin);
   const {
@@ -33,23 +35,32 @@ const NavbarManagmentPanel = () => {
           />
         </button>
         <div
-          onClick={() => {
-            setLogoutPanel(!logoutPanel);
-          }}
-          className="flex p-2 gap-1 items-center cursor-pointer"
+          // onClick={() => {
+          //   setLogoutPanel(!logoutPanel);
+          // }}
+          className="flex p-2 gap-1 items-center"
         >
-          <span className="flex gap-1 items-center text-sm">
-            <BiUserCircle className="text-2xl " /> {userInfo.first_name}
+          <span className="flex gap-1 items-center text-sm cursor-pointer">
+            <BiUserCircle className="text-2xl " />
+            {userInfo.first_name}
+            <button className="p-2">
+              <LogoutIcon
+                onClick={() => {
+                  dispatch(logout());
+                  navigate('/');
+                }}
+              />
+            </button>
           </span>
-          <span className="p-1">
+          {/* <span className="p-1">
             <MdOutlineKeyboardArrowDown className="font-bold" />
-          </span>
+          </span> */}
         </div>
-        {logoutPanel && (
+        {/* {logoutPanel && (
           <button className="text-sm bg-white py-1 px-3 absolute top-8 right-3 border rounded hover:font-bold w-20 hover:bg-primary-bg-color hover:text-white">
             Logout
           </button>
-        )}
+        )} */}
       </section>
       <section className="flex md:hidden w-screen justify-around text-xl  shadow-md text-[#6b7280]">
         <NavLink

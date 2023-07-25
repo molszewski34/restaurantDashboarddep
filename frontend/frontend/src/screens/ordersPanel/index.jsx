@@ -8,7 +8,6 @@ import {
   getOrderDetails,
   changeDishQty,
   addToOrder,
-  deleteFromOrder,
   listOrders,
 } from "../../actions/ordersActions";
 import { listCategories } from "../../actions/categoriesActions";
@@ -102,7 +101,7 @@ const OrdersPanel = () => {
     if (dishQty > 0) {
       dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
     } else {
-      dispatch(deleteFromOrder(dishToChange));
+      //dispatch(deleteFromOrder(dishToChange));
       dispatch(changeDishQty(dishToChange, dishQty, id, dishNameToDisplay));
     }
   };
@@ -120,14 +119,14 @@ const OrdersPanel = () => {
     const config = {
       headers: {
         "Content-type": "application/json",
-      },
-      body: {
-        isPaid: true,
+        Authorization: "Bearer " + String(userInfo.access),
       },
     };
 
+    const body = { isPaid: true };
     const { setOrderAsPaid } = await axios.post(
       `/orders/update-order/${id}`,
+      body,
       config
     );
 
