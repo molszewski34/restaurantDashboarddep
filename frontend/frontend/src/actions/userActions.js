@@ -1,4 +1,6 @@
+import axios from "axios";
 import {
+  // Action constants
   USER_LOGIN_REQUEST,
   USER_LOGIN_FAIL,
   USER_LOGIN_SUCCESS,
@@ -18,46 +20,48 @@ import {
   EMPLOYEE_DETAILS_SUCCESS,
   EMPLOYEE_DETAILS_FAIL,
 } from "../constants/userConstants";
-import axios from "axios";
 
+const API_BASE_URL = "/user";
+
+// Function to get user info and config
+const getConfig = () => {
+  let userInfo = JSON.parse(localStorage.userInfo);
+  const config = {
+    headers: {
+      "Content-type": "application/json",
+      Authorization: "Bearer " + String(userInfo.access),
+    },
+  };
+  return config;
+};
+
+// Action creator: User login
 export const login = (username, password) => async (dispatch) => {
   try {
-    dispatch({
-      type: USER_LOGIN_REQUEST,
+    dispatch({ type: USER_LOGIN_REQUEST });
+
+    // API call to login
+    const { data } = await axios.post(`${API_BASE_URL}/login/`, {
+      username: username,
+      password: password,
     });
 
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-      },
-    };
-
-    const { data } = await axios.post(
-      `/user/login/`,
-      {
-        username: username,
-        password: password,
-      },
-      config
-    );
-
+    // Dispatch success action and save user info in local storage
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: data,
     });
-
     localStorage.setItem("userInfo", JSON.stringify(data));
   } catch (error) {
+    // Dispatch failure action on login error
     dispatch({
       type: USER_LOGIN_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
+// Action creator: Create new user
 export const createNewUser =
   (name, email, position, password) => async (dispatch) => {
     try {
@@ -71,133 +75,103 @@ export const createNewUser =
         },
       });
 
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: {
-          name: name,
-          email: email,
-          position: position,
-          password: password,
-        },
-      };
-
-      const { data } = await axios.post("/user/create/", config);
+      // API call to create a new user
+      await axios.post(`${API_BASE_URL}/create/`, {
+        name: name,
+        email: email,
+        position: position,
+        password: password,
+      });
     } catch (error) {
+      // Dispatch failure action on user creation error
       dispatch({
         type: USER_CREATE_FAIL,
-        payload:
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message,
+        payload: error.response?.data?.message || error.message,
       });
     }
   };
 
+// Action creator: Get list of users
 export const getUsers = () => async (dispatch) => {
   try {
     dispatch({
       type: USER_LIST_REQUEST,
     });
 
-    let userInfo = JSON.parse(localStorage.userInfo);
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(userInfo.access),
-      },
-    };
+    // API call to get list of users
+    const { data } = await axios.get(`${API_BASE_URL}/users/`, getConfig());
 
-    const { data } = await axios.get(`/user/users/`, config);
-
+    // Dispatch success action with user data
     dispatch({
       type: USER_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    // Dispatch failure action on error getting users list
     dispatch({
       type: USER_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
+// Action creator: Get list of employees
 export const getEmployees = () => async (dispatch) => {
   try {
     dispatch({
       type: EMPLOYEE_LIST_REQUEST,
     });
 
-    let userInfo = JSON.parse(localStorage.userInfo);
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(userInfo.access),
-      },
-    };
+    // API call to get list of employees
+    const { data } = await axios.get(`${API_BASE_URL}/employees/`, getConfig());
 
-    const { data } = await axios.get("/user/employees/", config);
+    // Dispatch success action with employee data
     dispatch({
       type: EMPLOYEE_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    // Dispatch failure action on error getting employees list
     dispatch({
       type: EMPLOYEE_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
+// Action creator: Get employee details by ID
 export const getEmployeeById = (id) => async (dispatch) => {
   try {
     dispatch({
       type: EMPLOYEE_DETAILS_REQUEST,
     });
-    //Get user info from local storage
-    let userInfo = JSON.parse(localStorage.userInfo);
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(userInfo.access),
-      },
-    };
-    const { data } = await axios.get(`/user/employees/${id}`, config);
+
+    // API call to get employee details by ID
+    const { data } = await axios.get(
+      `${API_BASE_URL}/employees/${id}`,
+      getConfig()
+    );
+
+    // Dispatch success action with employee details
     dispatch({
       type: EMPLOYEE_DETAILS_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    // Dispatch failure action on error getting employee details
     dispatch({
       type: EMPLOYEE_DETAILS_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response?.data?.message || error.message,
     });
-    alert(error);
+    console.log(error);
   }
 };
 
+// Action creator: Edit employee details
 export const editEmployee =
   (id, fullName, email, phoneNumber, position) => async (dispatch) => {
     try {
-      //Get user info from local storage
-      let userInfo = JSON.parse(localStorage.userInfo);
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: "Bearer " + String(userInfo.access),
-        },
-      };
-      // data sent to the backend
+      // Data sent to the backend for employee update
       const body = {
         name: fullName,
         email: email,
@@ -205,67 +179,47 @@ export const editEmployee =
         position: position,
       };
 
-      const data = await axios
-        .put(`user/edit-employee/${id}`, body, config)
-        .then(function (response) {
-          if (response.status == 200) {
-            //if response is 200, display OK alert
-            alert("Edit Employee status: OK");
-          }
-          if (response.status == 403) {
-            alert("You don`t have permission to do that");
-          } else {
-            alert("Something went wrong, status code: ", response.status);
-          }
-        });
+      // API call to edit employee details
+      await axios.put(`${API_BASE_URL}/edit-employee/${id}`, body, getConfig());
+
+      // Display success alert
+      alert("Edit Employee status: OK");
     } catch (error) {
+      // Display error alert on edit failure
       alert(error);
     }
   };
 
-// Get types of pissible employees positions from Data base
+// Action creator: Get list of employee positions
 export const getEmployeePositions = () => async (dispatch) => {
   try {
     dispatch({
       type: POSITIONS_LIST_REQUEST,
     });
-    //Get user info from local storage
-    let userInfo = JSON.parse(localStorage.userInfo);
-    const config = {
-      headers: {
-        "Content-type": "application/json",
-        Authorization: "Bearer " + String(userInfo.access),
-      },
-    };
 
-    const { data } = await axios.get("user/positions/", config);
+    // API call to get list of employee positions
+    const { data } = await axios.get(`${API_BASE_URL}/positions/`, getConfig());
+
+    // Dispatch success action with employee positions data
     dispatch({
       type: POSITIONS_LIST_SUCCESS,
       payload: data,
     });
   } catch (error) {
+    // Dispatch failure action on error getting employee positions
     dispatch({
       type: POSITIONS_LIST_FAIL,
-      payload:
-        error.response && error.response.data.message
-          ? error.response.data.message
-          : error.message,
+      payload: error.response?.data?.message || error.message,
     });
   }
 };
 
+// Action creator: Create new employee
 export const createNewEmployee =
   (fullName, email, phoneNumber, position, isCashier, isDriver) =>
   async (dispatch) => {
     try {
-      let userInfo = JSON.parse(localStorage.userInfo);
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-          Authorization: "Bearer " + String(userInfo.access),
-        },
-      };
-
+      // Data sent to the backend for new employee creation
       const body = {
         fullName: fullName,
         email: email,
@@ -275,24 +229,23 @@ export const createNewEmployee =
         isDriver: isDriver,
       };
 
-      const data = await axios
-        .post("/user/create-employee/", body, config)
-        .then(function (response) {
-          if (response.status == 200) {
-            //if response is 200, display status OK
-            alert("Edd Employee status: OK");
-          } else {
-            alert("Something went wrong, status code: ", response.status);
-          }
-        });
+      // API call to create a new employee
+      await axios.post(`${API_BASE_URL}/create-employee/`, body, getConfig());
+
+      // Display success alert
+      alert("Add Employee status: OK");
     } catch (error) {
       console.log(error);
     }
   };
 
+// Action creator: Logout user
 export const logout = () => async (dispatch) => {
+  // Remove user info from local storage and dispatch logout action
   localStorage.removeItem("userInfo");
   dispatch({ type: USER_LOGOUT });
+
+  // Reload the window after logout for a smoother transition
   setTimeout(() => {
     window.location.reload();
   }, 2000);
