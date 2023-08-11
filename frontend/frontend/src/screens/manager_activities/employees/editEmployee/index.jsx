@@ -17,9 +17,11 @@ const EditEmployee = () => {
 
   // first states of Name, email and phone number
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumError, setPhoneNumError] = useState('');
   const [email, setEmail] = useState('');
   const [emailError, setEmailError] = useState('');
   const [fullName, setFullName] = useState('');
+  const [fullNameError, setFullNameError] = useState('');
 
   const [position, setPosition] = useState('');
   const [isCashier, setIsCashier] = useState('');
@@ -37,7 +39,25 @@ const EditEmployee = () => {
     employee,
   } = employeeDetails;
 
-  const handleInputChange = (e, setInputText) => {
+  const validateFullName = (e, setInputChange) => {
+    const inputValue = e.target.value;
+
+    // Regular expression to match email format
+    const fullNameRegex = /^[a-zA-Z]/;
+
+    // Check if the input value is empty or matches the email regex
+    if (inputValue === '' || fullNameRegex.test(inputValue)) {
+      // Set the input text using the provided setter function
+      setInputChange(inputValue);
+      setFullNameError(''); // Clear the email error
+    } else {
+      // Set the input text using the provided setter function
+      setInputChange(inputValue);
+      setFullNameError('Full Name can contain only letters'); // Set the email error message
+    }
+  };
+
+  const handlePhoneNumberChange = (e, setInputText) => {
     // Get the input value from the event
     const inputValue = e.target.value;
 
@@ -48,6 +68,10 @@ const EditEmployee = () => {
     if (inputValue === '' || numbersRegex.test(inputValue)) {
       // Set the input text using the provided setter function
       setInputText(inputValue);
+      setPhoneNumError('');
+    } else {
+      setInputText(inputValue);
+      setPhoneNumError('Only numbers');
     }
   };
 
@@ -61,7 +85,7 @@ const EditEmployee = () => {
     if (inputValue === '' || emailRegex.test(inputValue)) {
       // Set the input text using the provided setter function
       setInputChange(inputValue);
-      setEmailError(''); // Clear the email error
+      setEmailError('Email format is correct'); // Clear the email error
     } else {
       // Set the input text using the provided setter function
       setInputChange(inputValue);
@@ -111,8 +135,12 @@ const EditEmployee = () => {
                               required
                               onChange={(e) => {
                                 setFullName(e.target.value);
+                                validateFullName(e, setFullName);
                               }}
                             />
+                            <span className={`text-xs text-[#dc2626]`}>
+                              {fullNameError || '\u00A0'}
+                            </span>
                           </div>
 
                           <div className="md:col-span-3">
@@ -120,9 +148,6 @@ const EditEmployee = () => {
                               <label className="font-bold ">
                                 Email Address
                               </label>
-                              <span className="text-xs text-[#dc2626]">
-                                {emailError}
-                              </span>
                             </div>
 
                             <input
@@ -139,6 +164,15 @@ const EditEmployee = () => {
                               }
                               required
                             />
+                            <span
+                              className={`text-xs text-[#dc2626] ${
+                                emailError === 'Email format is correct'
+                                  ? 'text-[#84cc16]'
+                                  : ''
+                              }`}
+                            >
+                              {emailError || '\u00A0'}
+                            </span>
                           </div>
 
                           <div className="md:col-span-2">
@@ -151,7 +185,7 @@ const EditEmployee = () => {
                               onChange={(e) => {
                                 setPhoneNumber(e.target.value);
 
-                                handleInputChange(e, setPhoneNumber);
+                                handlePhoneNumberChange(e, setPhoneNumber);
                               }}
                               value={phoneNumber}
                               placeholder={
@@ -161,6 +195,9 @@ const EditEmployee = () => {
                               }
                               required
                             />
+                            <span className={`text-xs text-[#dc2626]`}>
+                              {phoneNumError || '\u00A0'}
+                            </span>
                           </div>
 
                           <div className="md:col-span-3 ">
