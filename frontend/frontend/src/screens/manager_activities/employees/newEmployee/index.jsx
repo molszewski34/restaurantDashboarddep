@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
+import {
+  getEmployeePositions,
+  createNewEmployee,
+} from '../../../../actions/userActions';
 import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
 import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
-import CircularProgress from '@mui/material/CircularProgress';
-import { getEmployeePositions } from '../../../../actions/userActions';
-import { createNewEmployee } from '../../../../actions/userActions';
 
 const NewEmployee = () => {
   let dispatch = useDispatch();
@@ -70,6 +72,10 @@ const NewEmployee = () => {
     );
   };
 
+  const selectStyles =
+    'w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2';
+  const inputStyles = 'h-10 border mt-1 rounded pl-2 w-full bg-gray-50';
+
   useEffect(() => {
     dispatch(getEmployeePositions());
   }, []);
@@ -101,7 +107,7 @@ const NewEmployee = () => {
                             type="text"
                             name="full_name"
                             id="full_name"
-                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
+                            className={inputStyles}
                             placeholder="ex: John Doe"
                             required
                             onChange={(e) => {
@@ -136,7 +142,7 @@ const NewEmployee = () => {
                             type="text"
                             name="address"
                             id="address"
-                            className="h-10 border mt-1 rounded pl-2 w-full bg-gray-50"
+                            className={inputStyles}
                             onChange={(e) => {
                               setPhoneNumber(e.target.value);
 
@@ -155,7 +161,7 @@ const NewEmployee = () => {
                               onChange={(e) => {
                                 setPosition(e.target.value);
                               }}
-                              className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
+                              className={selectStyles}
                             >
                               {positions.map((position, i) => (
                                 <option key={i} value={position.title}>
@@ -173,7 +179,7 @@ const NewEmployee = () => {
                             onChange={(e) => {
                               setIsCashier(e.target.value);
                             }}
-                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
+                            className={selectStyles}
                           >
                             <option className="md:col-span-2">No</option>
                             <option className="md:col-span-2">Yes</option>
@@ -185,7 +191,7 @@ const NewEmployee = () => {
                             onChange={(e) => {
                               setIsDriver(e.target.value);
                             }}
-                            className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
+                            className={selectStyles}
                           >
                             <option className="md:col-span-2">No</option>
                             <option className="md:col-span-2">Yes</option>

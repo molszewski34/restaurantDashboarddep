@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 import CircularProgress from '@mui/material/CircularProgress';
-import { getEmployeePositions } from '../../../../actions/userActions';
-import { getEmployeeById } from '../../../../actions/userActions';
-import { editEmployee } from '../../../../actions/userActions';
+import {
+  getEmployeePositions,
+  getEmployeeById,
+  editEmployee,
+  getUsers,
+} from '../../../../actions/userActions';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { getUsers } from '../../../../actions/userActions';
+
+import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
+import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
 
 const EditEmployee = () => {
   let dispatch = useDispatch();
@@ -211,14 +214,11 @@ const EditEmployee = () => {
                                 }}
                                 className="w-full h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1 pl-2"
                               >
-                                {' '}
-                                {/* <option value={employee.title}></option> */}
                                 {positions.map((position, i) => (
                                   <option
                                     key={i}
                                     value={position.title}
                                     className="font-normal"
-                                    // placeholder="Chosse new role"
                                   >
                                     {position.title}
                                   </option>
