@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import CircularProgress from '@mui/material/CircularProgress';
-import { FaRegTrashAlt } from 'react-icons/fa';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import CircularProgress from "@mui/material/CircularProgress";
+import { FaRegTrashAlt } from "react-icons/fa";
 import {
   listDishes,
   addDishToMenu,
   removeDishFromMenu,
   editDish,
-} from '../../../../actions/dishActions';
+} from "../../../../actions/dishActions";
 import {
   listCategories,
   createNewCategory,
   removeCategory,
-} from '../../../../actions/categoriesActions';
-import NavbarManagmentPanel from '../../../../components/navbars/NavbarManagmentPanel';
-import NavbarManagmentPanelSide from '../../../../components/navbars/NavbarManagmentPanelSide';
+} from "../../../../actions/categoriesActions";
+import NavbarManagmentPanel from "../../../../components/navbars/NavbarManagmentPanel";
+import NavbarManagmentPanelSide from "../../../../components/navbars/NavbarManagmentPanelSide";
 
-import AddCategoryForm from './components/CategoryForm';
+import AddCategoryForm from "./components/CategoryForm";
 const CategoriesList = () => {
   const categoriesList = useSelector((state) => state.categoriesList);
   const { error, loading, categories } = categoriesList;
@@ -42,8 +42,8 @@ const CategoriesList = () => {
   const [categoryId, setCategoryId] = useState(null);
 
   // INITIAL NAME AND PRICE VALUES (ADD DISH AND EDIT)
-  const [newDishName, setNewDishName] = useState('');
-  const [dishPrice, setDishPrice] = useState('');
+  const [newDishName, setNewDishName] = useState("");
+  const [dishPrice, setDishPrice] = useState("");
   const [categoryName, setCategoryName] = useState(null);
   const [selectedDishId, setSelectedDishId] = useState(null);
 
@@ -96,7 +96,7 @@ const CategoriesList = () => {
           <header className="font-bold py-1  mt-4">Categories</header>
         </div>
         <section className="mt-4 flex flex-col gap-3">
-          <div className="grid grid-cols-4 ">
+          <div className="grid grid-cols-3 ">
             <span className="text-sm font-bold  pl-2 place-self-start">
               Name
             </span>
@@ -112,20 +112,14 @@ const CategoriesList = () => {
                 className="flex flex-col w-full gap-2 "
               >
                 <div className="shadow">
-                  <div className="grid grid-cols-4 items-center  px-2 bg-[#f1f5f9] py-2 border-b border-white rounded shadow">
+                  <div className="grid grid-cols-3 items-center  px-2 bg-[#f1f5f9] py-2 border-b border-white rounded shadow">
                     <p className="uppercase text-sm text-[#6b7280] font-bold">
                       {categoryItem.title}
                     </p>
                     <span
-                      className=" w-6 h-6 grow flex border-2 border-white"
+                      className=" w-6 h-6 grow flex border-2 self-left border-white"
                       style={{ backgroundColor: categoryItem.colour }}
                     ></span>
-                    <button
-                      onClick={() => handleCategoryEditClick(categoryItem.id)}
-                      className="flex justify-center items-center w-8 h-8 text-[#64748b] text-sm font-bold hover:underline"
-                    >
-                      Edit
-                    </button>
                     <button
                       onClick={() => {
                         setModalOpen(true);
@@ -155,7 +149,7 @@ const CategoriesList = () => {
                             className="grid grid-cols-4 items-center  text-sm text-[#6b7280] py-1"
                             style={{
                               backgroundColor:
-                                index % 2 === 1 ? 'white' : '#f1f5f9',
+                                index % 2 === 1 ? "white" : "#f1f5f9",
                             }}
                           >
                             <span className="pl-2  cursor-pointer text-[0.9em] font-bold py-1">
@@ -173,9 +167,7 @@ const CategoriesList = () => {
                             <button
                               className="flex place-self-end self-center text-[#6b7280]  hover:text-[#dc2626] text-lg  px-2 py-1 font-bold hover:underline mr-2"
                               onClick={() => {
-                                dispatch(
-                                  removeDishFromMenu(dishes, filteredDish)
-                                );
+                                dispatch(removeDishFromMenu(filteredDish));
                               }}
                             >
                               <FaRegTrashAlt />
@@ -203,7 +195,7 @@ const CategoriesList = () => {
                                 <button
                                   className="border border-[#cbd5e1]  py-1 px-3 text-sm  text-[#0369a1] bg-white font-bold"
                                   onClick={() => {
-                                    console.log('Edytuje');
+                                    console.log("Edytuje");
                                     console.log();
                                     dispatch(
                                       editDish(
@@ -248,7 +240,7 @@ const CategoriesList = () => {
                 Do you want to delete room and all items inside?
               </b>
               <div className="flex justify-between gap-2">
-                {' '}
+                {" "}
                 <button
                   onClick={() => {
                     dispatch(removeCategory(categoryId));
@@ -271,7 +263,7 @@ const CategoriesList = () => {
               </div>
             </main>
           </div>
-        )}{' '}
+        )}{" "}
         {/* ===========  REMOVE CATEGORY PANEL === EMD  ============ */}
         {/* ================ ADD NEW DISH MODAL ================ */}
         {addProductModal && (

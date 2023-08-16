@@ -155,6 +155,7 @@ export const editDish = (id, title, price) => async (dispatch) => {
 export const removeDishFromMenu = (filteredDish) => async (dispatch) => {
   try {
     const config = getAuthConfig();
+    console.log(filteredDish);
     await axios.delete(`/dishes/delete-dish/${filteredDish.id}`, config);
 
     alert("Remove dish status: OK");
