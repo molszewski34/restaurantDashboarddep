@@ -1,18 +1,40 @@
-import React from "react";
-import NavbarTop from "../../components/navbars/NavbarTop";
-import { useSelector, useDispatch } from "react-redux";
-import CircularProgress from "@mui/material/CircularProgress";
-import { useNavigate } from "react-router-dom";
-import { listRooms } from "../../actions/tablesActions";
-import { listTables } from "../../actions/tablesActions";
-import { listActiveOrderDishes } from "../../actions/dishActions";
-import { listOrders } from "../../actions/ordersActions";
+import React from 'react';
+import NavbarTop from '../../components/navbars/NavbarTop';
+import { useSelector, useDispatch } from 'react-redux';
+import CircularProgress from '@mui/material/CircularProgress';
+import { useNavigate } from 'react-router-dom';
+import { listRooms } from '../../actions/tablesActions';
+import { listTables } from '../../actions/tablesActions';
+import { listActiveOrderDishes } from '../../actions/dishActions';
+import { listOrders } from '../../actions/ordersActions';
 
 const Services = () => {
   let navigate = useNavigate();
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.userLogin);
   const { error, loading, userInfo } = userLogin;
+  const buttonData = [
+    {
+      label: 'Menu Management',
+      onClick: () => {
+        navigate('/menu');
+      },
+    },
+    {
+      label: 'Employees Management',
+      onClick: () => {
+        navigate('/employees');
+      },
+    },
+    {
+      label: 'Rooms Management',
+      onClick: () => {
+        navigate('/tablesList');
+        dispatch(listRooms());
+        dispatch(listTables());
+      },
+    },
+  ];
 
   return loading ? (
     <CircularProgress color="secondary" />
@@ -34,7 +56,7 @@ const Services = () => {
                   dispatch(listTables());
                   dispatch(listRooms());
                   dispatch(listOrders());
-                  navigate("/tablesPanel");
+                  navigate('/tablesPanel');
                 }}
                 className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
               >
@@ -43,7 +65,7 @@ const Services = () => {
               <button
                 onClick={() => {
                   dispatch(listActiveOrderDishes());
-                  navigate("/pending-orders");
+                  navigate('/pending-orders');
                 }}
                 className="flex justify-center items-center  bg-white text-center font-bold text-xl"
               >
@@ -56,33 +78,15 @@ const Services = () => {
               <h1>Manager Activities</h1>
             </div>
             <div className="grid grid-cols-2 grid-rows-2 gap-1">
-              <button
-                className="flex p-8 justify-center items-center  bg-white text-center font-bold text-xl"
-                onClick={() => {
-                  navigate("/menu");
-                }}
-              >
-                Menu Managment
-              </button>
-              <button
-                onClick={() => {
-                  navigate("/employess");
-                }}
-                className="flex justify-center items-center  bg-white text-center font-bold text-xl"
-              >
-                Employees Managment
-              </button>
-
-              <button
-                className="flex justify-center items-center  bg-white text-center font-bold text-xl"
-                onClick={() => {
-                  navigate("/tablesList");
-                  dispatch(listRooms());
-                  dispatch(listTables());
-                }}
-              >
-                Rooms Managment
-              </button>
+              {buttonData.map((button, index) => (
+                <button
+                  key={index}
+                  className="flex justify-center items-center bg-white text-center font-bold text-xl p-8"
+                  onClick={button.onClick}
+                >
+                  {button.label}
+                </button>
+              ))}
             </div>
           </div>
         </div>
