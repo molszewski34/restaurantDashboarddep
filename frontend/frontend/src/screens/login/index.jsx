@@ -68,9 +68,8 @@ export default function SignIn() {
               placeholder="Enter your password"
               onChange={(e) => setPassword(e.target.value)}
             />
-            <button>
-              <ImEye className="mr-2" onClick={togglePassword} />
-            </button>
+
+            <ImEye className="mr-2 cursor-pointer " onClick={togglePassword} />
           </div>
         </label>
         <div className=" flex flex-col justify-between text-sm text-#171717">
